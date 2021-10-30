@@ -31,7 +31,7 @@
                         {{ Form::label('documnet image', 'Document image:') }}
                     </div>
                     <div class="col-6">
-                        {!! Form::file('doc_image', ['name' => 'image[0]', 'multiple' => true, 'class' => 'form-control','id'=>'image']) !!}
+                        {!! Form::file('doc_image', ['name' => 'image[0]', 'multiple' => true, 'class' => 'form-control','id'=>'image','required']) !!}
                     </div>
                     <div class="col-2">
                         {!! Form::button('<i class="fa fa-plus"></i>', ['class' => 'btn btn-danger add_more']) !!}
@@ -76,7 +76,7 @@
                         {{ Form::label('documnet image', 'Document image:') }}
                     </div>
                     <div class="col-6">
-                        {!! Form::file('doc_image', ['name' => 'image[` + i + `]', 'multiple' => true, 'class' => 'form-control','id'=>'image']) !!}
+                        {!! Form::file('doc_image', ['name' => 'image[` + i + `]', 'multiple' => true, 'class' => 'form-control','id'=>'image','required']) !!}
                     </div>
                         <div class="col-2">
                             {!! Form::button('<i class="fa fa-close"></i>', ['class' => 'btn btn-danger delete_add_more']) !!}     
@@ -101,6 +101,9 @@
                 required: true,
                 number: true,
             },
+            'image[]':{
+                required: true,
+            }
 
         },
         messages: {
@@ -111,6 +114,10 @@
                 required: "This field is required",
                 number: "Only Digits Are Allowed",
             },
+            'image[]':{
+                required: "This field is required",
+            }
+
 
 
         },
