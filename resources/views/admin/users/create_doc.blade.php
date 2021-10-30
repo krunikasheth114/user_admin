@@ -7,6 +7,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
+            
             <div class="modal-body">
                 {{ Form::open(['class' => 'doc', 'method' => 'POST', 'enctype' => 'multipart/form-data']) }}
                 {{ Form::token() }}
