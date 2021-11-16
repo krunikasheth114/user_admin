@@ -18,7 +18,7 @@ class CreateDocumentsTable extends Migration
             $table->foreignId('user_id')->constrained('users')->onUpdate('cascade')->onDelete('cascade');
             $table->string('doc_name');
             $table->bigInteger('doc_num');
-            $table->string('image');
+            $table->string('document');
             $table->timestamps();
         });
     }

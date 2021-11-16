@@ -60,7 +60,7 @@
                                                 <label for="firstname">{{ __('Firstname') }} :</label>
                                                 <input id="firstname" type="text" class="form-control"
                                                     name="firstname" value="{{ old('firstname') }}"
-                                                    autocomplete="firstname" autofocus>
+                                                    autocomplete="firstname"  placeholder="Enter Firstname" autofocus>
                                             </div>
 
                                             @if ($errors->has('firstname'))
@@ -74,7 +74,7 @@
                                                 <input id="lastname" type="text"
                                                     class="form-control @error('lastname') is-invalid @enderror"
                                                     name="lastname" value="{{ old('lastname') }}"
-                                                    autocomplete="lastname" autofocus>
+                                                    autocomplete="lastname"  placeholder="Enter Lastname" autofocus>
                                             </div>
                                             @if ($errors->has('lastname'))
                                                 <span class="invalid-feedback d-block" role="alert">
@@ -87,7 +87,7 @@
                                                 <label for="email">{{ __('Email') }} :</label>
 
                                                 <input id="email" type="email" class="form-control" name="email"
-                                                    value="{{ old('email') }}" autocomplete="email" autofocus>
+                                                    value="{{ old('email') }}" autocomplete="email"  placeholder="Enter Email" autofocus>
                                             </div>
                                             @if ($errors->has('email'))
                                                 <span class="invalid-feedback d-block" role="alert">
@@ -129,7 +129,7 @@
                                                 <label for="email">{{ __('Password') }} :</label>
                                                 <input id="password" type="password"
                                                     class="form-control @error('password') is-invalid @enderror"
-                                                    name="password" autocomplete="current-password">
+                                                    name="password"  placeholder="Enter Password" autocomplete="current-password">
                                             </div>
                                             @if ($errors->has('password'))
                                                 <span class="invalid-feedback d-block" role="alert">
@@ -148,6 +148,13 @@
                                                     {{ __('Register') }}
                                                 </button>
                                             </div>
+                                            <div class="form-group row">
+                                                
+                                                   Already have Acount?
+                                                    <a href="{{ route('user.login') }}"> Login here</a>
+                                              
+                                            </div>
+        
                                     </div>
                                     </form>
                                 </div>
@@ -268,8 +275,8 @@
                     processData: false,
                     dataType: 'JSON',
                     success: function(data) {
-                     
-                        window.location.href = 'verify_user' + '/'+data.id;
+
+                        window.location.href = 'verify_register_user' + '/' + data.id;
 
                     },
                     error: function(error) {

@@ -1,29 +1,68 @@
-<div class="topbar">
-
-    <div class="topbar-left	d-none d-lg-block">
-        <div class="text-center">
-            <a href="#" class="logo"><img src="{{ asset('assets/images/logo-dark.png') }}" height="50" alt="logo"></a>
-        </div>
-    </div>
-    <nav class="navbar-custom">
-        <li class="nav-item dropdown pull-right">
-            <a id="navbarDropdown" class="nav-link dropdown-toggle" style="color: black;"  role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            {{Auth::user()->firstname}}
+<!-- Header -->
+<header class="">
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="{{route('dashboard')}}">
+                <h2>Stand Blog<em>.</em></h2>
             </a>
-            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="{{ route('logout') }}">
-                    {{ __('Logout') }}
-                </a>
-                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                    @csrf
-                </form>
-                <a class="dropdown-item update" href="#" data-toggle="modal" data-target="#updateprofile" id="{{ Auth::user()->id }}" > 
-                    {{ __('Update Profile') }}
-                </a>
-               
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                        @if (Route::has('dashboard'))
+                        <a class="nav-link" href="{{route('dashboard')}}">Home
+                            <span class="sr-only">(current)</span>
+                        </a>
+                        @else
+                        <a class="nav-link" href="{{route('dashboard')}}">Home
+                        </a>
+                        @endif
+                      
+                    </li>
+                    @if (Auth::user())
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('blog.createblog') }}">Start Writing
+                            <span class="sr-only">(current)</span></a>
+                        </li>
+                    @else
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('user.login') }}">
+                                Strat Writing</a>
+                        </li>
+                    @endif
+
+                    @if (Auth::user())
+                        <li class="nav-item">
+                            <a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" href="#"
+                                aria-haspopup="true" aria-expanded="false" v-pre>{{ Auth::user()->firstname }}
+                                <span class="sr-only">(current)</span>
+
+                                <div class="dropdown-menu dropdown-menu-right">
+                                    <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
+                                                      document.getElementById('logout-form').submit();">
+                                        {{ __('Logout') }}
+                                    </a>
+
+                                    <form id="logout-form" action="{{ route('logout') }}" method="get"
+                                        class="d-none">
+                                        @csrf
+                                    </form>
+                                </div>
+                            </a>
+                        </li>
+                    @else
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('user.login') }}">Login</a>
+                        </li>
+
+                    @endif
+
+
+                </ul>
             </div>
-        </li>
-        <div class="clearfix"></div>
+        </div>
     </nav>
-</div>
-@include('user.update_user')
+</header>

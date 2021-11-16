@@ -8,6 +8,7 @@ use App\DataTables\SubCategoryDataTable;
 use App\Models\Category;
 use App\Models\Subcategory;
 use App\Http\Requests\SubCategoryRequest;
+use Illuminate\Validation\Rule;
 
 class SubCategoryController extends Controller
 {
@@ -17,30 +18,36 @@ class SubCategoryController extends Controller
 
         return $datatable->render('admin.subcategory.index', compact('data'));
     }
-    public function updatesubcategory(SubCategoryRequest $request)
+    public function updatesubcategory(Request $request)
     {
-        $data = $request->validated();
-        $data= Subcategory::find($request->id);
+        $id = $request->id;
+        $request->validate([
+            'subcategory_name' => Rule::unique('sub_categories')->ignore($id)->where(function ($query) use($request) {
+                return $query->where('category_id', $request->category_name);
+            }),
+        ]);
+
+        $data = Subcategory::find($request->id);
         $data->category_id = $request->input('category_name');
         $data->subcategory_name = $request->input('subcategory_name');
-        
+
         $data->update();
         return response()->json(['status' => true, 'message' => 'Update Success']);
     }
 
     public function showCategory()
     {
-        $data = Category::Join('categories', function($join) {
+        $data = Category::Join('categories', function ($join) {
             $join->on('sub_categories.id', '=', 'categories.category_id');
-          })
-          ->whereNull('categories.category_id');
- 
+        })
+            ->whereNull('categories.category_id');
+
         return view('admin.subcategory.index', ['data' => $data]);
     }
 
     public function store(SubCategoryRequest $request)
     {
-        // dd(123);
+
         $subcategory = $request->validated();
         $subcategory = new Subcategory;
         $subcategory->subcategory_name = $request->input('subcategory_name');
@@ -48,7 +55,6 @@ class SubCategoryController extends Controller
         $subcategory->save();
         return response()->json(['status' => true, 'data' => $subcategory]);
     }
-
     public function changeStatus(Request $request)
     {
         //   dd($request->all());
@@ -58,15 +64,14 @@ class SubCategoryController extends Controller
     public function edit(Request $request)
     {
         $data = Subcategory::find($request->id);
-       
+
         return response()->json(['status' => true, 'data' => $data]);
     }
-    public function deletecategory(Request $request){   
+    public function deletecategory(Request $request)
+    {
+        $data = Subcategory::find($request->id);
 
-        
-        $data= Subcategory::find($request->id);
-        
         $data->delete();
         return response()->json(['status' => true, 'message' => "Delete Successfully"]);
-       }
+    }
 }

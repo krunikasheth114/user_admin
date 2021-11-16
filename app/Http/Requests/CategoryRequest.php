@@ -24,10 +24,10 @@ class CategoryRequest extends FormRequest
     public function rules()
     {
         return [
-            'category_name' => 'required',
+            'category_name' => 'required|unique:categories,category_name,NULL,id,deleted_at,NULL',
         ];
 
-       
+      
     }
     
 }

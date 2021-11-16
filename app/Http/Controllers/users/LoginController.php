@@ -10,7 +10,7 @@ use App\Http\Requests\LoginRequest;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use Mail;
-use App\Mail\Welcome;
+use App\Mail\Forgetpass;
 
 class LoginController extends Controller
 {
@@ -25,17 +25,17 @@ class LoginController extends Controller
 
     public function __construct()
     {
+        // $this->middleware('guest')->except('logout');
         $this->middleware('guest:web')->except('logout');
     }
 
     public function showLoginForm()
     {
-
         return view('user.login');
     }
 
 
-    public function attemptLogin(Request $request)
+    public function Login(Request $request)
     {
 
         $request->validate([
@@ -43,25 +43,22 @@ class LoginController extends Controller
             'password' => 'required'
         ]);
 
-
-
         Auth::guard('web')->attempt(['email' => $request->email, 'password' => $request->password]);
-
         if (Auth::guard('web')->check()) {
 
             return redirect()->route('dashboard');
         } else {
-            // session()->flash('message', 'Invalid credentials');
-            return redirect()->route('user.login');
+
+            return redirect()->route('user.login')->with('danger', 'Invalid credentials');
         }
     }
 
     public function logout(Request $request)
     {
-
         $this->guard('web')->logout();
         return redirect()->route('user.login');
     }
+
 
     /**
      * Get the guard to be used during authentication.
@@ -77,10 +74,11 @@ class LoginController extends Controller
      *
      * @return \Illuminate\Contracts\Auth\StatefulGuard
      */
-    public function register()
-    {
-        return view('user.register');
-    }
+    // public function register()
+    // {
+
+    //     return view('user.register');
+    // }
 
 
     public function  showEmail(Request $request)
@@ -93,11 +91,15 @@ class LoginController extends Controller
 
         $user = User::where('email', $request->email)->first();
 
-        if ($user) {
-            $user->otp = random_int(1000, 9999);
-            $user->update();
-            Mail::to($request->email)->send(new Welcome($user->otp));
-            return response()->json(['status' => true, 'data' => $user, 'message' => 'Otp Successfully Sent On Your Mail']);
+        if (!empty($user)) {
+            if ($request->email === $user->email) {
+                $user->otp = random_int(1000, 9999);
+                $user->update();
+                Mail::to($request->email)->send(new Forgetpass($user->otp));
+                return response()->json(['status' => true, 'data' => $user, 'message' => 'Otp Successfully Sent On Your Mail']);
+            }
+        } else {
+            return response()->json(['status' => false, 'message' => 'Please Enter registerd Email']);
         }
     }
     public function get_otp($id)
@@ -109,8 +111,10 @@ class LoginController extends Controller
         $data = User::find($request->id);
         $otp = $data->otp;
         $get_user_otp = $request->input('otp');
-        if ($otp == $get_user_otp) {
-            return response()->json(['status' => true, 'data' => $data, "message" => "Account verified now ypu can change Your Password"]);
+        if ($otp === (int)$get_user_otp) {
+            return response()->json(['status' => true, 'data' => $data, "message" => "Account verified now you can change Your Password"]);
+        } else {
+            return response()->json(['status' => false, 'message' => 'Please Enter Correct Otp']);
         }
     }
     public function reset_pass($id)
@@ -123,9 +127,7 @@ class LoginController extends Controller
 
         $get_user_pass = User::find($request->id);
         $get_user_pass->password = Hash::make($request->input('pass'));
-         $get_user_pass->update();
-         return response()->json(['status' => true, 'data' => $get_user_pass, "message" => "Your Password is now changed"]);
-      
-        
+        $get_user_pass->update();
+        return response()->json(['status' => true, 'data' => $get_user_pass, "message" => "Your Password is now changed"]);
     }
 }

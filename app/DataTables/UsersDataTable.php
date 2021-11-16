@@ -25,9 +25,34 @@ class UsersDataTable extends DataTable
             ->editcolumn('category_id', function ($data) {
                 return $data->getCategory ? $data->getCategory->category_name : '';
             })
+            ->editcolumn('status', function ($data) {
+                $inactive = "";
+                if ($data->status == 1) {
+                    $inactive .= '<span class="btn btn-primary">Active</span>';
+                } else {
+                    $inactive .= '<span class="btn btn-danger">InActive</span>';
+                }
+                return $inactive;
+            })
+            ->editColumn('created_at', function ($request) {
+                return $request->created_at->format('Y-m-d H:i:s'); // human readable format
+            })
+            ->editColumn('updated_at', function ($request) {
+                return $request->created_at->format('Y-m-d H:i:s'); // human readable format
+            })
+
+
 
             ->editcolumn('subcategory_id', function ($data) {
                 return $data->getSubCategory ? $data->getSubCategory->subcategory_name : '';
+            })
+
+            ->editcolumn('firstname', function ($data) {
+                return $data->full_name;
+            })
+
+            ->editcolumn('profile', function ($data) {
+                return '<img src="'.$data->profile_url.'" height="100px" width="100px">';
             })
             ->addColumn('action', function ($data) {
                 $inactive = "";
@@ -43,11 +68,15 @@ class UsersDataTable extends DataTable
                 $inactive .=  '<button type="button" class="btn btn-primary m-1 adddoc" data-toggle="modal" data-target="#adddoc" id="' . $data->id . '"><i class="fa fa-plus"></i></button>';
                 return $inactive;
             })
-
-            ->addColumn('profile', function ($data) {
-                return '<img src="' . '/images/' . $data->profile . '"height="50px" width="50px"/>';
-            })
-            ->rawColumns(['action', 'profile']);
+            // ->addColumn('profile', function ($data) {
+            //     if ($data->profile == '') {
+            //         return '<img src="images/default/default.jpg" height="50px" width="50px"height="50px" width="50px"/>';
+            //     } else {
+            //         return '<img src="' . '/images/' . $data->profile . '"height="50px" width="50px"/>';
+            //     }
+            // })
+            ->rawColumns(['action', 'status','profile','first_name'])
+            ->addIndexColumn();
     }
 
     /**
@@ -94,12 +123,17 @@ class UsersDataTable extends DataTable
 
             Column::make('id'),
             Column::make('profile'),
-            Column::make('firstname')->searchable(),
-            Column::make('lastname')->searchable(),
+            Column::make('firstname')->title('Fullname'),
+            // Column::make('firstname')->searchable(),
+            // Column::make('lastname')->searchable(),
             Column::make('email')->searchable(),
             Column::make('category_id')->searchable()->title('Category'),
             Column::make('subcategory_id')->searchable()->title('SubCategory'),
-            // Column::make('created_at')->title('register date'),
+            Column::make('created_at')->title('register date'),
+            Column::make('updated_at'),
+            Column::make('status'),
+
+
             // Column::make('updated_at'),
             Column::computed('action')
                 ->exportable(false)

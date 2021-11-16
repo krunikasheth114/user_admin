@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('page_title', 'Category Display')
+@section('page_title', 'Category ')
 
 @section('content')
 <div class="main-content">
@@ -48,7 +48,7 @@
     <!-- End Page-content -->
 </div>
 
-<div class="modal" id="editcategory" tabindex="-1" role="dialog">
+<div class="modal" id="editcategory" tabindex="-1" role="dialog" data-backdrop="static">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -62,7 +62,7 @@
 
                     <div class="form-group">
                         <label>Category Name :</label>
-                        <textarea class="form-control" value="" name="category_name" id="category_name" placeholder="Type your Category"></textarea>
+                        <input type="text" class="form-control" value="" name="category_name" id="category_name" placeholder="Type your Category">
                     </div>
                    
                     <input type="hidden" id="hidden_id">
@@ -87,7 +87,7 @@
 
         var conf = confirm("Are you sure to want delete??");
         if (conf == true) {
-            var id = $('.delete').attr('id');
+            var id = $(this).attr('id');
 
             $.ajax({
                 headers: {
@@ -143,11 +143,8 @@
     })
 
     $(document).on('click', '#btn', function() {
-
         var id = $('#hidden_id').val();
         var category_name = $('#category_name').val();
-
-
         $.ajax({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),

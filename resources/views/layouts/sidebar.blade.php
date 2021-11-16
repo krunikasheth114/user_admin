@@ -6,7 +6,8 @@
     <div class="left-side-logo d-block d-lg-none">
         <div class="text-center">
 
-            <a href="index.html" class="logo"><img src="{{ asset('assets/images/HRMS3.png') }}" height="50" alt="logo"></a>
+            <a href="index.html" class="logo"><img src="{{ asset('assets/images/HRMS3.png') }}" height="50"
+                    alt="logo"></a>
         </div>
     </div>
 
@@ -17,29 +18,49 @@
                 <li class="menu-title">Main</li>
 
                 <li>
-                    <a href="{{route('admin.dashboard') }}" class="waves-effect">
+                    <a href="{{ route('admin.dashboard') }}" class="waves-effect">
                         <i class="fa fa-dashboard"></i>
                         <span> Dashboard </span>
                     </a>
                 </li>
                 <li>
-                    <a href="{{route('admin.category.dataTable') }}" class="waves-effect">
+                    <a href="{{ route('admin.category.dataTable') }}" class="waves-effect">
                         <i class="fa fa-list-alt"></i>
                         <span> Category </span>
                     </a>
                 </li>
                 <li>
-                    <a href="{{  route('admin.subcategory.dataTable') }}" class="waves-effect">
+                    <a href="{{ route('admin.subcategory.dataTable') }}" class="waves-effect">
                         <i class="fa fa-list-alt"></i>
                         <span> Sub Category </span>
                     </a>
                 </li>
                 <li>
-                    <a href="{{  route('admin.getuser') }}" class="waves-effect">
+                    <a href="{{ route('admin.getuser') }}" class="waves-effect">
                         <i class="fa fa-users"></i>
                         <span> Users </span>
                     </a>
                 </li>
+                <li>
+                    <a href="{{ route('admin.document.index') }}" class="waves-effect">
+                        <i class="fa fa-file"></i>
+                        <span>User Documents </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('admin.blog.blog')}}" class="waves-effect">
+                        <i class="fa fa-list-alt"></i>
+                        <span>Blog Category</span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="{{ route('admin.blog.blog_list')}}" class="waves-effect">
+                        <i class="fa fa-list-alt"></i>
+                        <span>Blog List</span>
+                    </a>
+                </li>
+
 
             </ul>
         </div>

@@ -13,17 +13,19 @@ use App\Http\Requests\RegisterRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use App\Mail\VerifyUser;
 
 class RegisterController extends Controller
 {
 
     public function showLoginForm(Request $request)
     {
-
-        $data = Category::where('status', 1)->get(['category_name', 'id']);
-
-
-        return view('user.register', ['data' => $data]);
+        if (Auth::check()) {
+            return view('user.index');
+        } else {
+            $data = Category::where('status', 1)->get(['category_name', 'id']);
+            return view('user.register', ['data' => $data]);
+        }
     }
 
 
@@ -37,8 +39,7 @@ class RegisterController extends Controller
 
     public function store(RegisterRequest $request)
     {
-
-        $validatedData = $request->validated();
+        // $validatedData = $request->validated();
         $validatedData = new User;
         $validatedData->firstname = $request->input('firstname');
         $validatedData->lastname = $request->input('lastname');
@@ -54,16 +55,22 @@ class RegisterController extends Controller
         $id = $validatedData->id; // Get current user id
 
 
-        Mail::to($validatedData->email)->send(new Welcome($validatedData->otp));
+        Mail::to($validatedData->email)->send(new VerifyUser($validatedData->otp));
         return response()->json(['status' => true, 'data' => $validatedData, 'message' => "Mail sent", 'id' => $id]);
     }
 
-    public function showotp(Request $request, $id)
+    public function showotpRegister(Request $request, $id)
     {
         $user = User::find($id);
-        $user->otp= random_int(1000, 9999);
+        return view('user.verify_user', compact('user'));
+    }
+
+    public function showotpLogin(Request $request, $id)
+    {
+        $user = User::find($id);
+        $user->otp = random_int(1000, 9999);
         $user->update();
-       
+
         Mail::to($user->email)->send(new Welcome($user->otp));
         return view('user.verify_user', compact('user'));
     }
@@ -71,9 +78,9 @@ class RegisterController extends Controller
     {
         $data = User::find($request->id);
         $otp = $data->otp;
-
         $get_user_otp = $request->input('otp');
-        if ($otp == $get_user_otp) {
+
+        if ($otp === (int)$get_user_otp) {
             $data->is_verify = '1';
             $data->update();
             return response()->json(['status' => true, 'data' => $data, 'message' => 'Account verified']);
@@ -81,5 +88,10 @@ class RegisterController extends Controller
             return response()->json(['status' => false, 'message' => 'Please Enter Correct Otp']);
         }
     }
-    
+
+    public function home()
+    {
+        $blog = \App\Models\Blog::get();
+        return view('user.index',compact('blog'));
+    }
 }

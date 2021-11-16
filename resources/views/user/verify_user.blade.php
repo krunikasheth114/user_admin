@@ -54,7 +54,7 @@
                                                     class="col-md-4 col-form-label text-md-right">{{ __('Enter Otp') }}</label>
 
                                                 <div class="col-md-6">
-                                                    <input id="otp" type="otp" name="otp" class="form-control "
+                                                    <input id="otp" type="number" name="otp" class="form-control "
                                                         autocomplete="otp" autofocus>
                                                 </div>
                                             </div>

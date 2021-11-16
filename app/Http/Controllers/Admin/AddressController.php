@@ -54,7 +54,6 @@ class AddressController extends Controller
      */
     public function show($id)
     {
-
         $userdata = User::find($id);
         $data = Country::get(['name', 'id']);
         $category = Category::get(['category_name', 'id']);
@@ -72,11 +71,14 @@ class AddressController extends Controller
     public function edit($id)
     {
         $userdata = User::find($id);
+
         $data = Country::get(['name', 'id']);
+        $state = State::get(['name', 'id']);
+        $city = City::get(['name', 'id']);
         $category = Category::get(['category_name', 'id']);
         $subcategory = Subcategory::get(['subcategory_name', 'id']);
         // dd($category);
-        return view('admin.users.address', compact('data', 'category', 'userdata', 'subcategory'));
+        return view('admin.users.address', compact('data', 'state', 'city', 'category', 'userdata', 'subcategory'));
     }
 
     /**
@@ -86,34 +88,58 @@ class AddressController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(AddressRequest $request, $id)
+    public function update(Request $request, $id)
     {
-        $data = $request->validated();
+        // $id = $request->id;
+        $request->validate([
+            'firstname' => 'required',
+            'lastname' => 'required',
+            'email' => 'required|unique:users,email,' . $id,
+            'profile' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'category' => 'required',
+            'subcategory' => 'required',
+            // 'address' => 'required'
+        ]);
         $data = User::find($id);
+
         $data->firstname = $request->input('firstname');
+
         $data->lastname = $request->input('lastname');
         $data->email = $request->input('email');
         $data->category_id = $request->input('category');
         $data->subcategory_id = $request->input('subcategory');
-        if ($profile = $request->file('profile')) {
-            $destinationPath = 'images/';
-            $profileImage = date('YmdHis') . "." . $profile->getClientOriginalExtension();
+
+        if (isset($request->profile)) {
+            $profile = $request->profile;
+            $destinationPath = public_path('images/');
+            if (!empty($data->profile)) {
+                $file_old = $destinationPath . $data->profile;
+                unlink($file_old);
+            }
+            $profileImage = date('YmdHis') . "." . $profile->extension();
             $profile->move($destinationPath, $profileImage);
-
-            $data->profile = "$profileImage";
+            $data->profile = $profileImage;
         }
+
         $data->update();
-
-        if (!empty($request->address)) {
-            foreach ($request->address as $collec) {
-
-                UserAddress::create([
-                    'user_id' => $id,
-                    'address' => $collec['address'],
-                    'country' => $collec['country'],
-                    'state' => $collec['state'],
-                    'city' => $collec['city'],
-                ]);
+        // dd(isset($request->address) && is_array($request->address));
+        if (isset($request->address)) {
+            $addresss = UserAddress::where('user_id', $id)->get();
+            if (!empty($addresss)) {
+                foreach ($addresss as $a) {
+                    $a->delete();
+                }
+            }
+            if (is_array($request->address)) {
+                foreach ($request->address as $collec) {
+                    UserAddress::create([
+                        'user_id' => $id,
+                        'address' => $collec['address'],
+                        'country' => $collec['country'],
+                        'state' => $collec['state'],
+                        'city' => $collec['city'],
+                    ]);
+                }
             }
         }
         $category = Category::get(['category_name', 'id']);
@@ -121,7 +147,7 @@ class AddressController extends Controller
         $subcategory = Subcategory::get(['subcategory_name', 'id']);
         $userdata  = $data;
         $data = Country::get(['name', 'id']);
-        return view('admin.users.address', compact('userdata', 'category', 'data', 'subcategory'));
+        return redirect()->route('admin.address.edit', $id);
     }
 
     /**

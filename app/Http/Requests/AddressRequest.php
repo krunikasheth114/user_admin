@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class AddressRequest extends FormRequest
 {
@@ -23,14 +24,24 @@ class AddressRequest extends FormRequest
      */
     public function rules()
     {
+
         return [
             'firstname' => 'required',
             'lastname' => 'required',
-            'email' => 'required',
+            'email' => Rule::unique('users', 'email')->ignore($this->route('admin.address.edit'))->where(function ($query) {
+                return $query->where('id', $this->id)->where('deleted_at', NULL);
+            }),
             'category' => 'required',
             'subcategory' => 'required',
-            'address' => 'required|array'
+           
 
+        ];
+    }
+    public function messages()
+    {
+        return [
+            'email'=>'This email is alreay taken.',
+            'required' => 'please Add At least one address .',
         ];
     }
 }

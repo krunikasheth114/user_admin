@@ -22,20 +22,38 @@ class SubCategoryDataTable extends DataTable
         return datatables()
             ->eloquent($query)
             ->editcolumn('category_id', function ($data) {
-                return $data->getCategory['category_name'];
+                return $data->getCategory['category_name'] ?? "no category found";
             })
+            ->editcolumn('status', function ($data) {
+                $inactive = "";
+                if ($data->status == 1) {
+                    $inactive .= '<span class="btn btn-primary">Active</span>';
+                } else {
+                    $inactive .= '<span class="btn btn-danger">InActive</span>';
+                }
+                return $inactive;
+            })
+            ->editColumn('created_at', function ($request) {
+                return $request->created_at->format('Y-m-d H:i:s'); // human readable format
+            })
+            ->editColumn('updated_at', function ($request) {
+                return $request->created_at->format('Y-m-d H:i:s'); // human readable format
+            })
+
 
             ->addColumn('action', function ($data) {
                 $inactive = "";
                 if ($data->status == 1) {
-                    $inactive .= '<button type="button" class="btn btn-primary changestatus" status ="0" id="' . $data->id . '">Inactive</button>';
+                    $inactive .= '<button type="button" class="btn btn-primary changestatus" status ="0" id="' . $data->id . '"><i class="fa fa-lock"></i></button>';
                 } else {
-                    $inactive .= '<button type="button" class="btn btn-success changestatus" status ="1" id="' . $data->id . '">Active</button>';
+                    $inactive .= '<button type="button" class="btn btn-success changestatus" status ="1" id="' . $data->id . '"><i class="fa fa-unlock"></i></button>';
                 }
-                $inactive .=  '<button type="button" class="btn btn-warning m-1 edit" data-toggle="modal" data-target="#editsubcategory" id="' . $data->id . '">Edit</button>';
-                $inactive .=  '<button type="button" class="btn btn-danger m-1 delete" id="' . $data->id . '">Delete</button>';
+                $inactive .=  '<button type="button" class="btn btn-warning m-1 edit" data-toggle="modal" data-target="#editsubcategory" id="' . $data->id . '"><i class="fa fa-edit"></i></button>';
+                $inactive .=  '<button type="button" class="btn btn-danger m-1 delete" id="' . $data->id . '"><i class="fa fa-trash"></i></button>';
                 return $inactive;
-            });
+            })
+            ->rawColumns(['action', 'status'])
+            ->addIndexColumn();
     }
 
     /**
@@ -83,7 +101,9 @@ class SubCategoryDataTable extends DataTable
             Column::make('id'),
             Column::make('subcategory_name'),
             Column::make('category_id')->title('Category'),
-            Column::make('created_at')->title('Register date'),
+            Column::make('created_at'),
+            Column::make('updated_at'),
+            Column::make('status'),
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)

@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Subcategory extends Model
 {
     use HasFactory;
-    use SoftDeletes;
+
     protected $table = 'sub_categories';
 
     protected $fillable = [
@@ -23,8 +23,8 @@ class Subcategory extends Model
         'updated_at',
     ];
 
-    public function getCategory(){
-        return $this->hasOne(Category::class, 'id','category_id');
+    public function getCategory()
+    {
+        return $this->hasOne(Category::class, 'id', 'category_id');
     }
 }
-

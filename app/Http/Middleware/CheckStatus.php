@@ -17,16 +17,17 @@ class CheckStatus
      */
     public function handle(Request $request, Closure $next)
     {
-
         if (Auth::guard('web')->user()) {
-
             if (Auth::user()->status == 0) {
-
-                return redirect()->route('user.login')->with('danger', 'Please Wait for admin to activate your account');
+                \Auth::logout();    
+                return redirect()->route('user.login')->with('danger','
+                Accouts has been blocked contact to admin!');
             } elseif (Auth::user()->is_verify == 0) {
+                // dd('dsfsdfdsf');
                 return redirect()->route('user.verify_user', Auth::user()->id)->with('danger', 'Otp sent On Your Registerd Email');
+            } else {
+                return $next($request);
             }
         }
-        return $next($request);
     }
 }

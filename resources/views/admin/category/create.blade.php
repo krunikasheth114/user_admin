@@ -1,4 +1,4 @@
-<div class="modal fade" id="category_add_modal" role="dialog" aria-modal="true" aria-labelledby="category_add_modal">
+<div class="modal fade" id="category_add_modal" role="dialog" aria-modal="true" data-backdrop="static"  aria-labelledby="category_add_modal">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -12,17 +12,19 @@
                     @csrf
                     <div class="form-group">
                         <label>Category Name :</label>
-                        <textarea class="form-control" name="category_name" id="category_name" placeholder="Type your Category"></textarea>
+                        <input type="text" class="form-control" name="category_name" id="category_name"
+                            placeholder="Type your Category">
                     </div>
                     @if ($errors->has('category_name'))
-                    <span class="invalid-feedback d-block" role="alert">
-                        <strong>{{ $errors->first('category_name') }}</strong>
-                    </span>
+                        <span class="invalid-feedback d-block" role="alert">
+                            <strong>{{ $errors->first('category_name') }}</strong>
+                        </span>
                     @endif
 
                     <div class="form-group">
                         <div>
-                            <button type="submit" id="submit" name="submit" value="submit" class="btn btn-primary">Add</button>
+                            <button type="submit" id="submit" name="submit" value="submit"
+                                class="btn btn-primary">Add</button>
                         </div>
                     </div>
                 </form>
@@ -33,7 +35,6 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"></script>
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 <script>
@@ -57,7 +58,7 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
                 },
 
-                url: "{{ route('admin.category.store')}}",
+                url: "{{ route('admin.category.store') }}",
                 method: "POST",
                 data: new FormData(form),
                 contentType: false,

@@ -1,4 +1,4 @@
-<div class="modal fade" id="subcategory_add_modal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-modal="true" data-backdrop="static" data-keyboard="false" aria-modal="true" aria-labelledby="category_add_modal" aria-hidden="true">
+<div class="modal fade" id="subcategory_add_modal" tabindex="-1" data-backdrop="static" role="dialog" data-backdrop="static" data-keyboard="false" aria-modal="true" data-backdrop="static" data-keyboard="false" aria-modal="true" aria-labelledby="category_add_modal" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -22,7 +22,7 @@
                     </div>
                     <div class="form-group">
                         <label>SubCategory Name :</label>
-                        <textarea class="form-control" name="subcategory_name" id="subcategory_name" placeholder="Type your SubCategory"></textarea>
+                        <input type="text" class="form-control" name="subcategory_name" id="subcategory_name" placeholder="Type your SubCategory">
                     </div>
 
                     <div class="form-group">

@@ -25,9 +25,8 @@ class DocumentRequest extends FormRequest
     {
         return [
             'doc_name' => 'required|alpha',
-            'doc_num' => 'required|min:2|numeric',
-            'image' => 'required|mimes:pdf|max:10000',
-            
+            'doc_num' => 'required|numeric',
+            'document.*' => 'required|file|mimes:pdf|max:2048',
         ];
     }
 }

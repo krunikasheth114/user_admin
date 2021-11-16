@@ -38,7 +38,7 @@ class LoginController extends Controller
         Auth::guard('admin')->attempt(['email' => $request->email, 'password' => $request->password]);
         return $this->guard('admin')->attempt(
                 $this->credentials($request),
-                $request->filled('remember')
+              
             );
         if (Auth::guard('admin')->check()) {
 
@@ -47,10 +47,7 @@ class LoginController extends Controller
             return redirect()->route('admin.login');
         }
 
-        // return $this->guard()->attempt(
-        //     $this->credentials($request),
-        //     $request->filled('remember')
-        // );
+        
     }
 
     public function logout(Request $request)

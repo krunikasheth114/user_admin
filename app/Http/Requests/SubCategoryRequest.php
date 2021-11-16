@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class SubCategoryRequest extends FormRequest
 {
@@ -24,8 +25,9 @@ class SubCategoryRequest extends FormRequest
     public function rules()
     {
         return [
-            // 'category_name' => 'required',
-            'subcategory_name'=>'required',
+            'subcategory_name' => Rule::unique('sub_categories', 'subcategory_name')->where(function ($query) {
+                return $query->where('category_id', $this->category)->where('deleted_at', NULL);
+            }),
         ];
     }
 }

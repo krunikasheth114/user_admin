@@ -1,4 +1,4 @@
-<div class="modal" tabindex="-1" role="dialog" id="adddoc">
+<div class="modal" tabindex="-1" role="dialog" id="adddoc" data-backdrop="static">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -7,52 +7,48 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            
+
             <div class="modal-body">
-                {{ Form::open(['class' => 'doc', 'method' => 'POST', 'enctype' => 'multipart/form-data']) }}
-                {{ Form::token() }}
+                {!! Form::open(['class' => 'doc', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
+                {!! Form::token() !!}
                 <div class="form-group row">
                     <div class="col-4">
-                        {{ Form::label('documnet', 'Document Name:') }}
+                        {!! Form::label('documnet', 'Document Name:') !!}
                     </div>
                     <div class="col-6">
-                        {!! Form::text('Document', old('document'), ['name' => 'doc_name', 'class' => 'form-control']) !!}
+                        {!! Form::text('Document', old('document'), ['name' => 'doc_name', 'class' => 'form-control', 'placeholder' => 'Enter Document name']) !!}
                     </div>
                 </div>
                 <div class="form-group row">
                     <div class="col-4">
-                        {{ Form::label('documnet number', 'Document Number:') }}
+                        {!! Form::label('documnet number', 'Document Number:') !!}
                     </div>
                     <div class="col-6">
-                        {!! Form::text('Document number', old('documnet number'), ['name' => 'doc_num', 'document', 'class' => 'form-control']) !!}
+                        {!! Form::text('Document number', old('documnet number'), ['name' => 'doc_num', 'document', 'class' => 'form-control', 'placeholder' => 'Enter Document number']) !!}
                     </div>
                 </div>
                 <div class="form-group row">
                     <div class="col-4">
-                        {{ Form::label('documnet image', 'Document image:') }}
+                        {!! Form::label('documnet image', 'Document image:') !!}
                     </div>
                     <div class="col-6">
-                        {!! Form::file('doc_image', ['name' => 'image[0]', 'multiple' => true, 'class' => 'form-control','id'=>'image','required']) !!}
+                        {!! Form::file('document', ['name' => 'document[]', 'multiple' => true, 'class' => 'form-control', 'id' => 'document', 'required']) !!}
                     </div>
-                    <div class="col-2">
+                    {{-- <div class="col-2">
                         {!! Form::button('<i class="fa fa-plus"></i>', ['class' => 'btn btn-danger add_more']) !!}
-                    </div>
+                    </div> --}}
                 </div>
                 <div class="form-group row " id="append">
-
                 </div>
                 <div class="form-group row">
-                    <div class="col-4">
-
-                    </div>
+                    <div class="col-4"></div>
                     <div class="col-6">
-                        {{ Form::hidden('user_id', 'secret', ['id' => 'user_id']) }}
+                        {!! Form::hidden('user_id', 'secret', ['id' => 'user_id']) !!}
                         {!! Form::submit('Save', ['class' => 'btn btn-primary', 'name' => 'submit', 'type' => 'submit']) !!}
                     </div>
                 </div>
-                {{ Form::close() }}
+                {!! Form::close() !!}
             </div>
-
         </div>
     </div>
 </div>
@@ -61,33 +57,33 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 <script>
-    var i = 1;
-    $("body").on("click", ".add_more", function() {
-        my_addmore_count = $('body').find('.my_add_more').length;
-        i = my_addmore_count + 1;
-        var maxfield = 2;
+    // var i = 1;
+    // $("body").on("click", ".add_more", function() {
+    //     my_addmore_count = $('body').find('.my_add_more').length;
+    //     i = my_addmore_count + 1;
+    //     var maxfield = 2;
 
-        if (i >= maxfield) {
-            alert("you can not add more than two document");
-            return false;
-        }
+    //     if (i >= maxfield) {
+    //         alert("you can not add more than two document");
+    //         return false;
+    //     }
 
-        var html = `<div class="form-group row my_add_more">
-                    <div class="col-4">
-                        {{ Form::label('documnet image', 'Document image:') }}
-                    </div>
-                    <div class="col-6">
-                        {!! Form::file('doc_image', ['name' => 'image[` + i + `]', 'multiple' => true, 'class' => 'form-control','id'=>'image','required']) !!}
-                    </div>
-                        <div class="col-2">
-                            {!! Form::button('<i class="fa fa-close"></i>', ['class' => 'btn btn-danger delete_add_more']) !!}     
-                        </div>
-                </div>`;
-        $("#append").append(html);
-    });
-    $("body").on("click", ".delete_add_more", function() {
-        $(this).parent().parent().remove();
-    });
+    //     var html = `<div class="form-group row my_add_more">
+    //                 <div class="col-4">
+    //                     {{ Form::label('documnet image', 'Document image:') }}
+    //                 </div>
+    //                 <div class="col-6">
+    //                     {!! Form::file('doc_image', ['name' => 'document[` + i + `]', 'multiple' => true, 'class' => 'form-control', 'id' => 'image', 'required']) !!}
+    //                 </div>
+    //                     <div class="col-2">
+    //                         {!! Form::button('<i class="fa fa-close"></i>', ['class' => 'btn btn-danger delete_add_more']) !!}     
+    //                     </div>
+    //             </div>`;
+    //     $("#append").append(html);
+    // });
+    // $("body").on("click", ".delete_add_more", function() {
+    //     $(this).parent().parent().remove();
+    // });
 
     $("body").on("click", ".adddoc", function() {
         var Id = $(this).attr('id');
@@ -102,7 +98,7 @@
                 required: true,
                 number: true,
             },
-            'image[]':{
+            'document[]': {
                 required: true,
             }
 
@@ -115,12 +111,9 @@
                 required: "This field is required",
                 number: "Only Digits Are Allowed",
             },
-            'image[]':{
+            'document[]': {
                 required: "This field is required",
             }
-
-
-
         },
 
         submitHandler: function(form) {
@@ -128,7 +121,7 @@
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
                 },
-                url: "{{ route('admin.createDoc') }}",
+                url: "{{ route('admin.document.store') }}",
                 method: "POST",
                 data: new FormData(form),
                 contentType: false,
@@ -140,7 +133,12 @@
                         alert(data.message);
                         $("#adddoc").modal('hide')
                         window.LaravelDataTables["users-table"].draw();
+                    } else {
+                        alert(data.message);
+                        $("#adddoc").modal('hide')
+                        window.LaravelDataTables["users-table"].draw();
                     }
+                    $(".doc")[0].reset();
                 },
                 error: function(error) {
                     var i;
@@ -152,7 +150,7 @@
             });
 
         },
-       
+
 
     })
 </script>

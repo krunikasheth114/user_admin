@@ -21,7 +21,7 @@ class CategoryController extends Controller
     }
     public function store(CategoryRequest $request)
     {
-        
+
         $validatedData = $request->validated();
         $validatedData = new Category;
         $validatedData->category_name = $request->input('category_name');
@@ -44,9 +44,13 @@ class CategoryController extends Controller
         return response()->json(['status' => true, 'data' => $data]);;
     }
 
-    public function updatecategory(CategoryRequest $request)
+    public function updatecategory(Request $request)
     {
-        $data = $request->validated();
+        $id = $request->id;
+        // dd($id);
+        $request->validate([
+            'category_name' => 'required|unique:categories,category_name,' . $id,
+        ]);
         $data = Category::find($request->id);
         $data->category_name = $request->input('category_name');
 
@@ -56,10 +60,7 @@ class CategoryController extends Controller
 
     public function deletecategory(Request $request)
     {
-
-
         $data = Category::find($request->id);
-
         $data->delete();
         return response()->json(['status' => true, 'message' => "Delete Successfully"]);
     }

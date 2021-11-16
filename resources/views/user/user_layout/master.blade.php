@@ -2,89 +2,75 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
-    <title>@yield('page_title') | User </title>
-    <meta content="Admin Dashboard" name="description" />
-    <meta content="ThemeDesign" name="author" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="csrf-token" content={{csrf_token()}}>
 
-    <link rel="shortcut icon" href="#">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="TemplateMo">
+    <link
+        href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i&display=swap"
+        rel="stylesheet">
 
-    <!--Morris Chart CSS -->
-    <link rel="stylesheet" href="{{ asset('assets/plugins/morris/morris.css') }}">
+    <title>Stand CSS Blog by TemplateMo</title>
 
-    <link href="{{ asset('assets/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css">
-    <link href="{{ asset('assets/css/icons.css')}}" rel="stylesheet" type="text/css">
-    <link href="{{ asset('assets/css/style.css')}}" rel="stylesheet" type="text/css">
-    <link href="{{ asset('assets/plugins/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('assets/plugins/datatables/buttons.bootstrap4.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('assets/plugins/datatables/responsive.bootstrap4.min.css') }}" rel="stylesheet" type="text/css" />
+    <!-- Bootstrap core CSS -->
+    <link href="{{ asset('blog/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
 
 
+    <!-- Additional CSS Files -->
+    <link rel="stylesheet" href="{{ asset('blog/assets/css/fontawesome.css') }}">
+    <link rel="stylesheet" href="{{ asset('blog/assets/css/templatemo-stand-blog.css') }}">
+    <link rel="stylesheet" href="{{ asset('blog/assets/css/owl.css') }}">
+    <!--
+    
+    TemplateMo 551 Stand Blog
+    
+    https://templatemo.com/tm-551-stand-blog
+    
+    -->
 </head>
 
 
-<body class="fixed-left">
+<body>
+    @include('user.user_layout.header')
 
-    <div id="wrapper">
-
-    
-
-        <div class="content-page">
-
-            <div class="content">
-
-                @include('user.user_layout.header')
-
-                <div class="page-content-wrapper ">
-
-                    <div class="container-fluid">
-
-                        <div class="row">
-                            <div class="col-sm-12">
-                                @yield('page_head')
-
-                            </div>
-                        </div>
-
-                        @yield('content')
-
-                    </div>
+    <div class="main-banner header-text">
+        <div class="container-fluid">
+            <div class="owl-banner owl-carousel">
+                <div class="item">
 
                 </div>
-
             </div>
-            
         </div>
-        <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
-        <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
-        <script src="{{ asset('assets/js/modernizr.min.js') }}"></script>
-        <script src="{{ asset('assets/js/detect.js') }}"></script>
-        <script src="{{ asset('assets/js/fastclick.js') }}"></script>
-        <script src="{{ asset('assets/js/jquery.slimscroll.js') }}"></script>
-        <script src="{{ asset('assets/js/jquery.blockUI.js') }}"></script>
-        <script src="{{ asset('assets/js/waves.js') }}"></script>
-        <script src="{{ asset('assets/js/jquery.nicescroll.js') }}"></script>
-        <script src="{{ asset('assets/js/jquery.scrollTo.min.js') }}"></script>
+    </div>
+    <section class="blog-posts">
+        <div class="container">
+            @yield('content')
+        </div>
+    </section>
+    <!-- Bootstrap core JavaScript -->
+    <script src="{{ asset('blog/vendor/jquery/jquery.min.js') }}"></script>
+    <script src="{{ asset('blog/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 
-        <!-- Morris Chart -->
-        <script src="{{ asset('assets/plugins/morris/morris.min.js') }}"></script>
-        <script src="{{ asset('assets/plugins/raphael/raphael-min.js') }}"></script>
+    <!-- Additional Scripts -->
+    <script src="{{ asset('blog/assets/js/custom.js') }}"></script>
+    <script src="{{ asset('blog/assets/js/owl.js') }}"></script>
+    <script src="{{ asset('blog/assets/js/slick.js') }}"></script>
+    <script src="{{ asset('blog/assets/js/isotope.js') }}"></script>
+    <script src="{{ asset('blog/assets/js/accordions.js') }}"></script>
 
-        <!-- dashboard -->
-        <script src="{{ asset('assets/pages/dashboard.js') }}"></script>
+    <script language="text/Javascript">
+        cleared[0] = cleared[1] = cleared[2] = 0; //set a cleared flag for each field
+        function clearField(t) { //declaring the array outside of the
+            if (!cleared[t.id]) { // function makes it static and global
+                cleared[t.id] = 1; // you could use true and false, but that's more typing
+                t.value = ''; // with more chance of typos
+                t.style.color = '#fff';
+            }
+        }
+    </script>
+    @stack('page_scripts')
 
-        <!-- App js -->
-        <script src="{{ asset('assets/js/app.js') }}"></script>
-
-        <script src="{{ asset('assets/plugins/parsleyjs/parsley.min.js') }}"></script>
-
-        <script src="{{ asset('assets/plugins/datatables/jquery.dataTables.min.js') }}"></script>
-        <script src="{{ asset('assets/plugins/datatables/dataTables.bootstrap4.min.js')}}"></script>
-        @stack('page_scripts')
 </body>
 
 </html>

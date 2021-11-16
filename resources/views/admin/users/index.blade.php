@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('page_title', 'Registered User Display')
+@section('page_title', 'Registered User ')
 
 @section('content')
     <div class="main-content">
@@ -46,7 +46,7 @@
     </div>
     @include('admin.users.create_doc');
 
-    <div class="modal" tabindex="-1" role="dialog" id="updateuser">
+    <div class="modal" tabindex="-1" role="dialog" id="updateuser" data-backdrop="static">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -72,19 +72,21 @@
                                 <label for="firstname">{{ __('Firstname') }} :</label>
                                 <input id="firstname" type="firstname"
                                     class="form-control @error('firstname') is-invalid @enderror" name="firstname" required
-                                    autocomplete="firstname" autofocus>
+                                    autocomplete="firstname" placeholder="Enter Firstname" autofocus>
                             </div>
                             <div class="form-group">
                                 <label for="lastname">{{ __('Lastname') }} :</label>
                                 <input id="lastname" type="lastname"
                                     class="form-control @error('lastname') is-invalid @enderror" name="lastname"
-                                    value="{{ old('lastname') }}" required autocomplete="lastname" autofocus>
+                                    value="{{ old('lastname') }}" required autocomplete="lastname"
+                                    placeholder="Enter Lastname" autofocus>
                             </div>
                             <div class="form-group ">
                                 <label for="email">{{ __('Email') }} :</label>
 
                                 <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
-                                    name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+                                    name="email" value="{{ old('email') }}" required autocomplete="email"
+                                    placeholder="Enter Email" autofocus>
                             </div>
                             <div class="form-group">
                                 <label for="category">{{ __('Category') }} :</label>
@@ -121,14 +123,54 @@
     @push('page_scripts')
         {!! $dataTable->scripts() !!}
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"></script>
-
         <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 
 
         <script>
             $('#update_form').validate({
+                rules: {
+                    firstname: {
+                        required: true,
+                    },
+                    lastname: {
+                        required: true,
+                    },
+                    email: {
+                        required: true,
+                    },
+                    category: {
+                        required: true,
+                    },
+                    subcategory: {
+                        required: true,
+                    },
+                    password: {
+                        required: true,
+                    },
 
+                },
+                messages: {
+                    firstname: {
+                        required: "Firstname is required ",
+                    },
+                    lastname: {
+                        required: "Lastname is required",
+                    },
+                    email: {
+                        required: "Email is required",
+                    },
+                    category: {
+                        required: "Category is required",
+                    },
+                    subcategory: {
+                        required: "SubCategory is required",
+                    },
+                    password: {
+                        required: "Password is required",
+                    },
+
+                },
                 submitHandler: function(form) {
 
                     $.ajax({
@@ -148,12 +190,15 @@
                             $("#updateuser").modal('hide')
                             window.LaravelDataTables["users-table"].draw();
                         },
-                        // error: function(error){
-                        // var i;
-                        // var res = error.responseJSON.errors;
-                        // $.each(res, function(key, value){
-                        // toastr.error(value);
-                        // });
+                        error: function(error) {
+                            console.log(error.responseJSON.errors);
+                            var i;
+                            var res = error.responseJSON.errors;
+                            $.each(res, function(key, value) {
+                                alert.error(value);
+                            });
+
+                        }
 
                     })
                 },
@@ -178,16 +223,31 @@
                         $('#firstname').val(data.data.user.firstname);
                         $('#lastname').val(data.data.user.lastname);
                         $('#email').val(data.data.user.email);
+                        $("#category").html('');
+
                         $.each(data.data.Category, function(key, value) {
-                            $("#category").html('<option value="' + value.id + '">' + value
+                            selectdata = (value.id == data.data.user.category_id) ? 'selected' : '';
+
+                            $("#category").append('<option value="' + value.id + '" ' + selectdata +
+                                '>' + value
                                 .category_name + '</option>');
                         });
+                        $("#subcategory ").html('');
                         $.each(data.data.subcategory, function(key, value) {
-                            $("#subcategory").html('<option value="' + value.id + '">' + value
+                            selectdata = (value.id == data.data.user.subcategory_id) ? 'selected' :
+                                '';
+                            $("#subcategory").append('<option value="' + value.id + '" ' +
+                                selectdata + '>' + value
                                 .subcategory_name + '</option>');
                         })
-                        $('#profile').html('<img src="' + /images/ + data.data.user.profile +
-                            '" height="50px" width="50px" />');
+                        if (data.data.user.profile == '') {
+                            $('#profile').html(
+                                '<img src="images/default/default.jpg" height="50px" width="50px" />');
+                        } else {
+                            $('#profile').html('<img src="' + /images/ + data.data.user.profile +
+                                '" height="50px" width="50px" />');
+                        }
+
 
                     }
 
@@ -221,6 +281,7 @@
                 })
 
             });
+
             $(document).on('click', '.delete', function() {
 
                 var conf = confirm("Are you sure to want delete??");
@@ -249,6 +310,30 @@
 
                     })
                 }
+            });
+            $('body').on('change', '#category', function() {
+                var id = $(this).val();
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                    },
+                    url: "{{ route('admin.getsub') }}",
+                    method: "post",
+                    data: {
+                        id: id,
+                    },
+                    dataType: 'JSON',
+                    success: function(data) {
+                        $("#subcategory").html('');
+                        if (data.status == true) {
+                            $.each(data.data, function(key, value) {
+                                $("#subcategory").append('<option value="' + value.id + '">' + value
+                                    .subcategory_name + '</option>');
+                            });
+                        }
+                    }
+                })
+
             })
         </script>
     @endpush

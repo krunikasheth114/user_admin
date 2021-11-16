@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('page_title', 'Sub Category Display')
+@section('page_title', 'Sub Category ')
 
 @section('content')
 <div class="main-content">
@@ -48,7 +48,7 @@
     <!-- End Page-content -->
 </div>
 
-<div class="modal" id="editsubcategory" tabindex="-1" role="dialog">
+<div class="modal" id="editsubcategory" tabindex="-1" role="dialog" data-backdrop="static">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -72,7 +72,7 @@
                     </div>
                     <div class="form-group">
                         <label>Sub Category Name :</label>
-                        <textarea class="form-control" name="subcategory_name" id="subcategory_name" placeholder="Type your SubCategory"></textarea>
+                        <input type="text" class="form-control" name="subcategory_name" id="subcategory_name" placeholder="Type your SubCategory">
                     </div>
                     <input type="hidden" id="hidden_id">
                 </form>
@@ -142,7 +142,6 @@
             }
 
         })
-
     })
 
     $(document).on('click', '#btn', function() {
@@ -186,7 +185,7 @@
 
         var conf = confirm("Are you sure to want delete??");
         if (conf == true) {
-            var id = $('.delete').attr('id');
+            var id = $(this).attr('id');
 
             $.ajax({
                 headers: {

@@ -26,11 +26,11 @@ class RegisterRequest extends FormRequest
         return [
             'firstname' => 'required',
             'lastname' => 'required|min:2|max:50',
-            'email' => 'required|email|unique:users',
+            'email' => 'required|email|unique:users,email,NULL,id,deleted_at,NULL',
             'category' => 'required',
             'subcategory' => 'required',
-            'password' => 'required|max:6',
-            'profile' => 'required',
+            'password' => 'required|max:8',
+            'profile' =>   'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ];
         
     }

@@ -21,21 +21,37 @@ class CategoryDataTable extends DataTable
     {
         return datatables()
             ->eloquent($query)
+            ->editcolumn('status', function ($data) {
+                $inactive = "";
+                if ($data->status == 1) {
+                    $inactive .= '<span class="btn btn-primary">Active</span>';
+                } else {
+                    $inactive .= '<span class="btn btn-danger">InActive</span>';
+                }
+                return $inactive;
+            })
+            ->editColumn('created_at', function ($request) {
+                return $request->created_at->format('Y-m-d H:i:s'); // human readable format
+            })
+            ->editColumn('updated_at', function ($request) {
+                return $request->created_at->format('Y-m-d H:i:s'); // human readable format
+            })
+
             ->addColumn('action', function ($data) {
                 $inactive = "";
                 if ($data->status == 1) {
-                    $inactive .= '<button type="button" class="btn btn-primary m-1 changestatus" status ="0" id="' . $data->id . '">Inactive</button>';
+                    $inactive .= '<button type="button" class="btn btn-primary m-1 changestatus" status ="0" id="' . $data->id . '"><i class="fa fa-lock"></i></button>';
                 } else {
-                    $inactive .= '<button type="button" class="btn btn-success   m-1 changestatus" status ="1" id="' . $data->id . '">Active</button>';
+                    $inactive .= '<button type="button" class="btn btn-success   m-1 changestatus" status ="1" id="' . $data->id . '"><i class="fa fa-unlock"></i></button>';
                 }
-                $inactive .=  '<button type="button" class="btn btn-warning m-1  edit " data-toggle="modal" data-target="#editcategory" id="' . $data->id . '">Edit</button>';
+                $inactive .=  '<button type="button" class="btn btn-warning m-1  edit " data-toggle="modal" data-target="#editcategory" id="' . $data->id . '"><i class="fa fa-edit"></i></button>';
 
-                $inactive .=  '<button type="button" class="btn btn-danger m-1 delete" id="' . $data->id . '">Delete</button>';
-                
+                $inactive .=  '<button type="button" class="btn btn-danger m-1 delete" id="' . $data->id . '"><i class="fa fa-trash"></i></button>';
+
                 return $inactive;
-               
-            });
-            
+            })
+            ->rawColumns(['action', 'status'])
+            ->addIndexColumn();
     }
 
     /**
@@ -81,8 +97,9 @@ class CategoryDataTable extends DataTable
         return [
             Column::make('id'),
             Column::make('category_name'),
-            Column::make('created_at')->title('register date'),
-            // Column::make('updated_at'),
+            Column::make('status'),
+            Column::make('created_at'),
+            Column::make('updated_at'),
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)
@@ -102,5 +119,3 @@ class CategoryDataTable extends DataTable
         return 'Category_' . date('YmdHis');
     }
 }
-
-

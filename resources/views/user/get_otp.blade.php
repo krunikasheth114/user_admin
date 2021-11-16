@@ -53,7 +53,7 @@
                                                 <label for="otp"
                                                     class="col-md-4 col-form-label text-md-right">{{ __('Enter otp ') }}</label>
                                                 <div class="col-md-6">
-                                                    <input id="otp" type="otp" name="otp" class="form-control "
+                                                    <input id="otp" type="number" name="otp" class="form-control "
                                                         Required autocomplete="otp" autofocus>
                                                 </div>
                                             </div>
@@ -109,8 +109,6 @@
                 otp: {
                     required: true,
                 },
-              
-
             },
             messages: {
                 otp: {
@@ -136,10 +134,8 @@
                         
                         if (data.status == true) {
                             alert(data.message);
-
-
                         }
-                        window.location.href ='reset_pass' + '/'+data.data.id;
+                        window.location.href ='/reset_pass' + '/'+data.data.id;
 
                     }
 

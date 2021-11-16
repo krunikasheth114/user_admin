@@ -21,6 +21,7 @@ class UserController extends Controller
   public function dataTable(UsersDataTable $datatable)
   {
 
+
     return $datatable->render('admin.users.index');
   }
   public function gets(Request $request)
@@ -42,24 +43,30 @@ class UserController extends Controller
 
   public function update(Request $request)
   {
-
+    $id = $request->id;
     $request->validate([
       'firstname' => 'required',
       'lastname' => 'required',
-      'email' => 'required'
+      'email' => 'required|unique:users,email,' . $id,
+      'profile' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
     ]);
     $data = User::find($request->id);
+
     $data->firstname = $request->input('firstname');
     $data->lastname = $request->input('lastname');
     $data->email = $request->input('email');
     $data->category_id = $request->input('category');
     $data->subcategory_id = $request->input('subcategory');
-    if ($profile = $request->file('profile')) {
-      $destinationPath = 'images/';
-      $profileImage = date('YmdHis') . "." . $profile->getClientOriginalExtension();
+    if (isset($request->profile)) {
+      $profile = $request->profile;
+      $destinationPath = public_path('images/');
+      if (!empty($data->profile)) {
+        $file_old = $destinationPath . $data->profile;
+        unlink($file_old);
+      }
+      $profileImage = date('YmdHis') . "." . $profile->extension();
       $profile->move($destinationPath, $profileImage);
-
-      $data->profile = "$profileImage";
+      $data->profile = $profileImage;
     }
     $data->update();
     return response()->json(['status' => true, 'message' => 'Update Success']);
@@ -75,8 +82,6 @@ class UserController extends Controller
   public function show($id)
   {
     $userdata = User::find($id);
-
-
     $data = Country::get(['name', 'id']);
     $category = Category::get(['category_name', 'id']);
     return view('admin.users.edit_add', compact(['data', 'category', 'userdata']));
@@ -103,17 +108,10 @@ class UserController extends Controller
     return response()->json(['status' => true, 'data' => $subcategory]);
   }
 
-  public function createDoc(DocumentRequest $request)
+  public function getsub(Request $request)
   {
-    $document = $request->validated();
-    $document = new Document();
-    $document->user_id = $request->input('user_id');
-    $document->doc_name = $request->input('doc_name');
-    $document->doc_num = $request->input('doc_num');
-    $imageName = time() . '.' . $request->image->extension();
-    $request->image->move(public_path('images'), $imageName);
-    $document->image = $imageName;
-    $document->save();
-    return response()->json(['status' => true, 'data' => $document, 'message' => 'Document Added Successfuly']);
+    $subcategory = Subcategory::where('category_id', $request->id)->get(['id', 'subcategory_name']);
+    // dd($subcategory);
+    return response()->json(['status' => true, 'data' => $subcategory]);
   }
 }

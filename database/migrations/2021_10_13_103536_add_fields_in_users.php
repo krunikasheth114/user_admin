@@ -17,7 +17,7 @@ class AddFieldsInUsers extends Migration
         
             $table->foreignId('category_id')->constrained('categories')->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('subcategory_id')->constrained('sub_categories')->onUpdate('cascade')->onDelete('cascade');
- 
+          
         });
     }
 

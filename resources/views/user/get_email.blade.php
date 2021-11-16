@@ -131,6 +131,8 @@
                                     alert(data.message);
                                     window.location.href = 'get_otp' + '/'+data.data.id;
 
+                                }else{
+                                    alert(data.message);
                                 }
 
 

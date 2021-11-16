@@ -9,19 +9,22 @@
     <meta content="Admin Dashboard" name="description" />
     <meta content="ThemeDesign" name="author" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="csrf-token" content={{csrf_token()}}>
+    <meta name="csrf-token" content={{ csrf_token() }}>
 
     <link rel="shortcut icon" href="#">
 
     <!--Morris Chart CSS -->
     <link rel="stylesheet" href="{{ asset('assets/plugins/morris/morris.css') }}">
 
-    <link href="{{ asset('assets/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css">
-    <link href="{{ asset('assets/css/icons.css')}}" rel="stylesheet" type="text/css">
-    <link href="{{ asset('assets/css/style.css')}}" rel="stylesheet" type="text/css">
-    <link href="{{ asset('assets/plugins/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('assets/plugins/datatables/buttons.bootstrap4.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('assets/plugins/datatables/responsive.bootstrap4.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('assets/css/icons.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('assets/plugins/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet"
+        type="text/css" />
+    <link href="{{ asset('assets/plugins/datatables/buttons.bootstrap4.min.css') }}" rel="stylesheet"
+        type="text/css" />
+    <link href="{{ asset('assets/plugins/datatables/responsive.bootstrap4.min.css') }}" rel="stylesheet"
+        type="text/css" />
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet">
@@ -87,12 +90,12 @@
         <!-- App js -->
         <script src="{{ asset('assets/js/app.js') }}"></script>
 
-        
+
 
         <script src="{{ asset('assets/plugins/parsleyjs/parsley.min.js') }}"></script>
 
         <script src="{{ asset('assets/plugins/datatables/jquery.dataTables.min.js') }}"></script>
-        <script src="{{ asset('assets/plugins/datatables/dataTables.bootstrap4.min.js')}}"></script>
+        <script src="{{ asset('assets/plugins/datatables/dataTables.bootstrap4.min.js') }}"></script>
         @stack('page_scripts')
 </body>
 
