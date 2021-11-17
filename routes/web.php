@@ -23,7 +23,7 @@ Route::get('/', function () {
     return redirect('home');
 });
 // \Auth::logout();
-Route::get('/',          'users\RegisterController@home')->name('home');
+Route::get('/home',          'users\RegisterController@home')->name('home');
 Route::get('/register',          'users\RegisterController@showLoginForm')->name('register');
 Route::get('/getcat',            'users\RegisterController@getcat')->name('getcat');
 Route::post('store',             'users\RegisterController@store')->name('store');
@@ -40,6 +40,7 @@ Route::post('verify_otp',        'users\LoginController@verify_otp')->name('user
 Route::get('reset_pass/{id}',        'users\LoginController@reset_pass')->name('user.reset_pass');
 Route::post('confirm_pass',        'users\LoginController@confirm_pass')->name('user.confirm_pass');
 Route::get('logout',            'users\LoginController@logout')->name('logout');
+Route::get('/display/{slug}',         'users\ViewblogController@index')->name('display');
 
 Route::group(['middleware' => 'auth:web'], function () {
     // Route::get('customlogout',            'users\LoginController@customlogout')->name('customlogout');
@@ -54,6 +55,11 @@ Route::group(['middleware' => 'auth:web'], function () {
     Route::group(['prefix' => 'blog', 'as' => 'blog.'], function () {
         Route::any('/createblog',         'users\CreateblogController@index')->name('createblog');
         Route::post('/store',         'users\CreateblogController@store')->name('store');
+        Route::get('/edit/{id}',         'users\CreateblogController@edit')->name('edit');
+        Route::post('/update/{slug}',         'users\CreateblogController@update')->name('update');
+        Route::get('/delete/{slug}',         'users\CreateblogController@delete')->name('delete');
+        Route::post('/like',         'users\ViewblogController@like')->name('like');
+
        
         
 

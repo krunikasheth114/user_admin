@@ -21,7 +21,9 @@
     <link rel="stylesheet" href="{{ asset('blog/assets/css/fontawesome.css') }}">
     <link rel="stylesheet" href="{{ asset('blog/assets/css/templatemo-stand-blog.css') }}">
     <link rel="stylesheet" href="{{ asset('blog/assets/css/owl.css') }}">
+    @stack('css')
     <!--
+        
     
     TemplateMo 551 Stand Blog
     

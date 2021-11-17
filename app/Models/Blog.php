@@ -10,6 +10,7 @@ class Blog extends Model
     use HasFactory;
     protected $fillable = [
         'id',
+        'slug',
         'category_id',
         'user_id',
         'title',
@@ -27,7 +28,16 @@ class Blog extends Model
     }
     public function getImageUrlAttribute()
     {
-        return $this->image != '' ?  asset('images/'.$this->image) : asset('images/default/default.jpg');
+        return $this->image != '' ?  asset('images/' . $this->image) : asset('images/default/default.jpg');
+    }
+    public function setTitleAttribute($value)
+    {
+        $this->attributes['title'] = $value;
+        $this->attributes['slug'] = str_slug($value);
     }
 
+    public function bloglike()
+    {
+        return $this->hasMany(Like::class, 'blog_id', 'id');
+    }
 }

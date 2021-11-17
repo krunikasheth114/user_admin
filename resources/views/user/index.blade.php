@@ -5,6 +5,7 @@
     </section>
     <div class="row">
         @foreach ($blog as $b)
+
             <div class="col-sm-4">
                 <div class="card" style="margin: 10px 10px 10px 10px">
                     <div class="blog">
@@ -18,11 +19,13 @@
                                 style="margin:10px 10px;font-size:18px;text-transform:uppercase; color:lightsalmon;margin:10px ">{{ $b->category->category }}</span>
                         </div>
                     </div>
-
                     <div class="content-title">
                         <div class="title">
-                            <a href="#"
+                            <a href="{{ route('display', $b->slug) }}"
                                 style="margin:10px 10px;font-weight:500;text-transform:capitalize">{{ $b->title }}</a>
+                            <h6 style="margin: 5px 5px 5px 5px"><i class="fa fa-thumbs-up"></i> Likes {{ $b->bloglike()->count() }} </h6>
+
+
                         </div>
                     </div>
                     <div class="content-description">

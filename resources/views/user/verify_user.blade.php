@@ -138,7 +138,7 @@
 
                         if (data.status == true) {
                             alert(data.message);
-                            window.location.href = '/user/login';
+                            window.location.href = '/home';
                         } else {
                             alert(data.message);
 

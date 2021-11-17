@@ -84,6 +84,19 @@ class User extends Authenticatable
     {
         return $this->hasOne(Blog::class, 'user_id', 'id');
     }
+
+    public function blogs()
+    {
+        return $this->hasMany(Blog::class, 'user_id', 'id');
+    }
+
+    public function likes()
+    {
+        return $this->belongsToMany('App\Models\Blog', 'likes', 'user_id', 'blog_id')->count();
+    }
+
+    
+   
  
 
  }

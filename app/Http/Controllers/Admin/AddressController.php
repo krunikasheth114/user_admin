@@ -123,6 +123,7 @@ class AddressController extends Controller
 
         $data->update();
         // dd(isset($request->address) && is_array($request->address));
+        // dd($request->address);
         if (isset($request->address)) {
             $addresss = UserAddress::where('user_id', $id)->get();
             if (!empty($addresss)) {
