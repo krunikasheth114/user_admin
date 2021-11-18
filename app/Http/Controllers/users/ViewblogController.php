@@ -6,14 +6,17 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Blog;
 use App\Models\Like;
+use App\Models\Comment;
 
 class ViewblogController extends Controller
 {
     public function index(Request $request, $slug)
     {
-        $view = Blog::where('slug', $slug)->get();
+        $view = Blog::where('slug', $slug)->first();
 
-        return view('user.blog.viewblog', compact('view'));
+        $comments = Comment::where('blog_id',$view->id)->get();
+
+        return view('user.blog.viewblog', compact('view', 'comments'));
     }
     public function like(Request $request)
     {
@@ -28,5 +31,18 @@ class ViewblogController extends Controller
 
             return response()->json(['status' => false, 'data' => '']);
         }
+    }
+    public function comment(Request $request)
+    {
+        $comment = Comment::create(['blog_id' => $request->id, 'user_id' => \Auth::user()->id, 'comment' => $request->comment]);
+        return response()->json(['status' => true, 'data' => $comment]);
+    }
+    public function delete(Request $request)
+    {
+        
+        $delete=Comment::find($request->id);
+        $delete->delete();
+        return response()->json(['status' => true, 'data' => $delete]);
+
     }
 }

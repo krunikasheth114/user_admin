@@ -40,4 +40,12 @@ class Blog extends Model
     {
         return $this->hasMany(Like::class, 'blog_id', 'id');
     }
+    public function blogcomments()
+    {
+        return $this->hasMany(Comment::class, 'blog_id', 'id');
+    }
+    // public function blogviews()
+    // {
+    //     return $this->hasMany(User::class, 'id', 'user_id');
+    // }
 }

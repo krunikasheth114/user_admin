@@ -19,8 +19,10 @@ class UpdateController extends Controller
   }
   public function edit(Request $request)
   {
+  
 
     $data['user'] = User::find($request->id);
+  
     $data['Category'] = Category::get(['category_name', 'id']);
     $data['subcategory'] = Subcategory::get(['subcategory_name', 'id']);
     return response()->json(['status' => true, 'data' => $data]);

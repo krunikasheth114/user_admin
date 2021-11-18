@@ -48,7 +48,7 @@ Route::group(['middleware' => 'auth:web'], function () {
     Route::any('/dashboard',         'users\DashboardController@index')->name('dashboard')->middleware('CheckStatus');
 
     Route::any('/edit',         'users\UpdateController@edit')->name('edit');
-    Route::post('/update',         'users\UpdateController@update')->name('update');
+    Route::any('/update',         'users\UpdateController@update')->name('update');
     Route::post('/getcategory',         'users\UpdateController@getcategory')->name('getcategory');
     Route::post('/getsubcategory',         'users\UpdateController@getsubcategory')->name('getsubcategory'); 
     
@@ -59,6 +59,8 @@ Route::group(['middleware' => 'auth:web'], function () {
         Route::post('/update/{slug}',         'users\CreateblogController@update')->name('update');
         Route::get('/delete/{slug}',         'users\CreateblogController@delete')->name('delete');
         Route::post('/like',         'users\ViewblogController@like')->name('like');
+        Route::post('/comment',         'users\ViewblogController@comment')->name('comment');
+        Route::post('/delete/comment',         'users\ViewblogController@delete')->name('delete.comment');
 
        
         

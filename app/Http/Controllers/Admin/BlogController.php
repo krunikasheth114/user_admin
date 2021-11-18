@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Blog_category;
 use App\DataTables\Blog_categoryDataTable;
 use App\DataTables\BlogDataTable;
+ use App\DataTables\LikeDataTable ;
 
 class BlogController extends Controller
 {
@@ -55,5 +56,9 @@ class BlogController extends Controller
 
     public function blogList(BlogDataTable $datatable){
         return $datatable->render('admin.blog_list.index');
+    }
+    public function blogLikes(LikeDataTable $datatable){
+
+        return $datatable->render('admin.blog_likes.index');
     }
 }

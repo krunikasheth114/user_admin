@@ -8,7 +8,7 @@ use App\Models\Blog_category;
 use App\Http\Requests\BlogRequest;
 use App\Models\Blog;
 use Illuminate\Support\Facades\Auth;
-// use Illuminate\Support\Str;
+
 
 
 class CreateblogController extends Controller
@@ -36,13 +36,15 @@ class CreateblogController extends Controller
 
     public function edit($id)
     {
-        $blogs = Blog::all();
+   
+        $blogs = Blog::where('user_id',$id)->get();
+      
         $category = Blog_category::get(['category', 'id']);
         return view('user.blog.editblog', compact('blogs', 'category'));
     }
-    public function update(Request $request, $slug)
+    public function update(BlogRequest $request, $slug)
     {
-
+      
         $update = Blog::where('slug', $slug)->get();
         foreach ($update as $u) {
             $u->category_id = $request->input('category_id');

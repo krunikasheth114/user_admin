@@ -53,11 +53,17 @@
                         <span>Blog Category</span>
                     </a>
                 </li>
-                
+               
                 <li>
                     <a href="{{ route('admin.blog.blog_list')}}" class="waves-effect">
                         <i class="fa fa-list-alt"></i>
                         <span>Blog List</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('admin.blog.bloglikes')}}" class="waves-effect">
+                        <i class="fa fa-list-alt"></i>
+                        <span>Blog Likes</span>
                     </a>
                 </li>
 

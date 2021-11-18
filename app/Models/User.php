@@ -94,7 +94,11 @@ class User extends Authenticatable
     {
         return $this->belongsToMany('App\Models\Blog', 'likes', 'user_id', 'blog_id')->count();
     }
-
+    public function comments()
+    {
+        return $this->belongsToMany('App\Models\Blog', 'comment', 'user_id', 'blog_id')->count();
+    }
+    
     
    
  

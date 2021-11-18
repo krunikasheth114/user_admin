@@ -47,8 +47,9 @@
                                             </a>
                                         @endif
                                     @endif
-                                    <a class="dropdown-item" href="{{ route('update') }}">
+                                    <a class="dropdown-item update" href="{{ route('update') }}" data-toggle="modal"id="{{Auth::user()->id}}" data-target="#updateprofile" >
                                         {{ __('Edit Profile') }}
+                                     
                                     </a>
                                     <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                                       document.getElementById('logout-form').submit();">
@@ -70,4 +71,5 @@
             </div>
         </div>
     </nav>
+    @include('user.update_user');
 </header>
