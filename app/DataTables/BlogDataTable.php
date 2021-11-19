@@ -24,6 +24,18 @@ class BlogDataTable extends DataTable
             ->editcolumn('category_id', function ($data) {
                 return $data->category['category'] ?? "no category found";
             })
+            ->editcolumn('like', function ($data) {
+                return $data->blogLikes() ? $data->blogLikes() : '';
+              
+            })
+            ->editcolumn('comments', function ($data) {
+                return $data->blogComment() ? $data->blogComment() : '';
+              
+            })
+            ->editcolumn('views', function ($data) {
+                return $data->views() ? $data->views() : '';
+              
+            })
             ->editcolumn('user_id', function ($data) {
                 return $data->getUser ? $data->getUser->firstname . '  ' .  $data->getUser->lastname : '';;
             })
@@ -37,7 +49,18 @@ class BlogDataTable extends DataTable
                 return '<img src="'.$data->image_url.'" height="100px" width="100px">';
             })
             
-             ->rawColumns(['image']);
+            ->editcolumn('url', function ($data) {
+              
+                return '<a href="'.$data->blogUrl->url.'" target="_blank">View Blog</a>' ;
+            })
+            ->addColumn('action', function ($data) {
+                $inactive = "";
+                $inactive .=  '<button type="button" class="btn btn-warning m-1 update" data-toggle="modal" data-target="#updateblog" id="' . $data->id . '"><i class="fa fa-edit"></i></button>';
+                $inactive .=  '<button type="button" class="btn btn-danger m-1 delete" id="' . $data->id . '"><i class="fa fa-trash"></i></button>';
+                return $inactive;
+            })
+            
+             ->rawColumns(['image','url','action']);
     }
 
     /**
@@ -83,13 +106,17 @@ class BlogDataTable extends DataTable
         return [
             Column::make('id'),
             Column::make('image'),
-            Column::make('user_id')->title('user'),
-            Column::make('category_id')->title('category'),
-            Column::make('title'),
-            Column::make('description')->width(40),
+            Column::make('user_id')->title('user')->searchable(),
+            Column::make('category_id')->title('category')->searchable(),
+            Column::make('title')->searchable(),
+            Column::make('description')->width(40)->searchable(),
+            Column::make('like')->searchable(),
+            Column::make('comments')->searchable(),
+            Column::make('views')->searchable(),
+            Column::make('url')->searchable(),
             Column::make('created_at'),
-            Column::make('updated_at')
-            // Column::computed('action')
+            Column::make('updated_at'),
+            Column::computed('action')
             ->exportable(false)
             ->printable(false)
             ->width(60)

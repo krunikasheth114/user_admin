@@ -57,13 +57,19 @@
                 <li>
                     <a href="{{ route('admin.blog.blog_list')}}" class="waves-effect">
                         <i class="fa fa-list-alt"></i>
-                        <span>Blog List</span>
+                        <span>Blog Details</span>
                     </a>
                 </li>
-                <li>
+                {{-- <li>
                     <a href="{{ route('admin.blog.bloglikes')}}" class="waves-effect">
                         <i class="fa fa-list-alt"></i>
                         <span>Blog Likes</span>
+                    </a>
+                </li> --}}
+                <li>
+                    <a href="{{ route('admin.blog.blogComment')}}" class="waves-effect">
+                        <i class="fa fa-list-alt"></i>
+                        <span>Blog Comments</span>
                     </a>
                 </li>
 

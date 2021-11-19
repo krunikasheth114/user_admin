@@ -8,4 +8,8 @@ function isLike($blog_id)
     }
      return false;
 }
-?>
+
+function getblogView($blog_id) {
+     $view = \App\Models\View::where('blog_id',$blog_id)->count();
+     return $view;
+}

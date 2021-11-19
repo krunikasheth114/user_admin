@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Like;
 
 class Blog extends Model
 {
@@ -22,6 +23,23 @@ class Blog extends Model
     {
         return $this->hasOne(Blog_category::class, 'id', 'category_id');
     }
+    public function blogLikes()
+    {
+        return $this->hasMany(Like::class, 'blog_id', 'id')->count();
+    }
+    public function blogComment()
+    {
+        return $this->hasMany(Comment::class, 'blog_id', 'id')->count();
+    }
+    public function views()
+    {
+        return $this->hasMany(View::class, 'blog_id', 'id')->count();
+    }
+    public function blogUrl()
+    {
+        return $this->hasOne(View::class, 'blog_id', 'id');
+    }
+   
     public function getUser()
     {
         return $this->hasOne(User::class, 'id', 'user_id');
@@ -44,8 +62,6 @@ class Blog extends Model
     {
         return $this->hasMany(Comment::class, 'blog_id', 'id');
     }
-    // public function blogviews()
-    // {
-    //     return $this->hasMany(User::class, 'id', 'user_id');
-    // }
+ 
+   
 }

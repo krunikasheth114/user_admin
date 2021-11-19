@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('page_title', 'Blog List')
+@section('page_title', 'Blog Comments')
 
 @section('content')
     <div class="main-content">
@@ -50,7 +50,7 @@
     </section>
 
 
-    @include('admin.blog_list.create');
+
 @endsection
 @push('page_scripts')
     {!! $dataTable->scripts() !!}
@@ -70,7 +70,7 @@
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
                     },
-                    url: "{{ route('admin.blog.deleteblog') }}",
+                    url: "{{ route('admin.blog.deletecomment') }}",
                     method: "POST",
                     data: {
                         id: id,
@@ -80,7 +80,7 @@
 
                         {
                             swal("Done!", data.message, "success");
-                            window.LaravelDataTables["blog-table"].draw();
+                            window.LaravelDataTables["comment-table"].draw();
                         }
 
 
@@ -89,37 +89,6 @@
                 })
             }
 
-
-        })
-        $(document).on('click', '.update', function() {
-            var id = $(this).attr('id');
-            //    console.log(id);
-            $.ajax({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-                },
-                url: "{{ route('admin.blog.editblog') }}",
-                method: "post",
-                data: {
-
-                    id: id,
-                },
-                success: function(data) {
-                    
-                    
-
-                    $('#id').val(data.data.blog.id);
-                    $('#title').val(data.data.blog.title);
-                    $('#description').val(data.data.blog.description);
-                    $('#images').html('<img src="' + /images/ + data.data.blog.image +
-                        '"height="50px" width="50px"/>');   
-                    $.each(data.data.category, function(key, value) {
-                        selectdata = (value.id == data.data.blog.category_id) ? 'selected' : '';
-                        $("#catgory_id").append('<option value="' + value.id + '" ' + selectdata +'>' + value.category + '</option>');
-                    });
-                }
-
-            })
 
         })
     </script>

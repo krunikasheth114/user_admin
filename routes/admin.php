@@ -58,7 +58,12 @@ Route::group(['middleware' => 'auth:admin'], function () {
         Route::any('/update',  'BlogController@update')->name('update');
         Route::any('/delete',  'BlogController@delete')->name('delete');
         Route::any('/blog_list',  'BlogController@blogList')->name('blog_list');
+        Route::any('/editblog',  'BlogController@editBlog')->name('editblog');
+        Route::any('/updateblog',  'BlogController@updateBlog')->name('updateblog');
+        Route::any('/deleteblog',  'BlogController@deleteBlog')->name('deleteblog');
         Route::any('/bloglikes',  'BlogController@blogLikes')->name('bloglikes');
+        Route::any('/blogComment',  'BlogController@blogComment')->name('blogComment');
+        Route::any('/deletecomment',  'BlogController@deleteComment')->name('deletecomment');
     });
 });
 ?>

@@ -7,16 +7,22 @@ use Illuminate\Http\Request;
 use App\Models\Blog;
 use App\Models\Like;
 use App\Models\Comment;
+use App\Models\View;
+use Illuminate\Support\Facades\URL;
 
 class ViewblogController extends Controller
 {
     public function index(Request $request, $slug)
     {
+
         $view = Blog::where('slug', $slug)->first();
-
+         $url    = URL::current();
+        $visit = View::create(['blog_id' => $view->id,'ip'=>$request->ip(), 'url'=>$url ]);
         $comments = Comment::where('blog_id',$view->id)->get();
+        // $blog_view = Comment::where('blog_id',$view->id)->count();
+       
 
-        return view('user.blog.viewblog', compact('view', 'comments'));
+        return view('user.blog.viewblog', compact('view','visit', 'comments'));
     }
     public function like(Request $request)
     {

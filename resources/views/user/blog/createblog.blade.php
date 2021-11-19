@@ -6,12 +6,12 @@
         </div>
         <div class="card-body">
             @include('common.flash')
-            <form action="{{ route('blog.store') }}" method="post" enctype="multipart/form-data">
+            <form action="{{ route('blog.store') }}" id="create_blog" method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="form-group row">
                     <div class="col-sm-8">
                         <label for="catgory">{{ __('Blog Category') }} :</label>
-                        <select class="form-control catgory" name="category_id" id="catgory" required>
+                        <select class="form-control catgory" name="category_id" id="catgory" >
                             <option value=""> ---Select Country--- </option>
                             @foreach ($category as $c)
                                 <option value="{{ $c->id }}">
@@ -55,15 +55,16 @@
                         <label for="file">{{ __('Add Image') }} :</label>
                         <input id="file" type="file" class="form-control" name="image" value="" autocomplete="file"
                             autofocus>
-                        @if ($errors->has('file'))
+                        @if ($errors->has('image'))
                             <span class="invalid-feedback d-block" role="alert">
-                                <strong>{{ $errors->first('file') }}</strong>
+                                <strong>{{ $errors->first('image') }}</strong>
                             </span>
                         @endif
                     </div>
                 </div>
                 <div class="form-group row">
-                    <input type="hidden" id="user_id" class="user_id " name="user_id" value="{{ Auth::user()->id }}">
+                    <input type="hidden" id="user_id" class="user_id " name="user_id"
+                        value="{{ Auth::user()->id }}">
                     <div class="col-sm-8">
                         <button type="submit" class="btn btn-primary">
                             {{ __('Create') }}
@@ -73,4 +74,40 @@
             </form>
         </div>
     </div>
+    <script>
+        $('#create_blog').validate({
+            rules: {
+                category_id: {
+                    required: true,
+                },
+                title: {
+                    required: true,
+                },
+                description: {
+                    required: true,
+                },
+                image: {
+                    required: true,
+                },
+               
+            },
+            messages: {
+                category_id: {
+                    required: "Category Required",
+                },
+                title: {
+                    required:  "Title Required",
+                },
+                description: {
+                    required:  "description Required",
+                },
+                image: {
+                    required: "Image Required",
+                },
+               
+            },
+
+
+        });
+    </script>
 @endsection

@@ -4,23 +4,23 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateStatesTable extends Migration
+class CreateViewsTable extends Migration
 {
     /**
      * Run the migrations.
      *
      * @return void
      */
-    
     public function up()
     {
-        Schema::create('states', function (Blueprint $table) {
-        $table->id();
-        $table->foreignId('country_id')->constrained('countries')->onUpdate('cascade')->onDelete('cascade');
-        $table->string('name');
-        $table->timestamps();
-    });
-}
+        Schema::create('views', function (Blueprint $table) {
+            $table->id();
+            $table->integer('blog_id');
+            $table->string('ip'); 
+            $table->string('url'); 
+            $table->timestamps();
+        });
+    }
 
     /**
      * Reverse the migrations.
@@ -29,6 +29,6 @@ class CreateStatesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('states');
+        Schema::dropIfExists('views');
     }
 }

@@ -1,10 +1,11 @@
 @extends('user.user_layout.master')
 @section('content')
-<style>
-    .error{
-        color: red;
-    }
-</style>
+    <style>
+        .error {
+            color: red;
+        }
+
+    </style>
 
     @foreach ($blogs as $blog)
         <div class="card">
@@ -23,7 +24,7 @@
                                     {{-- Category --}}
                                     <div class="col-sm-8">
                                         <label for="catgory">{{ __('Blog Category') }} :</label>
-                                        <select class="form-control catgory" name="category_id" value="" id="catgory" >
+                                        <select class="form-control catgory" name="category_id" value="" id="catgory">
                                             <option value=""> ---Select Category--- </option>
                                             @foreach ($category as $c)
                                                 <option value="{{ $c->id }}"
@@ -44,7 +45,7 @@
                                     <div class="col-sm-8">
                                         <label for="title">{{ __('Blog Title') }} :</label>
                                         <input id="title" type="title" class="form-control title" name="title"
-                                            value="{{ $blog->title }}" autocomplete="title" autofocus >
+                                            value="{{ $blog->title }}" autocomplete="title" autofocus>
                                         @if ($errors->has('title'))
                                             <span class="invalid-feedback d-block" role="alert">
                                                 <strong>{{ $errors->first('title') }}</strong>
@@ -57,7 +58,7 @@
                                     <div class="col-sm-8">
                                         <label for="description">{{ __('Description') }} :</label>
                                         <textarea id="description" type="description" class="form-control"
-                                            name="description" value="" autofocus >{{ $blog->description }}</textarea>
+                                            name="description" value="" autofocus>{{ $blog->description }}</textarea>
                                         @if ($errors->has('description'))
                                             <span class="invalid-feedback d-block" role="alert">
                                                 <strong>{{ $errors->first('description') }}</strong>
@@ -70,7 +71,7 @@
                                     <div class="col-sm-8">
                                         <label for="file">{{ __('Add Image') }} :</label>
                                         <input id="file" type="file" class="form-control" name="image" value=""
-                                            autocomplete="file" autofocus >
+                                            autocomplete="file" autofocus>
                                         @if ($errors->has('file'))
                                             <span class="invalid-feedback d-block" role="alert">
                                                 <strong>{{ $errors->first('file') }}</strong>
@@ -114,43 +115,38 @@
     @endforeach
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"></script>
+
+
     <script>
+        $('#edit_blog').validate({
+            rules: {
+                category_id: {
+                    required: true,
+                },
+                title: {
+                    required: true,
+                },
+                description: {
+                    required: true,
+                },
 
-// $('.title').each(function() {
-//                 $(this).rules('add', {
-//                     required: true,
-//                     messages: {
-//                         required: "This field is required",
-//                     },
 
-//                 });
-//             });
-    //  $('#edit_blog').validate({
-    //     rules: {
-    //         category_id: {
-    //             required: true,
-    //         },
-            
-    //         title: {
-    //             required: true,
-    //         },
-    //         description: {
-    //             required: true,
-    //         }
+            },
+            messages: {
+                category_id: {
+                    required: "Category Required",
+                },
+                title: {
+                    required: "Title Required",
+                },
+                description: {
+                    required: "description Required",
+                },
 
-    //     },
 
-    //     messages: {
-    //         category_id: {
-    //             required: "Category field is required",
-    //         },
-    //         title: {
-    //             required: "title field is required",
-    //         },
-    //         description: {
-    //             required: "description field is required",
-    //         }
-    //     },
-    //  })
+            },
+
+
+        });
     </script>
 @endsection

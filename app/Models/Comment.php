@@ -15,4 +15,12 @@ class Comment extends Model
 
        
     ];
+    public function getBlog()
+    {
+        return $this->hasOne(Blog::class, 'id', 'blog_id');
+    }
+    public function getUser()
+    {
+        return $this->hasOne(User::class, 'id', 'user_id');
+    }
 }

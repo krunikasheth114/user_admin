@@ -42,9 +42,13 @@ class CreateblogController extends Controller
         $category = Blog_category::get(['category', 'id']);
         return view('user.blog.editblog', compact('blogs', 'category'));
     }
-    public function update(BlogRequest $request, $slug)
+    public function update(Request $request, $slug)
     {
-      
+      $request->validate([
+        'category_id' => 'required',
+        'title'=>'required',
+        'description'=>'required',
+      ]);
         $update = Blog::where('slug', $slug)->get();
         foreach ($update as $u) {
             $u->category_id = $request->input('category_id');

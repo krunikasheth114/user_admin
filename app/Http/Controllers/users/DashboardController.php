@@ -19,6 +19,7 @@ class DashboardController extends Controller
     {
         if (Auth::check()) {
             $blog = Blog::get();
+          
             return view('user.index', compact('blog'));
         }
     }

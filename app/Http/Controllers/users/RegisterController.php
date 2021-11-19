@@ -14,6 +14,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use App\Mail\VerifyUser;
+use App\Models\Blog;
+use Illuminate\Support\Facades\DB;
+use App\Models\View;
 
 class RegisterController extends Controller
 {
@@ -89,9 +92,13 @@ class RegisterController extends Controller
         }
     }
 
-    public function home()
+    public function home(Request $request)
     {
-        $blog = \App\Models\Blog::get();
-        return view('user.index',compact('blog'));
+        $blog = Blog::get();
+        $blog_view = DB::table('blogs')
+            ->leftJoin('views', 'blogs.id', '=', 'views.blog_id')
+            ->count();
+
+        return view('user.index', compact('blog','blog_view'));
     }
 }

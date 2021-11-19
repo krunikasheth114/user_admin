@@ -28,6 +28,7 @@
                     @if (Auth::check())
                         <button class="btn like {{ isLike($view->id) ? 'red' : '' }}" id="{{ $view->id }}"
                             style="margin: 10px"><i class="fa fa-heart-o"></i>
+                            {{$view->bloglike()->count()}}
                         </button>
                     @else
                         <a href="{{ route('user.login') }}" class="btn like " id="id" style="margin: 10px"><i
@@ -38,26 +39,26 @@
                 <div class="col-sm-1">
                     @if (Auth::check())
                         <button class="btn comment" name="comment" id="comment" style="margin: 10px"><i
-                                class="fa fa-comments-o" aria-hidden="true"></i></i></button>
+                                class="fa fa-comments-o" aria-hidden="true"></i>{{$view->blogcomments()->count()}}</button>
                     @else
                         <a href="{{ route('user.login') }}" class="btn comment" name="comment" id="comment"
                             style="margin: 10px"><i class="fa fa-comments-o"></i> </a>
                     @endif
                 </div>
-                <div class="col-sm-1">
+                {{-- <div class="col-sm-1">
                     <button class="btn" name="view" id="view" style="margin: 10px"> <i class="fa fa-eye"
-                            aria-hidden="true"></i></button>
-                </div>
+                            aria-hidden="true"> </i></button>
+                </div> --}}
             </div>
 
             {{-- add comments --}}
             <div class="row mydiv" style="display: none">
                 <div class="col-12 my_add">
                     {{-- write comments --}}
-
                     <br>
                 </div>
             </div>
+
             {{-- list comments --}}
             <div class="row">
                 <div class="col-12 mycomments" style="margin: 5px 5px 5px 5px">
@@ -66,14 +67,14 @@
                     @foreach ($comments as $item)
                         <input type="text"
                             style="background: transparent; border: none; border-bottom: 1px solid #000000; width:50% "
-                            name="comment" id="commentlist" value="{{ $item->comment }}" class="form-group "><i
-                            class="fa fa-remove delete" id="{{ $item->id }}"></i>
+                            name="comment" id="commentlist" value="{{ $item->comment }}" class="form-group ">
+                            @if(\Auth::check())
+                                <i class="fa fa-remove delete" id="{{ $item->id }}"></i>
+                            @endif
                     @endforeach
                     <br>
                 </div>
             </div>
-
-
         </div>
     </div>
 

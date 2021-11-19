@@ -18,5 +18,12 @@ class Like extends Model
     // {
     //     return $this->hasOneThrough(User::class, 'id', 'user_id');
     // }
-
+    public function getBlog()
+    {
+        return $this->hasOne(Blog::class, 'id', 'blog_id');
+    }
+    public function getUser()
+    {
+        return $this->hasOne(User::class, 'id', 'user_id');
+    }
 }
