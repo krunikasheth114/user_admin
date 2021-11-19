@@ -10,6 +10,7 @@
     </style>
 @endpush
 @section('content')
+
     <div class="card">
         <div class="card-header">
             <h1>{{ $view->title }}</h1>
@@ -39,7 +40,7 @@
                 <div class="col-sm-1">
                     @if (Auth::check())
                         <button class="btn comment" name="comment" id="comment" style="margin: 10px"><i
-                                class="fa fa-comments-o" aria-hidden="true"></i>{{$view->blogcomments()->count()}}</button>
+                                class="fa fa-comments-o" aria-hidden="true"></i>&nbsp;&nbsp;{{$view->blogcomments()->count()}}</button>
                     @else
                         <a href="{{ route('user.login') }}" class="btn comment" name="comment" id="comment"
                             style="margin: 10px"><i class="fa fa-comments-o"></i> </a>
@@ -65,11 +66,13 @@
                     <label for="mycomments"> <b>Comments:</b> </label><br>
                     {{-- view Comments --}}
                     @foreach ($comments as $item)
+                   
+                   <b>@</b><b>{{ $item->getUser->firstname}}:</b>
                         <input type="text"
                             style="background: transparent; border: none; border-bottom: 1px solid #000000; width:50% "
-                            name="comment" id="commentlist" value="{{ $item->comment }}" class="form-group ">
+                            name="comment" id="commentlist"  value=" {{ $item->comment }}" class="form-group "/Readonly>
                             @if(\Auth::check())
-                                <i class="fa fa-remove delete" id="{{ $item->id }}"></i>
+                                <i class="fa fa-remove delete" id="{{ $item->id }}"></i><br>
                             @endif
                     @endforeach
                     <br>
