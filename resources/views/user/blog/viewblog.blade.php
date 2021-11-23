@@ -29,7 +29,7 @@
                     @if (Auth::check())
                         <button class="btn like {{ isLike($view->id) ? 'red' : '' }}" id="{{ $view->id }}"
                             style="margin: 10px"><i class="fa fa-heart-o"></i>
-                            {{$view->bloglike()->count()}}
+                            {{ $view->bloglike()->count() }}
                         </button>
                     @else
                         <a href="{{ route('user.login') }}" class="btn like " id="id" style="margin: 10px"><i
@@ -38,49 +38,61 @@
                     @endif
                 </div>
                 <div class="col-sm-1">
-                    @if (Auth::check())
-                        <button class="btn comment" name="comment" id="comment" style="margin: 10px"><i
-                                class="fa fa-comments-o" aria-hidden="true"></i>&nbsp;&nbsp;{{$view->blogcomments()->count()}}</button>
-                    @else
-                        <a href="{{ route('user.login') }}" class="btn comment" name="comment" id="comment"
-                            style="margin: 10px"><i class="fa fa-comments-o"></i> </a>
-                    @endif
+                    <button class="btn like " id="{{ $view->id }}" style="margin: 10px"><i
+                            class="fa fa-comment-o"></i>
+                        {{ $view->blogcomments()->count() }}
+                    </button>
                 </div>
-                {{-- <div class="col-sm-1">
+                <div class="col-sm-1">
                     <button class="btn" name="view" id="view" style="margin: 10px"> <i class="fa fa-eye"
-                            aria-hidden="true"> </i></button>
-                </div> --}}
-            </div>
-
-            {{-- add comments --}}
-            <div class="row mydiv" style="display: none">
-                <div class="col-12 my_add">
-                    {{-- write comments --}}
-                    <br>
+                            aria-hidden="true"> </i>
+                        {{ $view->blogviews()->count() }}
+                    </button>
                 </div>
             </div>
 
-            {{-- list comments --}}
-            <div class="row">
-                <div class="col-12 mycomments" style="margin: 5px 5px 5px 5px">
-                    <label for="mycomments"> <b>Comments:</b> </label><br>
-                    {{-- view Comments --}}
-                    @foreach ($comments as $item)
-                   
-                   <b>@</b><b>{{ $item->getUser->firstname}}:</b>
-                        <input type="text"
-                            style="background: transparent; border: none; border-bottom: 1px solid #000000; width:50% "
-                            name="comment" id="commentlist"  value=" {{ $item->comment }}" class="form-group "/Readonly>
-                            @if(\Auth::check())
-                                <i class="fa fa-remove delete" id="{{ $item->id }}"></i><br>
-                            @endif
-                    @endforeach
-                    <br>
+        </div>
+    </div>
+    <div class="mb-5">
+        <div class="col-lg-12" class="mb-5">
+            <div id="display_comment"></div>
+        </div>
+        <div class="col-lg-12">
+            <div class="sidebar-item submit-comment">
+                <div class="sidebar-heading">
+                    <h2>Your comment</h2>
                 </div>
+                @if (Auth::user()->check())
+                    <div class="content">
+                        <form action="{{ route('blog.comment') }}" id="comment-form" method="POST">
+                            @csrf
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <fieldset>
+                                        <textarea name="comment" rows="6" id="comment" placeholder="Type your comment"
+                                            value="" required=""></textarea>
+                                    </fieldset>
+                                </div>
+                                <input type="hidden" name="blog_id" value="{{ $view->id }}">
+                                <div class="col-lg-12">
+                                    <fieldset>
+                                        <button type="submit" id="form-submit" class="main-button">Submit</button>
+                                    </fieldset>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                @else
+                    <a href="{{ route('user.login') }}" class="btn comment" name="comment" id="comment"
+                        style="margin: 10px"><i class="fa fa-comments-o"></i> </a>
+                @endif
             </div>
         </div>
     </div>
+@endsection
 
+@push('page_scripts')
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.all.min.js"></script>
@@ -106,20 +118,11 @@
                 },
             })
         })
-        $('.comment').on('click', function() {
+
+        $('body').on('submit', '#comment-form', function() {
+            var comment = $('#comment').val();
             blog_id = "{{ $view->id }}"
-            my_addmore_count = $('body').find('.my_add').length;
-            i = my_addmore_count + 1;
-            var html =
-                `<input type="text" style="background: transparent; border: none; border-bottom: 1px solid #000000; width:50% " 
-            name="comments" id="comments" value=""  class="form-group comments" > <i class="fa fa-paper-plane send"  aria-hidden="true"></i>`
-            $(".mydiv").show();
-            $(".my_add").append(html);
-
-        })
-
-        $('body').on('click', '.send', function() {
-            var comment = $('.comments').val();
+            alert('dfgdf');
             $.ajax({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
@@ -133,46 +136,104 @@
                 },
                 success: function(data) {
                     console.log(data);
-                    if (data.status == true) {
-                        $('.mycomments').append(`<input type="text" style="background: transparent; border: none; border-bottom: 1px solid #000000; width:50% "
-                                name="comment" id="` + data.data.blog_id + `" value="` + data.data.comment +
-                            `" class="form-group value"><i class="fa fa-remove delete" id="` + data
-                            .data.id + `"></i><br>`
-                        );
-
-                        $('.value').effect("highlight", {}, 3000);
-
-                        $('.my_add').html('');
-                    }
-
-
                 }
             })
-
-
         })
 
+        // Delete Comment
         $('body').on('click', '.delete', function() {
-            var id = $(this).attr('id');
+            var id = $(this).attr('data-id');
+            alert(id);
             $.ajax({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
                 },
                 url: "{{ route('blog.delete.comment') }}",
-                method: "post",
+                method: "POST",
                 data: {
                     _token: "{{ csrf_token() }}",
                     id: id
                 },
                 success: function(data) {
-                    if (status == true) {
-
-                    }
-
-
+                    if (status == true) {}
+                    location.reload();
                 }
             })
         });
-    </script>
 
-@endsection
+        // reply
+        $('body').on('click', '.reply', function() {
+            $('.reply').toggle();
+            var thisClicked = $(this).attr('id');
+            var cmt_id = $(this).attr('data-id');
+            var route = "{{ route('blog.commentReply') }}";
+            blog_id = "{{ $view->id }}";
+            var html = `<div class="sidebar-item submit-comment">
+                            <div class="content">
+                                <form action="` + route + `" id="comment_reply_form" method="post">
+                                    @csrf
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <fieldset>
+                                            <textarea name="comment_reply" rows="6" id="comment_reply" placeholder="Type your comment" ></textarea>
+                                            </fieldset>
+                                        </div>
+                                        <input type="hidden" name="blog_id" value="` + blog_id + `">
+                                        <input type="hidden" name="parent_id" value="` + cmt_id + `">
+                                        <div class="col-lg-12">
+                                            <fieldset>
+                                            <button type="submit" id="reply-submit"  data-id="` + cmt_id + `" class="main-button">Submit</button>
+                                            </fieldset>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>`;
+            $(this).after(html);
+
+        })
+        $('body').on('click', '#reply-submit', function() {
+            var cmnt_id = $(this).attr('data-id');
+            var comment = $('#comment_reply').val();
+            blog_id = "{{ $view->id }}"
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                },
+                url: "{{ route('blog.commentReply') }}",
+                method: "POST",
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    parent_id: cmnt_id,
+                    blog_id: blog_id,
+                    comment: comment
+                },
+                success: function(data) {
+                    console.log(data)
+                },
+            });
+        });
+        load_comment();
+
+        function load_comment() {
+            blog_id = "{{ $view->id }}"
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                },
+                url: "{{ route('blog.fetch_comment') }}",
+                method: "POST",
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    blog_id: blog_id
+                },
+                success: function(data) {
+                    console.log(data.data);
+                    if (data.status == true) {
+                        $('#display_comment').html(data.data);
+                    }
+                }
+            })
+        }
+    </script>
+@endpush

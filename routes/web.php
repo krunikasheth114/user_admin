@@ -59,8 +59,12 @@ Route::group(['middleware' => 'auth:web'], function () {
         Route::post('/update/{slug}',         'users\CreateblogController@update')->name('update');
         Route::get('/delete/{slug}',         'users\CreateblogController@delete')->name('delete');
         Route::post('/like',         'users\ViewblogController@like')->name('like');
-        Route::post('/comment',         'users\ViewblogController@comment')->name('comment');
+        Route::post('comment',         'users\ViewblogController@comment')->name('comment');
         Route::post('/delete/comment',         'users\ViewblogController@delete')->name('delete.comment');
+        Route::post('/commentReply',         'users\ViewblogController@commentReply')->name('commentReply');
+        Route::post('/response',         'users\ViewblogController@response')->name('response');
+        Route::post('/fetch-comment',         'users\ViewblogController@fetchComment')->name('fetch_comment');
+
 
        
         

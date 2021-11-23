@@ -62,6 +62,12 @@ class Blog extends Model
     {
         return $this->hasMany(Comment::class, 'blog_id', 'id');
     }
+    
+    public function blogviews()
+    {
+        return $this->hasMany(View::class, 'blog_id', 'id');
+    }
+
  
    
 }
