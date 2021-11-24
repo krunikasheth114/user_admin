@@ -53,6 +53,7 @@ class ViewblogController extends Controller
     }
     public function commentReply(Request $request)
     {
+        // dd($request->all());
         $commentRep = Comment::create(['blog_id' => $request->blog_id, 'user_id' => \Auth::user()->id, 'comment' => $request->comment_reply, 'parent_id' => $request->parent_id]);
         return redirect()->back();
     }
@@ -65,49 +66,70 @@ class ViewblogController extends Controller
 
     public function fetchComment(Request $request)
     {
-        $comments = Comment::where('blog_id', $request->blog_id)
-            ->where('parent_id', '0')->get();
+        $comments = Comment::where('blog_id', $request->blog_id)->where('parent_id', 0)->get();
         $output = '';
-        $output .= '<div class="sidebar-item comments">
-                        <div class="sidebar-heading">
-                        </div>
-                        <div class="content">
+        for ($i = 0; $i < count($comments); $i++) {
+
+            $output .= '<div class="sidebar-item comments">
+                                <div class="sidebar-heading">
+                                </div>
+                            <div class="content">
                             <ul>';
-                    foreach ($comments as $key => $row) {
-                        $output .= '<li>
-                                        <div class="right-content">
-                                            <h4>' . $row->getUser->firstname . '</h4>
-                                            <p>' . $row->comment . '</p>
-                                            <button type="button" class="btn btn-danger delete mt-2 mr-2" data-id="' . $row->id . '">Delete</button>
-                                            <button type="button" class="btn btn-default reply mt-2" id="reply_' . $key . '" data-id="' . $row->id . '">Reply</button>';
-                                            $output .= $this->get_reply_comment($request->blog_id, $row->id);
-                                        '</div>
-                                    </li>';
-                    }
-        $output .= '</ul>
-                    </div>
-                </div>';
+            $output .= '<li>
+                                <div class="right-content">
+                                   <h5> <b>@</b>' . $comments[$i]->getUser->firstname . '  '. $comments[$i]->created_at->diffForHumans() .'</h5>
+                                   <p>' . $comments[$i]->comment . '</p>
+                                    <button type="button" class="btn btn-danger delete mt-2 mr-2" data-id="' . $comments[$i]->id . '">Delete</button>
+                                    <button type="button" class="btn btn-default reply mt-2" id="reply_' . $i . '" data-id="' . $comments[$i]->id . '">Reply</button>';
+            $output .= $this->get_reply_comment($request->blog_id, $comments[$i]->id);
+            '</div>
+                            </li>';
+            $output .= '</ul>
+                        </div>
+                    </div>';
+        }
+
+
         return response()->json(['status' => true, 'data' => $output]);
     }
     public function get_reply_comment($blog_id, $comment_id)
     {
         $comments = Comment::where('blog_id', $blog_id)->where('parent_id', $comment_id)->get();
         $output = '';
-        if (count($comments) > 0) {
-            foreach ($comments as $key => $row) {
-                $output .= '<div class="replied-box">
-                                <h4>' . $row->getUser->firstname . '</h4>
-                                <p>' . $row->comment . '</p>
-                                <button type="button" class="btn btn-danger reply mt-2 mr-2">Delete</button>
-                                <button type="button" class="btn btn-default reply mt-2" id="reply_' . $key . '" data-id="' . $row->id . '">Reply</button>
-                                ';
-                                 
-                            $output .= $this->get_reply_comment($blog_id, $row->id);
-                    '</div>';
-                    
-                
+        for ($i = 0; $i < count($comments); $i++) {
+
+            $output .= '<div class="replied-box">
+                    <h5> <b>@</b>' .  $comments[$i]->getUser->firstname . '  '. $comments[$i]->created_at->diffForHumans() .'</h5>
+                   
+                    <p>' .  $comments[$i]->comment . '</p>
+                    <button type="button" class="btn btn-danger delete"  data-id="' .  $comments[$i]->id . '" mt-2 mr-2">Delete</button>
+                    <button type="button" class="btn btn-default reply mt-2" id="reply_' . $i . '" data-id="' .  $comments[$i]->id . '">Reply</button>
+                    ';
+
+            $output .= $this->get_reply_comment($blog_id, $comments[$i]->id);
+            '</div>';
+            if ($comments[$i]->parent_id == $comment_id) {
+                $output .= '</div>';
             }
         }
+        // foreach ($comments as $key => $row) {
+
+        //     $find_parent = Comment::where('parent_id', $row->parent_id)->get();
+
+        //     $output = '';
+        //     if (count($find_parent) > 0) {
+
+        //         $output .= '<div class="replied-box">
+        //                             <h4>' . $row->getUser->firstname . '</h4>
+        //                             <p>' . $row->comment . '</p>
+        //                             <button type="button" class="btn btn-danger delete"  data-id="' . $row->id . '" mt-2 mr-2">Delete</button>
+        //                             <button type="button" class="btn btn-default reply mt-2" id="reply_' . $key . '" data-id="' . $row->id . '">Reply</button>
+        //                             ';
+        //         $output .= $this->get_reply_comment($blog_id, $row->id);
+        //         '</div>';
+        //     }
+        // }
+
         return $output;
     }
 }

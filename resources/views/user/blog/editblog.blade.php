@@ -1,4 +1,5 @@
 @extends('user.user_layout.master')
+@section('page_title', 'Edit Blog ')
 @section('content')
     <style>
         .error {

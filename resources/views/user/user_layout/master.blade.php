@@ -11,8 +11,7 @@
         href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i&display=swap"
         rel="stylesheet">
 
-    <title>Blog</title>
-
+        <title>@yield('page_title') | Blog </title>
     <!-- Bootstrap core CSS -->
     <link href="{{ asset('blog/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
 
@@ -34,8 +33,16 @@
 
 
 <body>
+    <div id="preloader">
+        <div class="jumper">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+    <!-- ***** Preloader End ***** -->
     @include('user.user_layout.header')
-
+    
     <div class="main-banner header-text">
         <div class="container-fluid">
             <div class="owl-banner owl-carousel">
@@ -47,6 +54,7 @@
     </div>
     <section class="blog-posts">
         <div class="container">
+            
             @yield('content')
         </div>
     </section>

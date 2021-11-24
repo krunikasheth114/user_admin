@@ -1,4 +1,5 @@
 @extends('user.user_layout.master')
+@section('page_title', 'Create Blog ')
 @section('content')
     <div class="card">
         <div class="card-header" style="background: white">
@@ -12,7 +13,7 @@
                     <div class="col-sm-8">
                         <label for="catgory">{{ __('Blog Category') }} :</label>
                         <select class="form-control catgory" name="category_id" id="catgory" >
-                            <option value=""> ---Select Country--- </option>
+                            <option value=""> ---Select Category--- </option>
                             @foreach ($category as $c)
                                 <option value="{{ $c->id }}">
                                     {{ $c->category }}

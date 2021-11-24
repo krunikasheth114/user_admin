@@ -83,6 +83,7 @@ class CommentDataTable extends DataTable
             Column::make('id'),
             Column::make('user_id')->title('User Name'),
             Column::make('blog_id')->title('Blog Title'),
+            Column::make('parent_id'),
             Column::make('comment'),
             Column::make('created_at'),
 
