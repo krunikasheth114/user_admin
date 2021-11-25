@@ -1,16 +1,19 @@
 <?php
 
-namespace App\Http\Controllers\users;
+namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Api\BaseController as BaseController;
 use App\Models\Blog;
-use App\Models\Like;
-use App\Models\Comment;
-use App\Models\View;
 use Illuminate\Support\Facades\URL;
+use App\Models\View;
+use App\Models\Comment;
+use App\Models\Like;
 
-class ViewblogController extends Controller
+use Illuminate\Support\Facades\Auth;
+
+class BlogDetailController extends BaseController
 {
     public function index(Request $request, $slug)
     {
@@ -20,49 +23,53 @@ class ViewblogController extends Controller
         $visit = View::create(['blog_id' => $view->id, 'ip' => $request->ip(), 'url' => $url]);
         $comments = Comment::where('blog_id', $view->id)
             ->where('parent_id', '=', 0)->get();
-        return view('user.blog.viewblog', compact('view', 'visit', 'comments'));
+        $data = [$view, $url, $visit, $comments];
+        return $this->sendResponse($data, 'data-details');
     }
-    public function like(Request $request)
+    public function like($id)
     {
-        $like = Like::where('blog_id', $request->id)->where('user_id', \Auth::user()->id)->first();
+  
+        $like = Like::where('blog_id', $id)->where('user_id', \Auth::user()->id)->first();
 
         if (empty($like)) {
-            $like = Like::create(['blog_id' => $request->id, 'user_id' => \Auth::user()->id]);
-
-            return response()->json(['status' => true, 'data' => $like]);
+            $like = Like::create(['blog_id' => $id, 'user_id' => \Auth::user()->id]);
+            return $this->sendResponse($like, 'likes created');
         } else {
             $like->delete();
-
-            return response()->json(['status' => false, 'data' => '']);
+            return $this->sendResponse($like, 'likes deleted');
         }
     }
-    public function comment(Request $request)
+       public function comment(Request $request)
     {
+    
         $comment = Comment::create(['blog_id' => $request->blog_id, 'user_id' => \Auth::user()->id, 'comment' => $request->comment]);
-        return redirect()->back();
+        return $this->sendResponse($comment, 'Comment created');
     }
-    public function delete(Request $request)
+    public function delete($id)
     {
-
-        $delete = Comment::find($request->id);
+        $delete = Comment::find($id);
         $delete->delete();
-        return response()->json(['status' => true, 'data' => $delete]);
+        return $this->sendResponse($delete, 'Comment deleted');
     }
     public function commentReply(Request $request)
     {
-        // dd($request->all());
+     
+       
         $commentRep = Comment::create(['blog_id' => $request->blog_id, 'user_id' => \Auth::user()->id, 'comment' => $request->comment_reply, 'parent_id' => $request->parent_id]);
-        return redirect()->back();
+ 
+        return $this->sendResponse($commentRep, 'replyed');
+
     }
     public function response(Request $request)
     {
 
         $commentRes = Comment::create(['blog_id' => $request->blog_id, 'user_id' => \Auth::user()->id, 'comment' => $request->comment, 'parent_id' => $request->parent_id]);
-        return response()->json(['status' => true, 'data' => $commentRes]);
+        return $this->sendResponse($commentRes, 'replyed');
     }
-    public function fetchComment(Request $request)
+    public function fetchComment($id)
     {
-        $comments = Comment::where('blog_id', $request->blog_id)->where('parent_id', 0)->get();
+     
+        $comments = Comment::where('blog_id', $id)->where('parent_id', 0)->get();
         $output = '';
         for ($i = 0; $i < count($comments); $i++) {
 
@@ -77,14 +84,16 @@ class ViewblogController extends Controller
                                    <p>' . $comments[$i]->comment . '</p>
                                     <button type="button" class="btn btn-danger delete mt-2 mr-2" data-id="' . $comments[$i]->id . '">Delete</button>
                                     <button type="button" class="btn btn-default reply mt-2" id="reply_' . $i . '" data-id="' . $comments[$i]->id . '">Reply</button>';
-            $output .= $this->get_reply_comment($request->blog_id, $comments[$i]->id);
+            $output .= $this->get_reply_comment($id, $comments[$i]->id);
             '</div>
                             </li>';
             $output .= '</ul>
                         </div>
                     </div>';
         }
-        return response()->json(['status' => true, 'data' => $output]);
+
+
+        return $this->sendResponse($comments, 'comment fetch');
     }
     public function get_reply_comment($blog_id, $comment_id)
     {
@@ -106,7 +115,9 @@ class ViewblogController extends Controller
                 $output .= '</div>';
             }
         }
+      
 
         return $output;
     }
+
 }

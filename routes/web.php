@@ -29,7 +29,6 @@ Route::get('/getcat',            'users\RegisterController@getcat')->name('getca
 Route::post('store',             'users\RegisterController@store')->name('store');
 Route::get('verify_register_user/{id}',        'users\RegisterController@showotpRegister')->name('user.showotpRegister');
 Route::get('verify_user/{id}',        'users\RegisterController@showotpLogin')->name('user.verify_user');
-
 Route::post('otp_verify',        'users\RegisterController@VerifyUser')->name('otp_verify');
 Route::get('/user/login',        'users\LoginController@showLoginForm')->name('user.login');
 Route::post('/attemptLogin',     'users\LoginController@Login')->name('attemptLogin');
@@ -41,17 +40,12 @@ Route::get('reset_pass/{id}',        'users\LoginController@reset_pass')->name('
 Route::post('confirm_pass',        'users\LoginController@confirm_pass')->name('user.confirm_pass');
 Route::get('logout',            'users\LoginController@logout')->name('logout');
 Route::get('/display/{slug}',         'users\ViewblogController@index')->name('display');
-
 Route::group(['middleware' => 'auth:web'], function () {
-    // Route::get('customlogout',            'users\LoginController@customlogout')->name('customlogout');
-
     Route::any('/dashboard',         'users\DashboardController@index')->name('dashboard')->middleware('CheckStatus');
-
     Route::any('/edit',         'users\UpdateController@edit')->name('edit');
     Route::any('/update',         'users\UpdateController@update')->name('update');
     Route::post('/getcategory',         'users\UpdateController@getcategory')->name('getcategory');
-    Route::post('/getsubcategory',         'users\UpdateController@getsubcategory')->name('getsubcategory'); 
-    
+    Route::post('/getsubcategory',         'users\UpdateController@getsubcategory')->name('getsubcategory');
     Route::group(['prefix' => 'blog', 'as' => 'blog.'], function () {
         Route::any('/createblog',         'users\CreateblogController@index')->name('createblog');
         Route::post('/store',         'users\CreateblogController@store')->name('store');
@@ -64,10 +58,5 @@ Route::group(['middleware' => 'auth:web'], function () {
         Route::post('/commentReply',         'users\ViewblogController@commentReply')->name('commentReply');
         Route::post('/response',         'users\ViewblogController@response')->name('response');
         Route::post('/fetch-comment',         'users\ViewblogController@fetchComment')->name('fetch_comment');
-
-
-       
-        
-
     });
 });

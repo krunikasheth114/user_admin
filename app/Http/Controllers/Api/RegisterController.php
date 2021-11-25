@@ -7,9 +7,11 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Api\BaseController as BaseController;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\VerifyUser;
+use App\Models\Blog;
 
 class RegisterController extends BaseController
 {
@@ -28,9 +30,18 @@ class RegisterController extends BaseController
         $user->otp = random_int(1000, 9999);
         $user->password = Hash::make($request->input('password'));
         $user->save();
-        $user['token'] =  $user->createToken('task2')->accessToken['token'];
+        $user['token'] =  $user->createToken('task2')->accessToken;
         $id = $user->id; // Get current user id
         Mail::to($user->email)->send(new VerifyUser($user->otp));
         return $this->sendResponse($user, 'User register successfully.');
+    }
+    public function home(Request $request)
+    {
+        $blog = Blog::get();
+        $blog_view = DB::table('blogs')
+            ->leftJoin('views', 'blogs.id', '=', 'views.blog_id')
+            ->count();
+        $data = [$blog, $blog_view];
+        return $this->sendResponse($data, 'data-list');
     }
 }
