@@ -57,8 +57,7 @@ class RegisterController extends Controller
         $validatedData->save();
         $id = $validatedData->id; // Get current user id
 
-
-        Mail::to($validatedData->email)->send(new VerifyUser($validatedData->otp));
+       Mail::to($validatedData->email)->send(new VerifyUser($validatedData->otp));
         return response()->json(['status' => true, 'data' => $validatedData, 'message' => "Mail sent", 'id' => $id]);
     }
 
