@@ -17,6 +17,7 @@ use App\Mail\VerifyUser;
 use App\Models\Blog;
 use Illuminate\Support\Facades\DB;
 use App\Models\View;
+use App\Models\Blog_category;
 
 class RegisterController extends Controller
 {
@@ -97,7 +98,9 @@ class RegisterController extends Controller
         $blog_view = DB::table('blogs')
             ->leftJoin('views', 'blogs.id', '=', 'views.blog_id')
             ->count();
+         $blogs = Blog::latest('created_at')->take(5)->get();
+         $category = Blog_category::get(['category', 'id']);
 
-        return view('user.index', compact('blog','blog_view'));
+        return view('user.index', compact('blog','blog_view','blogs','category'));
     }
 }

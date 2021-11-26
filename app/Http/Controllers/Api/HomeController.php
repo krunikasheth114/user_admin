@@ -15,7 +15,11 @@ class HomeController extends BaseController
     {
         if (Auth::check()) {
             $blog = Blog::get();
-            return $this->sendResponse($blog, 'Blog list');
+            if (!empty($blog)) {
+                return $this->sendResponse($blog, 'Blog list');
+            } else {
+                return $this->sendError($blog, 'Data not found');
+            }
         }
     }
 }

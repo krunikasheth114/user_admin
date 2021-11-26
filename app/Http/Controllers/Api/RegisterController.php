@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Requests\RegisterRequest;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Api\BaseController as BaseController;
@@ -15,9 +16,8 @@ use App\Models\Blog;
 
 class RegisterController extends BaseController
 {
-    public function Register(Request $request)
+    public function Register(RegisterRequest $request)
     {
-
         $user = new User;
         $user->firstname = $request->input('firstname');
         $user->lastname = $request->input('lastname');
@@ -38,10 +38,14 @@ class RegisterController extends BaseController
     public function home(Request $request)
     {
         $blog = Blog::get();
-        $blog_view = DB::table('blogs')
-            ->leftJoin('views', 'blogs.id', '=', 'views.blog_id')
-            ->count();
-        $data = [$blog, $blog_view];
-        return $this->sendResponse($data, 'data-list');
+        if (!empty($blog)) {
+            $blog_view = DB::table('blogs')
+                ->leftJoin('views', 'blogs.id', '=', 'views.blog_id')
+                ->count();
+            $data = [$blog, $blog_view];
+            return $this->sendResponse($data, 'data-list');
+        } else {
+            return $this->sendError($blog, 'Data not found');
+        }
     }
 }

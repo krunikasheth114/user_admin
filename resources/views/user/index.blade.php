@@ -1,57 +1,104 @@
 @extends('user.user_layout.master')
 @section('content')
 
-        <div class="row">   
-            <div class="col-lg-8">
-                @foreach ($blog as $b)
-                <div class="all-blog-posts">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="blog-post">
-                                <div class="blog-thumb">
-                                    <img src="{{ asset('images/' . $b->image) }}" alt="">
-                                </div>
-                                <div class="down-content">
-                                    <span>{{ $b->category->category }}</span>
-                                    <a href="{{ route('display', $b->slug) }}">
-                                        <h4>{{ $b->title }}</h4>
-                                    </a>
-                                    <ul class="post-info">
-                                        <li><i class="fa fa-thumbs-up">{{ $b->bloglike()->count() }}</i></li>
-                                        <li><i class="fa fa-comments-o">{{ $b->blogcomments()->count() }}</i></li>
-                                        <li><i class="fa fa-eye">{{ getblogView($b->id) }}</i></li>
-                                        <li><a href="#">{{ $b->created_at }}</a></li>
-                                    </ul>
-                                    <p>{{ $b->description }}</p>
-                                    <div class="post-options">
-                                        <div class="row">
-                                            <div class="col-6">
-                                                <ul class="post-tags">
-                                                    <li><i class="fa fa-tags"></i></li>
-                                                    <li><a href="#">Best Templates</a>,</li>
-                                                    <li><a href="#">TemplateMo</a></li>
-                                                </ul>
-                                            </div>
-                                            <div class="col-6">
-                                                <ul class="post-share">
-                                                    <li><i class="fa fa-share-alt"></i></li>
-                                                    <li><a href="#">Facebook</a>,</li>
-                                                    <li><a href="#"> Twitter</a></li>
-                                                </ul>
+
+  
+    <section class="call-to-action">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+                    @foreach ($blog as $b)
+                        <div class="all-blog-posts">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="blog-post">
+                                        <div class="blog-thumb">
+                                            <img src="{{ asset('images/' . $b->image) }}" alt="">
+                                        </div>
+                                        <div class="down-content">
+                                            <span>{{ $b->category->category }}</span>
+                                            <a href="{{ route('display', $b->slug) }}">
+                                                <h4>{{ $b->title }}</h4>
+                                            </a>
+                                            <ul class="post-info">
+                                                <li><i class="fa fa-thumbs-up">{{ $b->bloglike()->count() }}</i></li>
+                                                <li><i class="fa fa-comments-o">{{ $b->blogcomments()->count() }}</i></li>
+                                                <li><i class="fa fa-eye">{{ getblogView($b->id) }}</i></li>
+                                                <li><a href="#">{{ $b->created_at }}</a></li>
+                                            </ul>
+                                            <p>{{ $b->description }}</p>
+                                            <div class="post-options">
+                                                <div class="row">
+                                                    <div class="col-6">
+                                                        <ul class="post-tags">
+                                                            <li><i class="fa fa-tags"></i></li>
+                                                            <li><a href="#">Best Templates</a>,</li>
+                                                            <li><a href="#">TemplateMo</a></li>
+                                                        </ul>
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <ul class="post-share">
+                                                            <li><i class="fa fa-share-alt"></i></li>
+                                                            <li><a href="#">Facebook</a>,</li>
+                                                            <li><a href="#"> Twitter</a></li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                    @endforeach
+                </div>
+                <div class="col-lg-4">
+
+                    <div class="sidebar">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="sidebar-item search">
+
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="sidebar-item recent-posts">
+                                    <div class="sidebar-heading">
+                                        <h2>Recent Posts</h2>
+                                    </div>
+                                    @foreach ($blogs as $blog)
+                                        <div class="content">
+                                            <ul>
+                                                <li><a href="{{ route('display', $blog->slug) }}">
+                                                        <h5>{{ $blog->title }}</h5>
+                                                        <span>{{ $blog->created_at }}</span>
+                                                    </a></li>
+                                            </ul>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="sidebar-item categories">
+                                    <div class="sidebar-heading">
+                                        <h2>Categories</h2>
+                                    </div>
+                                    @foreach ($category as $c)
+                                        <div class="content">
+                                            <ul>
+                                                <li><a href="#">-{{ $c->category }}</a></li>
+                                            </ul>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                @endforeach
             </div>
-            <div class="col-lg-4"></div>
-          
         </div>
- 
+    </section>
+
 
 
 

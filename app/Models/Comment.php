@@ -14,7 +14,7 @@ class Comment extends Model
         'comment',
         'parent_id'
 
-       
+
     ];
     public function getBlog()
     {

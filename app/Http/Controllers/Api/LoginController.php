@@ -11,13 +11,17 @@ class LoginController extends BaseController
 {
      public function Login(Request $request)
      {
+        $request->validate([
+            'email' => 'required',
+            'password' => 'required'
+        ]);
+
         Auth::guard('web')->attempt(['email' => $request->email, 'password' => $request->password]);
         if (Auth::guard('web')->check()) {
             $user = Auth::user(); 
             $user->token =  $user->createToken('task2')->accessToken;
             return $this->sendResponse($user, 'User login successfully.');
         } else {
-            
             return $this->sendError('Unauthorised.', ['error'=>'Unauthorised']);
         }
      }
