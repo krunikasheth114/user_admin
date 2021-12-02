@@ -37,22 +37,20 @@ class LoginController extends Controller
         // $data = $request->validated();
         Auth::guard('admin')->attempt(['email' => $request->email, 'password' => $request->password]);
         return $this->guard('admin')->attempt(
-                $this->credentials($request),
-              
-            );
+            $this->credentials($request),
+
+        );
         if (Auth::guard('admin')->check()) {
 
             return redirect()->route('dashboard');
         } else {
             return redirect()->route('admin.login');
         }
-
-        
     }
 
     public function logout(Request $request)
     {
-       
+
         $this->guard()->logout();
         return redirect()->route('admin.login');
     }
@@ -66,8 +64,4 @@ class LoginController extends Controller
     {
         return Auth::guard('admin');
     }
-    
 }
-
-
-

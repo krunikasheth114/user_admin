@@ -27,8 +27,11 @@
                         <div class="card m-b-30">
                             <div class="card-header">
                                 <div class="card-header-actions">
-                                    <button class="btn btn-success btn-save float-right" title="Add " data-toggle="modal"
-                                        data-target="#blog_category" data-id="'.$data->id.'">Add </button>
+                                    @if (auth()->user()->hasAnyPermission('blog_category_create')) {\
+                                        <button class="btn btn-success btn-save float-right" title="Add "
+                                            data-toggle="modal" data-target="#blog_category" data-id="'.$data->id.'">Add
+                                        </button>
+                                    @endif
                                 </div>
                             </div>
                             <div class="card-body">

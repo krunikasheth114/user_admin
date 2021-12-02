@@ -48,7 +48,6 @@ class SubCategoryController extends Controller
     public function store(SubCategoryRequest $request)
     {
 
-        $subcategory = $request->validated();
         $subcategory = new Subcategory;
         $subcategory->subcategory_name = $request->input('subcategory_name');
         $subcategory->category_id = $request->input('category');

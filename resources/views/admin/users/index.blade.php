@@ -33,6 +33,7 @@
 
                                 <div class="ajax-msg"></div>
                                 <div class="table-responsive">
+                                    
                                     {!! $dataTable->table(['class' => 'table table-bordered dt-responsive nowrap']) !!}
                                 </div>
                             </div>

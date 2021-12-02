@@ -27,7 +27,7 @@ class DocumentDataTable extends DataTable
             ->editColumn('updated_at', function ($request) {
                 return $request->created_at->format('Y-m-d H:i:s'); // human readable format
             })
-            
+
             // ->editColumn('document', function ($request) {
             //     return $request->getDocumentUrlAttribute(); 
             // })
@@ -36,8 +36,13 @@ class DocumentDataTable extends DataTable
             })
             ->addColumn('action', function ($data) {
                 $inactive = "";
-                $inactive .=  '<a href="' . route('admin.document.edit', $data->id) . '" class="btn btn-success btn-sm  m-1 update" id="' . $data->id . '" title="Edit Page"><i class="fa fa-edit"></i></a>';
-                $inactive .=  '<a href="' . route('admin.document.destroy', $data->id) . '" class="btn btn-danger btn-sm  m-1 delete" id="' . $data->id . '" ><i class="fa fa-trash"></i></a>';
+
+                if (auth()->user()->hasAnyPermission('user_document_update')) {
+                    $inactive .=  '<a href="' . route('admin.document.edit', $data->id) . '" class="btn btn-success btn-sm  m-1 update" id="' . $data->id . '" title="Edit Page"><i class="fa fa-edit"></i></a>';
+                }
+                if (auth()->user()->hasAnyPermission('user_document_delete')) {
+                    $inactive .=  '<a href="' . route('admin.document.destroy', $data->id) . '" class="btn btn-danger btn-sm  m-1 delete" id="' . $data->id . '" ><i class="fa fa-trash"></i></a>';
+                }
                 return $inactive;
             })
             ->rawColumns(['action']);

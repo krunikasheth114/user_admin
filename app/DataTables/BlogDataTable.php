@@ -26,15 +26,12 @@ class BlogDataTable extends DataTable
             })
             ->editcolumn('like', function ($data) {
                 return $data->blogLikes() ? $data->blogLikes() : '';
-              
             })
             ->editcolumn('comments', function ($data) {
                 return $data->blogComment() ? $data->blogComment() : '';
-              
             })
             ->editcolumn('views', function ($data) {
                 return $data->views() ? $data->views() : '';
-              
             })
             ->editcolumn('user_id', function ($data) {
                 return $data->getUser ? $data->getUser->firstname . '  ' .  $data->getUser->lastname : '';;
@@ -46,21 +43,25 @@ class BlogDataTable extends DataTable
                 return $request->created_at->format('Y-m-d H:i:s'); // human readable format
             })
             ->editcolumn('image', function ($data) {
-                return '<img src="'.$data->image_url.'" height="100px" width="100px">';
+                return '<img src="' . $data->image_url . '" height="100px" width="100px">';
             })
-            
+
             ->editcolumn('url', function ($data) {
-              
-                return '<a href="'.$data->blogUrl->url.'" target="_blank">View Blog</a>' ;
+
+                return '<a href="' . $data->blogUrl->url . '" target="_blank">View Blog</a>';
             })
             ->addColumn('action', function ($data) {
                 $inactive = "";
-                $inactive .=  '<button type="button" class="btn btn-warning m-1 update" data-toggle="modal" data-target="#updateblog" id="' . $data->id . '"><i class="fa fa-edit"></i></button>';
-                $inactive .=  '<button type="button" class="btn btn-danger m-1 delete" id="' . $data->id . '"><i class="fa fa-trash"></i></button>';
+                if (auth()->user()->hasAnyPermission('blog_details_update')) {
+                    $inactive .=  '<button type="button" class="btn btn-warning m-1 update" data-toggle="modal" data-target="#updateblog" id="' . $data->id . '"><i class="fa fa-edit"></i></button>';
+                }
+                if (auth()->user()->hasAnyPermission('blog_details_delete')) {
+                    $inactive .=  '<button type="button" class="btn btn-danger m-1 delete" id="' . $data->id . '"><i class="fa fa-trash"></i></button>';
+                }
                 return $inactive;
             })
-            
-             ->rawColumns(['image','url','action']);
+
+            ->rawColumns(['image', 'url', 'action']);
     }
 
     /**
@@ -82,18 +83,18 @@ class BlogDataTable extends DataTable
     public function html()
     {
         return $this->builder()
-                    ->setTableId('blog-table')
-                    ->columns($this->getColumns())
-                    ->minifiedAjax()
-                    ->dom('Blfrtip')
-                    ->orderBy(1)
-                    ->buttons(
-                        Button::make('create'),
-                        Button::make('export'),
-                        Button::make('print'),
-                        Button::make('reset'),
-                        Button::make('reload')
-                    );
+            ->setTableId('blog-table')
+            ->columns($this->getColumns())
+            ->minifiedAjax()
+            ->dom('Blfrtip')
+            ->orderBy(1)
+            ->buttons(
+                Button::make('create'),
+                Button::make('export'),
+                Button::make('print'),
+                Button::make('reset'),
+                Button::make('reload')
+            );
     }
 
     /**
@@ -117,10 +118,10 @@ class BlogDataTable extends DataTable
             Column::make('created_at'),
             Column::make('updated_at'),
             Column::computed('action')
-            ->exportable(false)
-            ->printable(false)
-            ->width(60)
-            ->addClass('text-center'),
+                ->exportable(false)
+                ->printable(false)
+                ->width(60)
+                ->addClass('text-center'),
         ];
     }
 

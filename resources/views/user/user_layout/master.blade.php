@@ -11,27 +11,15 @@
         href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i&display=swap"
         rel="stylesheet">
 
-        <title>@yield('page_title') | Blog </title>
+    <title>@yield('page_title') | Blog </title>
     <!-- Bootstrap core CSS -->
     <link href="{{ asset('blog/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
-
-
     <!-- Additional CSS Files -->
     <link rel="stylesheet" href="{{ asset('blog/assets/css/fontawesome.css') }}">
     <link rel="stylesheet" href="{{ asset('blog/assets/css/templatemo-stand-blog.css') }}">
     <link rel="stylesheet" href="{{ asset('blog/assets/css/owl.css') }}">
     @stack('css')
-    <!--
-        
-    
-    TemplateMo 551 Stand Blog
-    
-    https://templatemo.com/tm-551-stand-blog
-    
-    -->
 </head>
-
-
 <body>
     <div id="preloader">
         <div class="jumper">
@@ -42,19 +30,17 @@
     </div>
     <!-- ***** Preloader End ***** -->
     @include('user.user_layout.header')
-    
+
     <div class="main-banner header-text">
         <div class="container-fluid">
             <div class="owl-banner owl-carousel">
                 <div class="item">
-
                 </div>
             </div>
         </div>
     </div>
     <section class="blog-posts">
         <div class="container">
-            
             @yield('content')
         </div>
     </section>
@@ -80,7 +66,6 @@
         }
     </script>
     @stack('page_scripts')
-
 </body>
 
 </html>

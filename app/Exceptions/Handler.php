@@ -6,7 +6,10 @@ use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
 use Illuminate\Auth\AuthenticationException;
 use Auth;
-
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 
 class Handler extends ExceptionHandler
 {
@@ -44,6 +47,7 @@ class Handler extends ExceptionHandler
 
     public function render($request, Throwable $exception)
     {
+       
         if ($request->expectsJson()) {
             if ($exception instanceof ValidationException) {
                 $transformed = [];
@@ -56,6 +60,7 @@ class Handler extends ExceptionHandler
                 ], 422);
             }
             if ($exception instanceof AccessDeniedHttpException || $exception instanceof AuthorizationException) {
+               
                 return response()->json([
                     'success' => false,
                     'errors' => new \StdClass(),
@@ -64,6 +69,7 @@ class Handler extends ExceptionHandler
             }
 
             if ($exception instanceof MethodNotAllowedHttpException || $exception instanceof ModelNotFoundException || $exception instanceof NotFoundHttpException) {
+         
                 return response()->json([
                     'success' => false,
                     'errors' => new \StdClass(),

@@ -3,6 +3,7 @@
 namespace App\DataTables;
 
 use App\Models\SubCategory;
+use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
@@ -39,17 +40,21 @@ class SubCategoryDataTable extends DataTable
             ->editColumn('updated_at', function ($request) {
                 return $request->created_at->format('Y-m-d H:i:s'); // human readable format
             })
-
-
             ->addColumn('action', function ($data) {
                 $inactive = "";
-                if ($data->status == 1) {
-                    $inactive .= '<button type="button" class="btn btn-primary changestatus" status ="0" id="' . $data->id . '"><i class="fa fa-lock"></i></button>';
-                } else {
-                    $inactive .= '<button type="button" class="btn btn-success changestatus" status ="1" id="' . $data->id . '"><i class="fa fa-unlock"></i></button>';
+                if (Auth::user()->is_admin == 1) {
+                    if ($data->status == 1) {
+                        $inactive .= '<button type="button" class="btn btn-primary changestatus" status ="0" id="' . $data->id . '"><i class="fa fa-lock"></i></button>';
+                    } else {
+                        $inactive .= '<button type="button" class="btn btn-success changestatus" status ="1" id="' . $data->id . '"><i class="fa fa-unlock"></i></button>';
+                    }
                 }
-                $inactive .=  '<button type="button" class="btn btn-warning m-1 edit" data-toggle="modal" data-target="#editsubcategory" id="' . $data->id . '"><i class="fa fa-edit"></i></button>';
-                $inactive .=  '<button type="button" class="btn btn-danger m-1 delete" id="' . $data->id . '"><i class="fa fa-trash"></i></button>';
+                if (auth()->user()->hasAnyPermission('subcategory_update')) {
+                    $inactive .=  '<button type="button" class="btn btn-warning m-1 edit" data-toggle="modal" data-target="#editsubcategory" id="' . $data->id . '"><i class="fa fa-edit"></i></button>';
+                }
+                if (auth()->user()->hasAnyPermission('subcategory_delete')) {
+                    $inactive .=  '<button type="button" class="btn btn-danger m-1 delete" id="' . $data->id . '"><i class="fa fa-trash"></i></button>';
+                }
                 return $inactive;
             })
             ->rawColumns(['action', 'status'])

@@ -74,3 +74,6 @@
     </nav>
     @include('user.update_user');
 </header>
+
+
+

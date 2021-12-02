@@ -15,10 +15,18 @@ class AdminSeeder extends Seeder
      */
     public function run()
     {
-        Admin::create([
+        $admin = Admin::create([
             'email'=>'admin@gmail.com',
             'password'=>Hash::make('admin@123'),
             'is_admin'=>'1',
         ]);
+        $admin->assignRole('SuperAdmin');
+
+        $admins = Admin::create([
+            'email'=>'krunika@gmail.com',
+            'password'=>Hash::make('admin@123'),
+            'is_admin'=>'1',
+        ]);
+        $admins->assignRole('Developer');
     }
 }

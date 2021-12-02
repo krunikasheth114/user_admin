@@ -1,8 +1,5 @@
 
 <?php
-
-
-
 Route::group(['namespace' => 'Auth'], function () {
     # Login Routes
     Route::get('login',     'LoginController@showLoginForm')->name('login');
@@ -12,6 +9,14 @@ Route::group(['namespace' => 'Auth'], function () {
 Route::group(['middleware' => 'auth:admin'], function () {
 
     Route::get('dashboard',                   'DashboardController@showDashboared')->name('dashboard');
+    Route::group(['prefix' => 'admin_user', 'as' => 'admin_user.'], function () {
+        Route::get('index',                   'AdminUserController@index')->name('admin');
+        Route::post('store',                   'AdminUserController@store')->name('store_admin');
+        Route::post('edit',                   'AdminUserController@edit')->name('edit_admin');
+        Route::post('update',                   'AdminUserController@update')->name('update_admin');
+        Route::post('delete',                   'AdminUserController@delete')->name('delete_admin');
+
+    });
     Route::group(['prefix' => 'category', 'as' => 'category.'], function () {
         Route::get('category',                   'CategoryController@showCategory')->name('showCategory');
         Route::get('/',                           'CategoryController@dataTable')->name('dataTable');
@@ -64,6 +69,21 @@ Route::group(['middleware' => 'auth:admin'], function () {
         Route::any('/bloglikes',  'BlogController@blogLikes')->name('bloglikes');
         Route::any('/blogComment',  'BlogController@blogComment')->name('blogComment');
         Route::any('/deletecomment',  'BlogController@deleteComment')->name('deletecomment');
+    });
+    Route::group(['prefix' => 'permission', 'as' => 'permission.'], function () {
+        Route::get('view',  'PermissionController@view')->name('view');
+        Route::post('create',  'PermissionController@create')->name('create');
+        Route::post('edit',  'PermissionController@edit')->name('edit');
+        Route::post('update',  'PermissionController@update')->name('update');
+        Route::post('delete',  'PermissionController@delete')->name('delete');
+    });
+    Route::group(['prefix' => 'role', 'as' => 'role.'], function () {
+        Route::get('viewrole',  'RoleController@viewRole')->name('viewrole');
+        Route::post('store',  'RoleController@create')->name('store');
+        Route::post('deleterole',  'RoleController@deleteRole')->name('deleterole');
+        Route::get('show/{id}',  'RoleController@show')->name('show');
+        Route::post('assign/{id}',  'RoleController@assign')->name('assign');
+        Route::post('updatepermission',  'RoleController@updatePermission')->name('update-permission');
     });
 });
 ?>

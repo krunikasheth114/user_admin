@@ -9,6 +9,7 @@ use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
+
 class CommentDataTable extends DataTable
 {
     /**
@@ -32,7 +33,9 @@ class CommentDataTable extends DataTable
             })
             ->addColumn('action', function ($data) {
                 $inactive = "";
+                if (auth()->user()->hasAnyPermission('comment_delete')) {
                 $inactive .=  '<button type="button" class="btn btn-danger m-1 delete" id="' . $data->id . '"><i class="fa fa-trash"></i></button>';
+                }
                 return $inactive;
             })
             ->rawColumns(['action']);
@@ -83,7 +86,7 @@ class CommentDataTable extends DataTable
             Column::make('id'),
             Column::make('user_id')->title('User Name'),
             Column::make('blog_id')->title('Blog Title'),
-            Column::make('parent_id'),
+         
             Column::make('comment'),
             Column::make('created_at'),
 

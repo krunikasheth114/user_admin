@@ -9,8 +9,8 @@ use Illuminate\Support\Facades\Auth;
 
 class LoginController extends BaseController
 {
-     public function Login(Request $request)
-     {
+    public function Login(Request $request)
+    {
         $request->validate([
             'email' => 'required',
             'password' => 'required'
@@ -18,11 +18,11 @@ class LoginController extends BaseController
 
         Auth::guard('web')->attempt(['email' => $request->email, 'password' => $request->password]);
         if (Auth::guard('web')->check()) {
-            $user = Auth::user(); 
+            $user = Auth::user();
             $user->token =  $user->createToken('task2')->accessToken;
             return $this->sendResponse($user, 'User login successfully.');
         } else {
-            return $this->sendError('Unauthorised.', ['error'=>'Unauthorised']);
+            return $this->sendError('Unauthorised.', ['error' => 'Unauthorised']);
         }
-     }
+    }
 }

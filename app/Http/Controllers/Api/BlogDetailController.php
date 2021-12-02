@@ -100,32 +100,28 @@ class BlogDetailController extends BaseController
     public function fetchComment($id)
     {
         $comments = Comment::where('blog_id', $id)->where('parent_id', 0)->get();
-        if (!empty($comments)) {
-            $output = '';
-            for ($i = 0; $i < count($comments); $i++) {
+        $output = '';
+        for ($i = 0; $i < count($comments); $i++) {
 
-                $output .= '<div class="sidebar-item comments">
-                                    <div class="sidebar-heading">
-                                    </div>
-                                <div class="content">
-                                <ul>';
-                $output .= '<li>
-                                    <div class="right-content">
-                                       <h5> <b>@</b>' . $comments[$i]->getUser->firstname . '  ' . $comments[$i]->created_at->diffForHumans() . '</h5>
-                                       <p>' . $comments[$i]->comment . '</p>
-                                        <button type="button" class="btn btn-danger delete mt-2 mr-2" data-id="' . $comments[$i]->id . '">Delete</button>
-                                        <button type="button" class="btn btn-default reply mt-2" id="reply_' . $i . '" data-id="' . $comments[$i]->id . '">Reply</button>';
-                $output .= $this->get_reply_comment($id, $comments[$i]->id);
-                '</div>
-                                </li>';
-                $output .= '</ul>
-                            </div>
-                        </div>';
-            }
-            return $this->sendResponse($comments, 'comments fetch');
-        } else {
-            return $this->sendError($comments, 'Comments not Found');
+            $output .= '<div class="sidebar-item comments">
+                                        <div class="sidebar-heading">
+                                        </div>
+                                    <div class="content">
+                                    <ul>';
+            $output .= '<li>
+                                        <div class="right-content">
+                                           <h5> <b>@</b>' . $comments[$i]->getUser->firstname . '  ' . $comments[$i]->created_at->diffForHumans() . '</h5>
+                                           <p>' . $comments[$i]->comment . '</p>
+                                            <button type="button" class="btn btn-danger delete mt-2 mr-2" data-id="' . $comments[$i]->id . '">Delete</button>
+                                            <button type="button" class="btn btn-default reply mt-2" id="reply_' . $i . '" data-id="' . $comments[$i]->id . '">Reply</button>';
+            $output .= $this->get_reply_comment($id, $comments[$i]->id);
+            '</div>
+                                    </li>';
+            $output .= '</ul>
+                                </div>
+                            </div>';
         }
+        return $this->sendResponse($comments, 'comments fetch');
     }
     public function get_reply_comment($blog_id, $comment_id)
     {

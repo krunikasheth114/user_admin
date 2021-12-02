@@ -28,12 +28,13 @@
                     <div class="card m-b-30">
                         <div class="card-header">
                             <div class="card-header-actions">
+                                	
+                                @if (auth()->user()->hasAnyPermission('category_create'))
                                 <button class="btn btn-success btn-save float-right" title="Add " data-toggle="modal" data-target="#category_add_modal" data-id="'.$data->id.'">Add </button>
+                                  @endif
                             </div>
                         </div>
                         <div class="card-body">
-                            <!-- ajax form response -->
-
                             <div class="ajax-msg"></div>
                             <div class="table-responsive">
                                 {!! $dataTable->table(['class' => 'table table-bordered dt-responsive nowrap']) !!}
