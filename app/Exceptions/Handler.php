@@ -21,7 +21,6 @@ class Handler extends ExceptionHandler
     protected $dontReport = [
         //
     ];
-
     /**
      * A list of the inputs that are never flashed for validation exceptions.
      *
@@ -47,7 +46,7 @@ class Handler extends ExceptionHandler
 
     public function render($request, Throwable $exception)
     {
-       
+
         if ($request->expectsJson()) {
             if ($exception instanceof ValidationException) {
                 $transformed = [];
@@ -60,7 +59,7 @@ class Handler extends ExceptionHandler
                 ], 422);
             }
             if ($exception instanceof AccessDeniedHttpException || $exception instanceof AuthorizationException) {
-               
+
                 return response()->json([
                     'success' => false,
                     'errors' => new \StdClass(),
@@ -69,7 +68,7 @@ class Handler extends ExceptionHandler
             }
 
             if ($exception instanceof MethodNotAllowedHttpException || $exception instanceof ModelNotFoundException || $exception instanceof NotFoundHttpException) {
-         
+
                 return response()->json([
                     'success' => false,
                     'errors' => new \StdClass(),
@@ -79,7 +78,6 @@ class Handler extends ExceptionHandler
         }
         return parent::render($request, $exception);
     }
-
     protected function unauthenticated($request, AuthenticationException $e)
     {
         if ($request->expectsJson()) {
@@ -99,7 +97,6 @@ class Handler extends ExceptionHandler
                     } else {
                         $jwtPayload = null;
                     }
-
                     if ($jwtPayload) {
                         $access_token = AccessToken::where('id', $jwtPayload->jti)->where('revoked', 0)->first();
                         $user = User::find($jwtPayload->sub);
@@ -125,7 +122,7 @@ class Handler extends ExceptionHandler
                 ], 401);
             }
         } else {
-            return redirect()->guest('user/login');
+            return redirect()->route('admin.login');
         }
     }
 }

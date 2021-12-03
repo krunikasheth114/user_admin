@@ -33,9 +33,9 @@ class CommentDataTable extends DataTable
             })
             ->addColumn('action', function ($data) {
                 $inactive = "";
-                if (auth()->user()->hasAnyPermission('comment_delete')) {
+            
                 $inactive .=  '<button type="button" class="btn btn-danger m-1 delete" id="' . $data->id . '"><i class="fa fa-trash"></i></button>';
-                }
+                 
                 return $inactive;
             })
             ->rawColumns(['action']);

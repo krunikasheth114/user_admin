@@ -34,23 +34,28 @@ class LoginController extends Controller
 
     protected function attemptlogin(Request $request)
     {
-        // $data = $request->validated();
-        Auth::guard('admin')->attempt(['email' => $request->email, 'password' => $request->password]);
-        return $this->guard('admin')->attempt(
+        // dd('fdgdfg');
+        // dd( $this->guard()->attempt(
+        //     $this->credentials($request), $request->filled('remember')
+        // ));
+        return $this->guard()->attempt(
             $this->credentials($request),
-
+            $request->filled('remember')
         );
-        if (Auth::guard('admin')->check()) {
+        // Auth::guard('admin')->attempt(['email' => $request->email, 'password' => $request->password]);
 
-            return redirect()->route('dashboard');
-        } else {
-            return redirect()->route('admin.login');
-        }
+        // $data =  $this->guard()->attempt( 
+        //     $this->credentials($request),
+        // );
+        // if ($data) {
+        //     return redirect()->route('dashboard');
+        // } else {
+        //     return redirect()->route('admin.login');
+        // }
     }
 
     public function logout(Request $request)
     {
-
         $this->guard()->logout();
         return redirect()->route('admin.login');
     }

@@ -23,30 +23,32 @@ class PermissionsSeeder extends Seeder
 
         $modules = array(
             'Category' => 'category',
-            'Subcategory'=>'subcategory',
-            'User' => 'user' ,
-            'UserDocument' => 'user_document' ,
-            'UserAddress'=>'user_address',
+            'Subcategory' => 'subcategory',
+            'User' => 'user',
+            'UserDocument' => 'user_document',
+            'UserAddress' => 'user_address',
             'BlogCategory' => 'blog_category',
-            'BlogDetails '=> 'blog_details' ,
-            'BlogComments' => 'blog_comments'
-    
-        ); 
-        foreach($modules as $key =>$value){
-            $permissions=array();
-            $create=$value .'_create';
-            $update=$value .'_update';
-            $delete=$value .'_delete';
-            $view=$value .'_view';
+            'BlogDetails ' => 'blog_details',
+            'BlogComments' => 'blog_comments',
+             'AdminUser' =>'admin_user',
+             'RolePermission'=>'Role_permission'
+        
+        );
+        foreach ($modules as $key => $value) {
+            $permissions = array();
+            $create = $value . '_create';
+            $update = $value . '_update';
+            $delete = $value . '_delete';
+            $view = $value . '_view';
 
             $permissions[] = $create;
             $permissions[] = $update;
             $permissions[] = $delete;
             $permissions[] = $view;
 
-            
+
             foreach ($permissions as $per) {
-               
+
                 Permission::create([
                     'name'          => $per,
                     'module'        => $key,

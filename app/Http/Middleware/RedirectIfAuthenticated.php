@@ -22,13 +22,11 @@ class RedirectIfAuthenticated
         if ($guard == "admin" && Auth::guard($guard)->check()) {
             return redirect('/Admin/dashboard/');
         }
-
         if ($guard == "web" && Auth::guard($guard)->check()) {
             return redirect('/dashboard');
         }
-
         if (Auth::guard($guard)->check()) {
-            return redirect('/dashboard');
+            return redirect('Admin/dashboard');
         }
         return $next($request);
     }

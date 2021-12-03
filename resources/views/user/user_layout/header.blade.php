@@ -41,8 +41,8 @@
                                 <div class="dropdown-menu dropdown-menu-right">
                                     @if (Auth::check())
                                         @if (count(Auth::user()->blogs) > 0)
-                                            <a class="dropdown-item" href="{{ route('blog.edit', Auth::user()->id) }}">
-
+                                            <a class="dropdown-item"
+                                                href="{{ route('blog.edit', Auth::user()->id) }}">
                                                 {{ __('Edit Blogs') }}
                                             </a>
                                         @endif
@@ -50,7 +50,6 @@
                                     <a class="dropdown-item update" href="{{ route('update') }}" data-toggle="modal"
                                         id="{{ Auth::user()->id }}" data-target="#updateprofile">
                                         {{ __('Edit Profile') }}
-
                                     </a>
                                     <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                                       document.getElementById('logout-form').submit();">
@@ -74,6 +73,3 @@
     </nav>
     @include('user.update_user');
 </header>
-
-
-

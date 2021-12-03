@@ -12,6 +12,7 @@ use App\Models\Permission;
 
 class RoleController extends Controller
 {
+  
     public function viewRole(RoleDataTable $datatable)
     {
 
