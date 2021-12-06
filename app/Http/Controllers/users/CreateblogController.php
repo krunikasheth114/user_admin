@@ -36,19 +36,19 @@ class CreateblogController extends Controller
 
     public function edit($id)
     {
-   
-        $blogs = Blog::where('user_id',$id)->get();
-      
+
+        $blogs = Blog::where('user_id', $id)->get();
+
         $category = Blog_category::get(['category', 'id']);
         return view('user.blog.editblog', compact('blogs', 'category'));
     }
     public function update(Request $request, $slug)
     {
-      $request->validate([
-        'category_id' => 'required',
-        'title'=>'required',
-        'description'=>'required',
-      ]);
+        $request->validate([
+            'category_id' => 'required',
+            'title' => 'required',
+            'description' => 'required',
+        ]);
         $update = Blog::where('slug', $slug)->get();
         foreach ($update as $u) {
             $u->category_id = $request->input('category_id');

@@ -90,7 +90,6 @@
                 image: {
                     required: true,
                 },
-               
             },
             messages: {
                 category_id: {

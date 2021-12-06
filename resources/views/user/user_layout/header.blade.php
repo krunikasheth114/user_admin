@@ -69,6 +69,8 @@
                     @endif
                 </ul>
             </div>
+            {{-- <a href="{{ url('login/facebook') }}" class="btn btn-social-icon btn-facebook"><i class="fa fa-facebook"></i></a>
+            <a href="{{ url('login/google') }}" class="btn btn-social-icon btn-google-plus"><i class="fa fa-google-plus"></i></a> --}}
         </div>
     </nav>
     @include('user.update_user');
