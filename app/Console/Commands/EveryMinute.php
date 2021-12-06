@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class EveryMinute extends Command
 {
@@ -39,7 +40,8 @@ class EveryMinute extends Command
     public function handle()
     {
         DB::table('users')->delete();
-        echo "Operation Done";
+        Log::info("Opration done");
         // return Command::SUCCESS;
     }
+  
 }

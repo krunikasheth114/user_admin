@@ -13,11 +13,11 @@ use App\Http\Requests\RegisterRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
-use App\Mail\VerifyUser;
 use App\Models\Blog;
 use Illuminate\Support\Facades\DB;
 use App\Models\View;
 use App\Models\Blog_category;
+use App\Jobs\RegisterUserEmail;
 
 class RegisterController extends Controller
 {
@@ -57,9 +57,10 @@ class RegisterController extends Controller
         $validatedData->password = Hash::make($request->input('password'));
         $validatedData->save();
         $id = $validatedData->id; // Get current user id
-
-       Mail::to($validatedData->email)->send(new VerifyUser($validatedData->otp));
-        return response()->json(['status' => true, 'data' => $validatedData, 'message' => "Mail sent", 'id' => $id]);
+ 
+ 
+        RegisterUserEmail::dispatch($validatedData)->delay(now()->addMinutes(1));   
+         return response()->json(['status' => true, 'data' => $validatedData, 'message' => "Mail sent", 'id' => $id]);
     }
 
     public function showotpRegister(Request $request, $id)
