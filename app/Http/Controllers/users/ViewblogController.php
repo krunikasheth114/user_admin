@@ -65,7 +65,6 @@ class ViewblogController extends Controller
         $comments = Comment::where('blog_id', $request->blog_id)->where('parent_id', 0)->get();
         $output = '';
         for ($i = 0; $i < count($comments); $i++) {
-
             $output .= '<div class="sidebar-item comments">
                                 <div class="sidebar-heading">
                                 </div>

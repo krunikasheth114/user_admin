@@ -6,7 +6,6 @@
             color: red;
             text-shadow: 1px 1px 1px red;
         }
-
     </style>
 @endpush
 @section('content')
@@ -53,7 +52,6 @@
     <div class="mb-5">
         <div class="col-lg-12" class="mb-5">
             <div id="display_comment">
-
             </div>
         </div>
         <div class="col-lg-12">
@@ -130,7 +128,6 @@
         $('body').on('submit', '#comment-form', function() {
             var comment = $('#comment').val();
             blog_id = "{{ $view->id }}"
-
             $.ajax({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
@@ -221,7 +218,6 @@
             });
         });
         load_comment();
-
         function load_comment() {
             blog_id = "{{ $view->id }}"
             $.ajax({

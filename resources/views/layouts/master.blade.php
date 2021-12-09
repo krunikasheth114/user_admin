@@ -15,7 +15,7 @@
 
     <!--Morris Chart CSS -->
     <link rel="stylesheet" href="{{ asset('assets/plugins/morris/morris.css') }}">
-    
+
 
     <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('assets/css/icons.css') }}" rel="stylesheet" type="text/css">
@@ -82,11 +82,12 @@
         <script src="{{ asset('assets/js/jquery.scrollTo.min.js') }}"></script>
 
         <!-- Morris Chart -->
-        <script src="{{ asset('assets/plugins/morris/morris.min.js') }}"></script>
+        {{-- <script src="{{ asset('assets/plugins/morris/morris.min.js') }}"></script> --}}
+        <script src="{{ asset('assets/plugins/raphael/raphael-min.js') }}"></script>
         <script src="{{ asset('assets/plugins/raphael/raphael-min.js') }}"></script>
 
         <!-- dashboard -->
-        <script src="{{ asset('assets/pages/dashboard.js') }}"></script>
+        {{-- <script src="{{ asset('assets/pages/dashboard.js') }}"></script> --}}
 
         <!-- App js -->
         <script src="{{ asset('assets/js/app.js') }}"></script>
@@ -97,6 +98,9 @@
 
         <script src="{{ asset('assets/plugins/datatables/jquery.dataTables.min.js') }}"></script>
         <script src="{{ asset('assets/plugins/datatables/dataTables.bootstrap4.min.js') }}"></script>
+        <script src="{{ asset('assets/plugins/chart.js/chart.min.js') }}"></script>
+        {{-- <script src="{{ asset('assets/pages/chartjs.init.js') }}"></script> --}}
+
         @stack('page_scripts')
 </body>
 
