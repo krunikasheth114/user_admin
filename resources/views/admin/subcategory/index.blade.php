@@ -96,18 +96,13 @@
     </div>
 
     </section>
-    @include('admin.subcategory.create')
 @endsection
 @push('page_scripts')
     {!! $dataTable->scripts() !!}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     <script>
         $(document).on('click', '.changestatus', function() {
-
             var status = $(this).attr('status');
             var id = $(this).attr('id');
-
             $.ajax({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
@@ -121,14 +116,11 @@
                 success: function(data) {
                     console.log(data.status);
                     if (data.status == true)
-
                     {
                         window.LaravelDataTables["subcategory-table"].draw();
                     }
                 }
-
             })
-
         })
         $(document).on('click', '.edit', function() {
 
@@ -156,12 +148,9 @@
         })
 
         $(document).on('click', '#btn', function() {
-
             var id = $('#hidden_id').val();
             var category_name = $('#category_name').val();
             var subcategory_name = $('#subcategory_name').val();
-
-
             $.ajax({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
@@ -174,21 +163,20 @@
                     subcategory_name: subcategory_name
                 },
                 success: function(data) {
-                    $("#editsubcategory").modal('hide');
+                    if(data.status==true){
+                        $("#editsubcategory").modal('hide');
                     alert(data.message);
                     window.LaravelDataTables["subcategory-table"].draw();
+                    }
                 },
-
                 error: function(error) {
-                    // console.log(error.responseJSON.errors);
+                    console.log(error.responseJSON.errors);
                     var i;
                     var res = error.responseJSON.errors;
                     $.each(res, function(key, value) {
                         toastr.error(value);
                     });
-
                 }
-
             })
 
         })
@@ -215,13 +203,10 @@
                             window.LaravelDataTables["subcategory-table"].draw();
                         }
 
-
                     }
-
                 })
             }
-
-
         })
     </script>
+      @include('admin.subcategory.create')
 @endpush

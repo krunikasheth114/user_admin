@@ -47,7 +47,7 @@
                                         </div>
                                         <div class="form-group row">
                                             <div class="col-sm-4">
-                                                <label for="firstname"> {{__('messages.firstname')}}</label>
+                                                <label for="firstname"> {{ __('messages.firstname') }}</label>
                                                 <input id="firstname" type="firstname" class="form-control"
                                                     name="firstname" value="{{ $userdata['firstname'] }}"
                                                     autocomplete="firstname" autofocus>
@@ -58,7 +58,7 @@
                                                 @endif
                                             </div>
                                             <div class="col-sm-4">
-                                                <label for="lastname"> {{__('messages.lastname')}}</label>
+                                                <label for="lastname"> {{ __('messages.lastname') }}</label>
                                                 <input id="lastname" type="lastname" class="form-control " name="lastname"
                                                     value="{{ $userdata['lastname'] }}" autocomplete="lastname" autofocus>
                                                 @if ($errors->has('lastname'))
@@ -70,7 +70,7 @@
 
 
                                             <div class="col-sm-4">
-                                                <label for="email"> {{__('messages.email')}}</label>
+                                                <label for="email"> {{ __('messages.email') }}</label>
                                                 <input id="email" type="email" class="form-control " name="email"
                                                     value="{{ old('email', isset($userdata->email) ? $userdata->email : '') }}"
                                                     autocomplete="email" autofocus>
@@ -84,7 +84,7 @@
 
                                         <div class="form-group row">
                                             <div class="col-sm-4">
-                                                <label for="category"> {{__('messages.category')}}</label>
+                                                <label for="category"> {{ __('messages.category') }}</label>
                                                 <select class="form-control" name="category" id="category">
 
                                                     @foreach ($category as $cat)
@@ -104,7 +104,7 @@
                                             </div>
 
                                             <div class="col-sm-4">
-                                                <label for="subcategory"> {{__('messages.sub_category')}}</label>
+                                                <label for="subcategory"> {{ __('messages.sub_category') }}</label>
                                                 <select class="form-control subcategory" name="subcategory"
                                                     id="subcategory">
 
@@ -126,13 +126,13 @@
                                             </div>
 
                                             <div class="col-sm-4">
-                                                <label for="profile"> {{__('messages.profile')}} </label>
+                                                <label for="profile"> {{ __('messages.profile') }} </label>
                                                 <input id="profile" type="file"
                                                     class="form-control @error('profile') is-invalid @enderror"
                                                     name="profile" autocomplete="current-profile">
                                             </div>
                                         </div>
-                                    
+
 
                                         @if (!empty($userdata->userAddress))
                                             @foreach ($userdata->userAddress as $key => $address)
@@ -228,7 +228,8 @@
                                         <div class="row">
                                             <div class="col-4">
                                                 <div class="col-4"></div>
-                                                <button type="button" class="btn btn-success" id="add-more" title="Add">{{ __('messages.addmoreaddress') }} </button>
+                                                <button type="button" class="btn btn-success" id="add-more"
+                                                    title="Add">{{ __('messages.addmoreaddress') }} </button>
                                             </div>
                                         </div>
 
@@ -251,7 +252,8 @@
                 </div>
             </div> <!-- container-fluid -->
         </div>
-
+        @endsection
+        @push('page_scripts')
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"></script>
         <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.js"></script>
@@ -332,7 +334,7 @@
                 },
                 messages: {
                     firstname: {
-                        required: "Firstname is required ",
+                        required: "This Field is required ",
                     },
                     lastname: {
                         required: "This field is Required",
@@ -461,4 +463,5 @@
                 $(this).parent().parent().parent().remove();
             })
         </script>
-    @endsection
+
+    @endpush

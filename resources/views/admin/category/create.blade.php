@@ -1,8 +1,9 @@
-<div class="modal fade" id="category_add_modal" role="dialog" aria-modal="true" data-backdrop="static"  aria-labelledby="category_add_modal">
+<div class="modal fade" id="category_add_modal" role="dialog" aria-modal="true" data-backdrop="static"
+    aria-labelledby="category_add_modal">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="workerLabel">{{ __('messages.add_category')}}</h5>
+                <h5 class="modal-title" id="workerLabel">{{ __('messages.add_category') }}</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -11,7 +12,7 @@
                 <form class="" method="POST" enctype="multipart/form-data" id="add_category_form">
                     @csrf
                     <div class="form-group">
-                        <label>{{ __('messages.category_name')}}</label>
+                        <label>{{ __('messages.category_name') }}</label>
                         <input type="text" class="form-control" name="category_name" id="category_name"
                             placeholder="Type your Category">
                     </div>
@@ -24,7 +25,7 @@
                     <div class="form-group">
                         <div>
                             <button type="submit" id="submit" name="submit" value="submit"
-                                class="btn btn-primary">{{ __('messages.add')}}</button>
+                                class="btn btn-primary">{{ __('messages.add') }}</button>
                         </div>
                     </div>
                 </form>
@@ -32,24 +33,14 @@
         </div>
     </div>
 </div>
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 <script>
     $('#add_category_form').validate({
-
+        lang: 'fr',
         rules: {
             category_name: {
                 required: true,
             }
-        },
-
-        messages: {
-            category_name: {
-                required: "Category field is required",
-            }
+        
         },
         submitHandler: function(form) {
 

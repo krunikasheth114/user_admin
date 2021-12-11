@@ -99,29 +99,47 @@
         <script src="{{ asset('assets/plugins/datatables/jquery.dataTables.min.js') }}"></script>
         <script src="{{ asset('assets/plugins/datatables/dataTables.bootstrap4.min.js') }}"></script>
         <script src="{{ asset('assets/plugins/chart.js/chart.min.js') }}"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+        <link rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.all.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/localization/messages_fr.js"></script>
+        
         {{-- <script src="{{ asset('assets/pages/chartjs.init.js') }}"></script> --}}
-<script>
-    $("body").on('change','#lang',function () {
-        var lang =$(this).val();
-        $.ajax({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-                },
-                url: "{{ route('admin.admin_user.language')}}",
-                method: "POST",
-                data: {
-                    _token: "{{ csrf_token() }}",
-                    lang: lang
-                },
-                success: function(data) {
-                   if(data.status==true){
-                    location.reload();
-                   }
-                    
+        <script>
+            $(document).ready(function() {
+                var en = {
+                    required: "This field is required.",
+
                 }
+            });
+            $('body').on('change', '#lang', function() {
+                $.extend($.validator.messages, eval($(this).val()));
+            });
+            $("body").on('change', '#lang', function() {
+                var lang = $(this).val();
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                    },
+                    url: "{{ route('admin.admin_user.language') }}",
+                    method: "POST",
+                    data: {
+                        _token: "{{ csrf_token() }}",
+                        lang: lang
+                    },
+                    success: function(data) {
+
+                        if (data.status == true) {
+
+                            location.reload();
+                        }
+
+                    }
+                })
             })
-    })
-</script>
+        </script>
         @stack('page_scripts')
 </body>
 
