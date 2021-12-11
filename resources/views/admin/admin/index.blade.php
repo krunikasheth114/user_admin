@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('page_title', 'Admin User')
+@section('page_title',  __('messages.adminuser'))
 @section('content')
     <div class="main-content">
         <div class="page-content">
@@ -25,7 +25,7 @@
                             <div class="card-header">
                                 <div class="card-header-actions">
                                     <button class="btn btn-success btn-save float-right" title="Add " data-toggle="modal"
-                                        data-target="#Admin_user" data-id="'.$data->id.'">Add </button>
+                                        data-target="#Admin_user" data-id="'.$data->id.'">{{__('messages.add') }}</button>
                                 </div>
                             </div>
                             <div class="card-body">
@@ -49,7 +49,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="workerLabel">Add Admin_User</h5>
+                    <h5 class="modal-title" id="workerLabel">{{__('messages.updateadminuser') }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -59,7 +59,7 @@
                         @csrf
                         <div class="form-group row">
                             <div class="col-sm-8">
-                                <label for="email">{{ __('Email') }} :</label>
+                                <label for="email">{{__('messages.email') }} :</label>
                                 <input type="email" class="form-control" id="email_edit" name="email_edit" value=""
                                     autocomplete="email" required autofocus>
                                 <input type="hidden" class="form-control" id="hidden" name="hidden" value=""
@@ -74,7 +74,7 @@
                         </div>
                         <div class="form-group row">
                             <div class="col-sm-8">
-                                <label> Role:</label>
+                                <label> {{__('messages.role') }}</label>
                                 <select class="form-control" name="role_edit" id="role_edit">
                                     <option value="">---select----</option>
 
@@ -84,7 +84,8 @@
                         <div class="form-group row">
                             <div class="col-sm-8">
                                 <button type="submit" class="btn btn-primary">
-                                    {{ __('Update') }}
+                                    {{__('messages.update') }}
+                                    
                                 </button>
                             </div>
                         </div>

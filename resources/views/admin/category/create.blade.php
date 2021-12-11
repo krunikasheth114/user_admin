@@ -2,7 +2,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="workerLabel">Add Category</h5>
+                <h5 class="modal-title" id="workerLabel">{{ __('messages.add_category')}}</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -11,7 +11,7 @@
                 <form class="" method="POST" enctype="multipart/form-data" id="add_category_form">
                     @csrf
                     <div class="form-group">
-                        <label>Category Name :</label>
+                        <label>{{ __('messages.category_name')}}</label>
                         <input type="text" class="form-control" name="category_name" id="category_name"
                             placeholder="Type your Category">
                     </div>
@@ -24,7 +24,7 @@
                     <div class="form-group">
                         <div>
                             <button type="submit" id="submit" name="submit" value="submit"
-                                class="btn btn-primary">Add</button>
+                                class="btn btn-primary">{{ __('messages.add')}}</button>
                         </div>
                     </div>
                 </form>

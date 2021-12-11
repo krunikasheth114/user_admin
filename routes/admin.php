@@ -10,6 +10,7 @@ Route::group(['middleware' => 'auth:admin'], function () {
 
     Route::get('dashboard',                   'DashboardController@showDashboared')->name('dashboard');
     Route::group(['prefix' => 'admin_user', 'as' => 'admin_user.'], function () {
+        Route::post('language',                   'LanguageController@language')->name('language');
         Route::get('index',                   'AdminUserController@index')->name('admin')->middleware('permission:admin_user_view');
         Route::post('store',                   'AdminUserController@store')->name('store_admin')->middleware('permission:admin_user_create');
         Route::post('edit',                   'AdminUserController@edit')->name('edit_admin')->middleware('permission:admin_user_view');

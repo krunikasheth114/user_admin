@@ -6,6 +6,7 @@
             color: red;
             text-shadow: 1px 1px 1px red;
         }
+
     </style>
 @endpush
 @section('content')
@@ -29,8 +30,8 @@
                             {{ $view->bloglike()->count() }}
                         </button>
                     @else
-                        <a href="{{ route('user.login') }}"  class="btn like " id="id"
-                            style="margin: 10px"><i class="fa fa-heart-o">{{ $view->bloglike()->count() }}</i>
+                        <a href="{{ route('user.login') }}" class="btn like " id="id" style="margin: 10px"><i
+                                class="fa fa-heart-o">{{ $view->bloglike()->count() }}</i>
                         </a>
                     @endif
                 </div>
@@ -218,6 +219,7 @@
             });
         });
         load_comment();
+
         function load_comment() {
             blog_id = "{{ $view->id }}"
             $.ajax({

@@ -100,7 +100,28 @@
         <script src="{{ asset('assets/plugins/datatables/dataTables.bootstrap4.min.js') }}"></script>
         <script src="{{ asset('assets/plugins/chart.js/chart.min.js') }}"></script>
         {{-- <script src="{{ asset('assets/pages/chartjs.init.js') }}"></script> --}}
-
+<script>
+    $("body").on('change','#lang',function () {
+        var lang =$(this).val();
+        $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                },
+                url: "{{ route('admin.admin_user.language')}}",
+                method: "POST",
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    lang: lang
+                },
+                success: function(data) {
+                   if(data.status==true){
+                    location.reload();
+                   }
+                    
+                }
+            })
+    })
+</script>
         @stack('page_scripts')
 </body>
 

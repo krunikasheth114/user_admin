@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('page_title', 'Blog Category')
+@section('page_title',  __('messages.blogcategory'))
 
 @section('content')
     <div class="main-content">
@@ -29,7 +29,7 @@
                                 <div class="card-header-actions">
                                     @if (auth()->user()->hasAnyPermission('blog_category_create')) {\
                                         <button class="btn btn-success btn-save float-right" title="Add "
-                                            data-toggle="modal" data-target="#blog_category" data-id="'.$data->id.'">Add
+                                            data-toggle="modal" data-target="#blog_category" data-id="'.$data->id.'">{{  __('messages.add')}}
                                         </button>
                                     @endif
                                 </div>
@@ -56,7 +56,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="workerLabel">create Blog Category</h5>
+                    <h5 class="modal-title" id="workerLabel"> {{__('messages.updateblogcategory')}}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -67,7 +67,7 @@
                         class="edit_blog_category_form">
                         @csrf
                         <div class="form-group">
-                            <label>Add Blog Category:</label>
+                            <label>{{__('messages.blogcategory')}}</label>
                             <input type="text" class="form-control category" value=" " name="category" id="category"
                                 placeholder="Type Blog Category">
                         </div>

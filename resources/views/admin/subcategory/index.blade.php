@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('page_title', 'Sub Category ')
+@section('page_title', __('messages.sub_category'))
 
 @section('content')
     <div class="main-content">
@@ -28,10 +28,10 @@
                         <div class="card m-b-30">
                             <div class="card-header">
                                 <div class="card-header-actions">
-                                    @if (auth()->user()->hasAnyPermission('subcategory_create')) 
+                                    @if (auth()->user()->hasAnyPermission('subcategory_create'))
                                         <button class="btn btn-success btn-save float-right" title="Add "
                                             data-toggle="modal" data-target="#subcategory_add_modal"
-                                            data-id="'.$data->id.'">Add </button>
+                                            data-id="'.$data->id.'"> {{ __('messages.add') }} </button>
                                     @endif
                                 </div>
                             </div>
@@ -65,7 +65,7 @@
                     <form>
 
                         <div class="form-group">
-                            <label>Category Name :</label>
+                            <label>{{ __('messages.category_name') }}</label>
                             <select class="form-control" name="category_name" id="category_name">
 
                                 @foreach ($data as $category)
@@ -78,7 +78,7 @@
                         </div>
                         @can('subcategory_create')
                             <div class="form-group">
-                                <label>Sub Category Name :</label>
+                                <label>{{ __('messages.subcategory_name') }}:</label>
                                 <input type="text" class="form-control" name="subcategory_name" id="subcategory_name"
                                     placeholder="Type your SubCategory">
                             </div>
@@ -87,7 +87,8 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" id="btn" value="submit" class="btn btn-primary">Update</button>
+                    <button type="submit" id="btn" value="submit"
+                        class="btn btn-primary">{{ __('messages.update') }}:</button>
 
                 </div>
             </div>
@@ -99,7 +100,8 @@
 @endsection
 @push('page_scripts')
     {!! $dataTable->scripts() !!}
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     <script>
         $(document).on('click', '.changestatus', function() {
 

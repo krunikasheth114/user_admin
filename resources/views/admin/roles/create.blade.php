@@ -3,7 +3,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="workerLabel">Add Permission</h5>
+                <h5 class="modal-title" id="workerLabel"> {{__('messages.addpermission')}}</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -13,7 +13,7 @@
                     class="role_form">
                     @csrf
                     <div class="form-group">
-                        <label> Role :</label>
+                        <label> {{__('messages.role')}}</label>
                         <input type="text" class="form-control" name="role" id="role"
                             placeholder="Add Role" required>
                     </div>
@@ -25,7 +25,7 @@
                     <div class="form-group">
                         <div>
                             <button type="submit" id="submit" name="submit" value="submit"
-                                class="btn btn-primary">Add</button>
+                                class="btn btn-primary">{{__('messages.add')}}</button>
                         </div>
                     </div>
                 </form>

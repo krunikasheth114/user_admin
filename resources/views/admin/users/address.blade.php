@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('page_title', 'Update User')
+@section('page_title', __('messages.updateuser'))
 
 @section('content')
     <div class="main-content">
@@ -47,7 +47,7 @@
                                         </div>
                                         <div class="form-group row">
                                             <div class="col-sm-4">
-                                                <label for="firstname">{{ __('Firstname') }} :</label>
+                                                <label for="firstname"> {{__('messages.firstname')}}</label>
                                                 <input id="firstname" type="firstname" class="form-control"
                                                     name="firstname" value="{{ $userdata['firstname'] }}"
                                                     autocomplete="firstname" autofocus>
@@ -58,7 +58,7 @@
                                                 @endif
                                             </div>
                                             <div class="col-sm-4">
-                                                <label for="lastname">{{ __('Lastname') }} :</label>
+                                                <label for="lastname"> {{__('messages.lastname')}}</label>
                                                 <input id="lastname" type="lastname" class="form-control " name="lastname"
                                                     value="{{ $userdata['lastname'] }}" autocomplete="lastname" autofocus>
                                                 @if ($errors->has('lastname'))
@@ -70,7 +70,7 @@
 
 
                                             <div class="col-sm-4">
-                                                <label for="email">{{ __('Email') }} :</label>
+                                                <label for="email"> {{__('messages.email')}}</label>
                                                 <input id="email" type="email" class="form-control " name="email"
                                                     value="{{ old('email', isset($userdata->email) ? $userdata->email : '') }}"
                                                     autocomplete="email" autofocus>
@@ -84,7 +84,7 @@
 
                                         <div class="form-group row">
                                             <div class="col-sm-4">
-                                                <label for="category">{{ __('Category') }} :</label>
+                                                <label for="category"> {{__('messages.category')}}</label>
                                                 <select class="form-control" name="category" id="category">
 
                                                     @foreach ($category as $cat)
@@ -104,7 +104,7 @@
                                             </div>
 
                                             <div class="col-sm-4">
-                                                <label for="subcategory">{{ __('Subcategory') }} :</label>
+                                                <label for="subcategory"> {{__('messages.sub_category')}}</label>
                                                 <select class="form-control subcategory" name="subcategory"
                                                     id="subcategory">
 
@@ -126,83 +126,20 @@
                                             </div>
 
                                             <div class="col-sm-4">
-                                                <label for="profile">{{ __('Profile') }} :</label>
+                                                <label for="profile"> {{__('messages.profile')}} </label>
                                                 <input id="profile" type="file"
                                                     class="form-control @error('profile') is-invalid @enderror"
                                                     name="profile" autocomplete="current-profile">
                                             </div>
                                         </div>
-                                        {{-- <div class="my-address">
-                                            <div class="form-group row ">
-                                                <div class="col-sm-6">
-                                                    <label for="Address">{{ __('Address') }} :</label>
-                                                    <textarea id="address" type="text" class="form-control "
-                                                        name="address[0][address]" autocomplete="address"
-                                                        autofocus></textarea>
-                                                    @if ($errors->has('address'))
-                                                        <span class="invalid-feedback d-block" role="alert">
-                                                            <strong>{{ $errors->first('address') }}</strong>
-                                                        </span>
-                                                    @endif
-                                                </div>
-                                              
-                                            </div>
-                                            <div class="form-group row">
-                                                <div class="col-sm-4">
-                                                    <label for="country">{{ __('Country') }} :</label>
-                                                    <select class="form-control country" name="address[0][country]"
-                                                        id="country" required>
-                                                        <option value=""> ---Select Country--- </option>
-                                                        @foreach ($data as $country)
-                                                            <option value="{{ $country->id }}">
-                                                                {{ $country->name }}
-                                                            </option>
-                                                        @endforeach
-                                                    </select>
-                                                    @if ($errors->has('country'))
-                                                        <span class="invalid-feedback d-block" role="alert">
-                                                            <strong>{{ $errors->first('country') }}</strong>
-                                                        </span>
-                                                    @endif
-                                                </div>
-
-                                                <div class="col-sm-4">
-                                                    <label for="state">{{ __('State') }} :</label>
-                                                    <select class="form-control state" name="address[0][state]" id="state"
-                                                        required>
-                                                        <option value=""> ---Select State--- </option>
-                                                    </select>
-                                                    @if ($errors->has('state'))
-                                                        <span class="invalid-feedback d-block" role="alert">
-                                                            <strong>{{ $errors->first('state') }}</strong>
-                                                        </span>
-                                                    @endif
-                                                </div>
-
-                                                <div class="col-sm-4">
-
-                                                    <label for="city">{{ __('City') }} :</label>
-                                                    <select class="form-control city" name="address[0][city]" id="city"
-                                                        required>
-                                                        <option value=""> ---Select City--- </option>
-                                                    </select>
-                                                    @if ($errors->has('city'))
-                                                        <span class="invalid-feedback d-block" role="alert">
-                                                            <strong>{{ $errors->first('city') }}</strong>
-                                                        </span>
-                                                    @endif
-                                                </div>
-                                            </div>
-                                        </div> --}}
-
+                                    
 
                                         @if (!empty($userdata->userAddress))
-                                            {{-- {{dd($userdata->userAddress)}}; --}}
                                             @foreach ($userdata->userAddress as $key => $address)
                                                 <div class="my-address del-add">
                                                     <div class="form-group row ">
                                                         <div class="col-sm-6">
-                                                            <label for="Address">{{ __('Address') }} :</label>
+                                                            <label for="Address">{{ __('messages.address') }} :</label>
                                                             <textarea id="address" type="text" class="form-control"
                                                                 name="address[{{ $key }}][address]"
                                                                 autocomplete="address"
@@ -223,7 +160,7 @@
 
                                                     <div class="form-group row">
                                                         <div class="col-sm-4">
-                                                            <label for="country">{{ __('Country') }} :</label>
+                                                            <label for="country">{{ __('messages.country') }} </label>
                                                             <select class="form-control country"
                                                                 name="address[{{ $key }}][country]" id="country"
                                                                 required>
@@ -243,7 +180,7 @@
                                                         </div>
 
                                                         <div class="col-sm-4">
-                                                            <label for="state">{{ __('State') }} :</label>
+                                                            <label for="state">{{ __('messages.state') }} :</label>
                                                             <select class="form-control state"
                                                                 name="address[{{ $key }}][state]" id="state"
                                                                 required>
@@ -265,7 +202,7 @@
 
                                                         <div class="col-sm-4">
 
-                                                            <label for="city">{{ __('City') }} :</label>
+                                                            <label for="city">{{ __('messages.city') }} </label>
                                                             <select class="form-control city"
                                                                 name="address[{{ $key }}][city]" id="city"
                                                                 required>
@@ -291,8 +228,7 @@
                                         <div class="row">
                                             <div class="col-4">
                                                 <div class="col-4"></div>
-                                                <button type="button" class="btn btn-success" id="add-more" title="Add">Add
-                                                    More address</button>
+                                                <button type="button" class="btn btn-success" id="add-more" title="Add">{{ __('messages.addmoreaddress') }} </button>
                                             </div>
                                         </div>
 
@@ -303,7 +239,7 @@
                                         <div class="form-group">
                                             <button type="submit" name="submit" value="submit"
                                                 class="btn btn-primary submit">
-                                                {{ __('Update') }}
+                                                {{ __('messages.update') }}
                                             </button>
                                         </div>
                                     </form>

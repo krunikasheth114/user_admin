@@ -1,5 +1,5 @@
 @extends('layouts.master');
-@section('page_title', 'Add Role')
+@section('page_title',  __('messages.addrole'))
 @section('content')
     <div class="main-content">
         <div class="page-content">
@@ -25,7 +25,7 @@
                             <div class="card-header">
                                 <div class="card-header-actions">
                                     <button class="btn btn-success btn-save float-right" title="Add" data-toggle="modal"
-                                        data-target="#Add-role-modal">Add</button>
+                                        data-target="#Add-role-modal"> {{__('messages.add')}}</button>
                                 </div>
                             </div>
                             <div class="card-body">

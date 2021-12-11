@@ -1,5 +1,5 @@
 @extends('layouts.master');
-@section('page_title', 'User Document')
+@section('page_title',  __('messages.userdocument'))
 
 @section('content')
     <div class="main-content">

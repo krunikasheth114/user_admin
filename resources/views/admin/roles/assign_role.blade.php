@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('page_title', 'Assign Role')
+@section('page_title', __('messages.assignrole'))
 @section('content')
     <div class="main-content">
         <div class="page-content">
@@ -33,7 +33,7 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label for="role_name">{{ __('role_name') }} :</label>
+                                                <label for="role_name">{{ __('messages.rolename') }} :</label>
                                                 <input id="role_name" type="role_name" class="form-control"
                                                     name="role_name" value="{{ $role->name }}" autocomplete="role_name"
                                                     autofocus>
@@ -48,57 +48,18 @@
                                             </div>
                                         </div>
                                     </div>
-                                    {{-- <div class="col-md-12">
-                                            <div class="form-group">
-                                                <select class="custom-select" name="permission[]" multiple> --}}
-                                    {{-- {{dd($permission)}} --}}
-
-                                    {{-- @foreach ($permission as $per)
-                                                        <option value="{{ $per->id }}"
-                                                            {{ in_array($per->id, $role_permission) ? 'selected' : '' }}>
-                                                            {{ $per->name }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                        </div> --}}
-                                    {{-- @foreach ($permission as $per)
-                                        <div class="col-md-12">
-                                            <div class="form-group">
-                                                <h6>{{($per->module)}}</h6>
-                                                <div class="mt-3">
-                                                    <div class="custom-control custom-checkbox d-inline-block mr-3">
-                                                        <input type="checkbox" class="custom-control-input" id="customCheck1">
-                                                        <label class="custom-control-label" for="customCheck1">Create</label>
-                                                    </div>
-                                                    <div class="custom-control custom-checkbox d-inline-block mr-3">
-                                                        <input type="checkbox" class="custom-control-input" id="customCheck2">
-                                                        <label class="custom-control-label" for="customCheck2">Read</label>
-                                                    </div>
-                                                    <div class="custom-control custom-checkbox d-inline-block mr-3">
-                                                        <input type="checkbox" class="custom-control-input" id="customCheck3">
-                                                        <label class="custom-control-label" for="customCheck3">Update</label>
-                                                    </div>
-                                                    <div class="custom-control custom-checkbox d-inline-block mr-3">
-                                                        <input type="checkbox" class="custom-control-input" id="customCheck4">
-                                                        <label class="custom-control-label" for="customCheck4">Delete</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        @endforeach --}}
                                     <div class="form-group">
                                         <input type="checkbox" name="" id="identifier">
-                                        <label for="identifier">{{ trans('Permissions') }}</label>
+                                        <label for="identifier">{{ __('messages.permissions') }} </label>
 
                                         <table class="table" id="permission">
                                             <table class="table" id="permission">
                                                 <tr>
-                                                    <td><b>Module Name</b></td>
-                                                    <td><b>Create</b></td>
-                                                    <td><b>Update</b></td>
-                                                    <td><b>View</b></td>
-                                                    <td><b>Delete</b></td>
+                                                    <td><b>{{ __('messages.module') }}</b></td>
+                                                    <td><b>{{ __('messages.create') }}</b></td>
+                                                    <td><b>{{ __('messages.update') }}</b></td>
+                                                    <td><b>{{ __('messages.view') }}</b></td>
+                                                    <td><b>{{ __('messages.delete') }}</b></td>
                                                 </tr>
                                                 @php $a=1; @endphp
                                                 @foreach ($permission as $value)
@@ -126,7 +87,7 @@
 
                                     <div class="form-group">
                                         <button type="submit" id="submit" value="submit"
-                                            class="btn btn-primary">Assign</button>
+                                            class="btn btn-primary">{{ __('messages.assign') }}</button>
                                     </div>
                                 </form>
                             </div>

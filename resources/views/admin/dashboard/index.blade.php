@@ -8,11 +8,11 @@
                     <div class="mini-stat-icon">
                         <i class="mdi mdi-cube-outline float-right mb-0"></i>
                     </div>
-                    <h6 class="text-uppercase mb-0">USERS</h6>
+                    <h6 class="text-uppercase mb-0"> {{__('messages.users')}}</h6>
                 </div>
                 <div class="card-body">
                     <div class="border-bottom pb-4">
-                        <span class="badge badge-success"></span> <span class="ml-2 text-muted">Total Users</span>
+                        <span class="badge badge-success"></span> <span class="ml-2 text-muted"> {{__('messages.total_users')}}</span>
                     </div>
                     <div class="mt-4 text-muted">
                         <div class="float-right">
@@ -31,11 +31,11 @@
                     <div class="mini-stat-icon">
                         <i class="mdi mdi-cube-outline float-right mb-0"></i>
                     </div>
-                    <h6 class="text-uppercase mb-0">Blogs</h6>
+                    <h6 class="text-uppercase mb-0"> {{__('messages.blogs')}}</h6>
                 </div>
                 <div class="card-body">
                     <div class="border-bottom pb-4">
-                        <span class="badge badge-success"></span> <span class="ml-2 text-muted">Total Blogs</span>
+                        <span class="badge badge-success"></span> <span class="ml-2 text-muted">{{__('messages.total_blogs')}}</span>
                     </div>
                     <div class="mt-4 text-muted">
                         <div class="float-right">
@@ -55,7 +55,7 @@
         <div class="col-xl-6">
             <div class="card m-b-30">
                 <div class="card-body">
-                    <h4 class="mt-0 header-title">Line Chart</h4>
+                    <h4 class="mt-0 header-title">{{__('messages.line_chart')}}</h4>
                     <p class="text-muted m-b-30 font-14 d-inline-block text-truncate w-100"></p>
                     <canvas id="lineChart" height="300" style="width: 507px; height: 300px;"></canvas>
                 </div>
@@ -90,7 +90,7 @@
                         var lineChart = {
                             labels: <?php echo json_encode($blogs); ?>,
                             datasets: [{
-                                    label: "Blog Likes",
+                                    label: "{{__('messages.blog_like')}}",
                                     fill: true,
                                     lineTension: 0.5,
                                     backgroundColor: "rgba(80, 138, 235, 0.2)",

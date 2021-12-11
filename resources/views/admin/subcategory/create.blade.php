@@ -2,7 +2,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="workerLabel">Add SubCategory</h5>
+                <h5 class="modal-title" id="workerLabel">{{ __('messages.add_subCategory')}}</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -10,7 +10,7 @@
             <div class="modal-body">
                 <form class="" method="POST" enctype="multipart/form-data" id="add_subcategory_form">
                     <div class="form-group">
-                        <label>Category Name :</label>
+                        <label>{{ __('messages.category_name')}}</label>
                         <select class="form-control" name="category" id="category">
                             <option value="">---select----</option>
                             @foreach ($data as $category)
@@ -21,7 +21,7 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label>SubCategory Name :</label>
+                        <label>{{ __('messages.subcategory_name')}}:</label>
                         <input type="text" class="form-control" name="subcategory_name" id="subcategory_name" placeholder="Type your SubCategory">
                     </div>
 

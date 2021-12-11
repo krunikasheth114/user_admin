@@ -19,7 +19,7 @@
                 <li>
                     <a href="{{ route('admin.dashboard') }}" class="waves-effect">
                         <i class="fa fa-dashboard"></i>
-                        <span> Dashboard </span>
+                        <span> {{__('messages.dashboard')}} </span>
                     </a>
                 </li>
 
@@ -28,7 +28,7 @@
                     <li>
                         <a href="{{ route('admin.category.dataTable') }}" class="waves-effect">
                             <i class="fa fa-list-alt"></i>
-                            <span> Category </span>
+                            <span> {{__('messages.category')}} </span>
                         </a>
                     </li>
                    
@@ -38,7 +38,7 @@
                     <li>
                         <a href="{{ route('admin.subcategory.dataTable') }}" class="waves-effect">
                             <i class="fa fa-list-alt"></i>
-                            <span> Sub Category </span>
+                            <span> {{__('messages.sub_category')}} </span>
                         </a>
                     </li>
                 @endcan
@@ -46,7 +46,7 @@
                     <li>
                         <a href="{{ route('admin.getuser') }}" class="waves-effect">
                             <i class="fa fa-users"></i>
-                            <span> Users </span>
+                            <span>{{__('messages.users')}} </span>
                         </a>
                     </li>
                 @endcan
@@ -54,7 +54,7 @@
                     <li>
                         <a href="{{ route('admin.document.index') }}" class="waves-effect">
                             <i class="fa fa-file"></i>
-                            <span>User Documents </span>
+                            <span>{{__('messages.user_documents')}} </span>
                         </a>
                     </li>
                 @endcan
@@ -62,7 +62,7 @@
                     <li>
                         <a href="{{ route('admin.blog.blog') }}" class="waves-effect">
                             <i class="fa fa-list-alt"></i>
-                            <span>Blog Category</span>
+                            <span>{{__('messages.blog_category')}} </span>
                         </a>
                     </li>
                 @endcan
@@ -70,7 +70,7 @@
                     <li>
                         <a href="{{ route('admin.blog.blog_list') }}" class="waves-effect">
                             <i class="fa fa-list-alt"></i>
-                            <span>Blog Details</span>
+                            <span>{{__('messages.blog_details')}} </span>
                         </a>
                     </li>
                 @endcan
@@ -78,7 +78,7 @@
                 <li>
                     <a href="{{ route('admin.blog.blogComment') }}" class="waves-effect">
                         <i class="fa fa-list-alt"></i>
-                        <span>Blog Comments</span>
+                        <span>{{__('messages.blog_comments')}} </span>
                     </a>
                 </li>
                 @endcan
@@ -86,13 +86,13 @@
                     <li>
                         <a href="{{ route('admin.role.viewrole') }}" class="waves-effect">
                             <i class="fa fa-user-circle-o"></i>
-                            <span>Roles & Permissions</span>
+                            <span>{{__('messages.roles&permissions')}} </span>
                         </a>
                     </li>
                     <li>
                         <a href="{{ route('admin.admin_user.admin') }}" class="waves-effect">
                             <i class="fa fa-user"></i>
-                            <span> Admin User </span>
+                            <span>{{__('messages.adminuser')}}  </span>
                         </a>
                     </li>
                 @endif
