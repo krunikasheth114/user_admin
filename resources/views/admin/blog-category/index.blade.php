@@ -91,24 +91,14 @@
     </div>
 
 @endsection
-@include('admin.blog-category.create');
 @push('page_scripts')
     {!! $dataTable->scripts() !!}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.all.min.js"></script>
+   
     <script>
         $(".edit_blog_category_form").validate({
             rules: {
                 category: {
                     required: true,
-                }
-            },
-            messages: {
-                category: {
-                    required: "This field is required",
                 }
             },
             submitHandler: function(form) {
@@ -227,4 +217,5 @@
 
         })
     </script>
+    @include('admin.blog-category.create');
 @endpush

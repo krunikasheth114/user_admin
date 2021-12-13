@@ -14,7 +14,10 @@ return [
     */
     'dashboard' => 'tableau de bord',
     'category' => 'Catégorie',
+    'categoryname' => 'Nom de catégorie',
     'sub_category' => 'Sous-catégorie',
+    'updatesubcategory' => 'mettre à jour la sous-catégorie',
+    'updatecategory' => 'mettre à jour la catégorie',
     'users' => 'Utilisateurs',
     'user_documents' => 'documents_utilisateur',
     'blog_category' => 'catégorie de blog',

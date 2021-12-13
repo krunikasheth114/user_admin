@@ -114,9 +114,7 @@
 
                 }
             });
-            $('body').on('change', '#lang', function() {
-                $.extend($.validator.messages, eval($(this).val()));
-            });
+         
             $("body").on('change', '#lang', function() {
                 var lang = $(this).val();
                 $.ajax({

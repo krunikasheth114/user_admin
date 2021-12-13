@@ -99,11 +99,7 @@
     </div>
 @endsection
 @push('page_scripts')
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.all.min.js"></script>
+   
     <script>
         $(".add_update_permissions").validate({
             rules: {
@@ -111,11 +107,8 @@
                     required: true,
                 }
             },
-            messages: {
-                role_name: {
-                    required: "This field is required",
-                }
-            },
+           
+           
             submitHandler: function(form) {
                 $.ajax({
                     headers: {

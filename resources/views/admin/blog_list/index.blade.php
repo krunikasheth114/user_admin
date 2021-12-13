@@ -50,15 +50,11 @@
     </section>
 
 
-    @include('admin.blog_list.create');
+
 @endsection
 @push('page_scripts')
     {!! $dataTable->scripts() !!}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.all.min.js"></script>
+  
     <script>
         $(document).on('click', '.delete', function() {
 
@@ -105,17 +101,18 @@
                     id: id,
                 },
                 success: function(data) {
-                    
-                    
+
+
 
                     $('#id').val(data.data.blog.id);
                     $('#title').val(data.data.blog.title);
                     $('#description').val(data.data.blog.description);
                     $('#images').html('<img src="' + /images/ + data.data.blog.image +
-                        '"height="50px" width="50px"/>');   
+                        '"height="50px" width="50px"/>');
                     $.each(data.data.category, function(key, value) {
                         selectdata = (value.id == data.data.blog.category_id) ? 'selected' : '';
-                        $("#catgory_id").append('<option value="' + value.id + '" ' + selectdata +'>' + value.category + '</option>');
+                        $("#catgory_id").append('<option value="' + value.id + '" ' +
+                            selectdata + '>' + value.category + '</option>');
                     });
                 }
 
@@ -123,4 +120,5 @@
 
         })
     </script>
+    @include('admin.blog_list.create');
 @endpush

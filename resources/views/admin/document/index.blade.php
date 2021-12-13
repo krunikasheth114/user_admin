@@ -92,9 +92,7 @@
 @endsection
 @push('page_scripts')
     {!! $dataTable->scripts() !!}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+ 
     <script>
         // Get data
         $(document).on('click', '.update', function(e) {
@@ -134,14 +132,8 @@
                     required: true,
                 }
             },
-            messages: {
-                doc_name: {
-                    required: 'Document name is requuired',
-                },
-                doc_num: {
-                    required: 'Document number is requuired',
-                }
-            },
+         
+            
             submitHandler: function(form) {
                 var id = $('#id').val();
                 $.ajax({

@@ -254,9 +254,6 @@
         </div>
         @endsection
         @push('page_scripts')
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.js"></script>
         <script>
             $('#add-more').on('click', function() {
                 // $('#update-data').validate();
@@ -330,26 +327,7 @@
                     subcategory: {
                         required: true,
                     },
-
                 },
-                messages: {
-                    firstname: {
-                        required: "This Field is required ",
-                    },
-                    lastname: {
-                        required: "This field is Required",
-                    },
-                    email: {
-                        required: "This field is Required",
-                    },
-                    category: {
-                        required: "This field is Required",
-                    },
-                    subcategory: {
-                        required: "This field is Required",
-                    },
-
-                }
             });
 
 
@@ -387,8 +365,6 @@
             $('body').on('change', '.country', function() {
                 $this = $(this);
                 country = $this.val();
-                console.log(country);
-
                 $.ajax({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),

@@ -52,7 +52,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Update Category </h5>
+                <h5 class="modal-title">{{__('messages.updatecategory')}}</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -61,7 +61,7 @@
                 <form>
 
                     <div class="form-group">
-                        <label>Category Name :</label>
+                        <label>{{__('messages.category')}}</label>
                         <input type="text" class="form-control" value="" name="category_name" id="category_name" placeholder="Type your Category">
                     </div>
                    

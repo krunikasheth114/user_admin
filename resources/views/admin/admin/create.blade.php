@@ -64,7 +64,7 @@
 </div>
 <script>
     $('.Admin_user').validate({
-        lang: 'fr',
+        // lang: 'fr',
         rules: {
             email: {
                 required: true,

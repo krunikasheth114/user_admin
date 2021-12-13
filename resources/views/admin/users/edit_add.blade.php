@@ -178,35 +178,7 @@
 
 
             },
-            messages: {
-                firstname: {
-                    required: "Firstname is required ",
-                },
-                lastname: {
-                    required: "This field is Required",
-                },
-                email: {
-                    required: "This field is Required",
-                },
-                category: {
-                    required: "This field is Required",
-                },
-                subcategory: {
-                    required: "This field is Required",
-                },
-                'address[]': {
-                    required: "This field is required",
-                },
-                'country[]': {
-                    required: "This field is required",
-                },
-                'state[]': {
-                    required: "This field is required",
-                },
-                'city[]': {
-                    required: "This field is required",
-                },
-            },
+        
         });
         $('#add-more').on('click', function() {
 

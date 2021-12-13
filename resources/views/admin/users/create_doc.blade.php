@@ -51,11 +51,7 @@
             </div>
         </div>
     </div>
-</div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    @push('page_scripts')
 <script>
     // var i = 1;
     // $("body").on("click", ".add_more", function() {
@@ -103,19 +99,8 @@
             }
 
         },
-        messages: {
-            doc_name: {
-                required: "This field is required",
-            },
-            doc_num: {
-                required: "This field is required",
-                number: "Only Digits Are Allowed",
-            },
-            'document[]': {
-                required: "This field is required",
-            }
-        },
-
+      
+        
         submitHandler: function(form) {
             $.ajax({
                 headers: {
@@ -154,3 +139,4 @@
 
     })
 </script>
+@endpush

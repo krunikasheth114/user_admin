@@ -43,16 +43,11 @@
         <!-- End Page-content -->
     </div>
   
-    @include('admin.roles.create')
 @endsection
 
 @push('page_scripts')
     {!! $dataTable->scripts() !!}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.all.min.js"></script>
+   
     <script>
           $(document).on('click', '.delete', function() {
             var conf = confirm("Are you sure to want delete??");
@@ -78,4 +73,6 @@
             }
         })
     </script>
+    
+    @include('admin.roles.create')
 @endpush

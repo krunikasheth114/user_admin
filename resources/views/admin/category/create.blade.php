@@ -12,7 +12,7 @@
                 <form class="" method="POST" enctype="multipart/form-data" id="add_category_form">
                     @csrf
                     <div class="form-group">
-                        <label>{{ __('messages.category_name') }}</label>
+                        <label>{{ __('messages.categoryname') }}</label>
                         <input type="text" class="form-control" name="category_name" id="category_name"
                             placeholder="Type your Category">
                     </div>
@@ -35,7 +35,6 @@
 </div>
 <script>
     $('#add_category_form').validate({
-        lang: 'fr',
         rules: {
             category_name: {
                 required: true,

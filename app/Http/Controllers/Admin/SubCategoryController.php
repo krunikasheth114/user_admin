@@ -20,13 +20,15 @@ class SubCategoryController extends Controller
     }
     public function updatesubcategory(Request $request)
     {
+
         $id = $request->id;
+      
         $request->validate([
-            'subcategory_name' => Rule::unique('sub_categories')->ignore($id)->where(function ($query) use($request) {
+            
+            'subcategory_name' =>['required',Rule::unique('sub_categories', 'subcategory_name')->ignore($id)->where(function ($query) use ($request) {
                 return $query->where('category_id', $request->category_name);
             }),
-        ]);
-
+        ]]);
         $data = Subcategory::find($request->id);
         $data->category_id = $request->input('category_name');
         $data->subcategory_name = $request->input('subcategory_name');
@@ -63,7 +65,6 @@ class SubCategoryController extends Controller
     public function edit(Request $request)
     {
         $data = Subcategory::find($request->id);
-
         return response()->json(['status' => true, 'data' => $data]);
     }
     public function deletecategory(Request $request)

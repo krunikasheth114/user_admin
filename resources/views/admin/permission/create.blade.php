@@ -47,11 +47,8 @@
                 required: true,
             }
         },
-        messages: {
-            Permission: {
-                required: "This field is required",
-            }
-        },
+     
+        
         submitHandler: function(form) {
             $.ajax({
                 headers: {

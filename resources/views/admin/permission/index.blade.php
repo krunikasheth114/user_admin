@@ -139,11 +139,8 @@
                 required: true,
             }
         },
-        messages: {
-            Permission_edit: {
-                required: "This field is required",
-            }
-        },
+      
+    
         submitHandler: function(form) {
             $.ajax({
                 headers: {

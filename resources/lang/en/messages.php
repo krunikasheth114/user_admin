@@ -14,7 +14,10 @@ return [
     */
     'dashboard' => 'Dashboard',
     'category' => 'Category',
+    'categoryname' => 'Category name',
     'sub_category' => 'Sub Category',
+    'updatesubcategory' => 'Update Sub Category',
+    'updatecategory' => 'Update Category',
     'users' => 'Users',
     'user_documents' => 'User Documents',
     'blog_category' => 'Blog Category',

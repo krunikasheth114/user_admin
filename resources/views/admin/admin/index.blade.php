@@ -126,20 +126,14 @@
             })
         })
         $('.admin_user_update').validate({
-            lang: 'fr',
+            // lang: 'fr',
             rules: {
                 email_edit: {
                     required: true,
                 },
 
             },
-            messages: {
-                email_edit: {
-                    required: 'email is requuired',
-                },
-
-
-            },
+           
             submitHandler: function(form) {
                 var id = $('#hidden').val();
                 $.ajax({

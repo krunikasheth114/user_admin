@@ -37,7 +37,6 @@
 </div>
 <script>
     $('#add_subcategory_form').validate({
-        lang='fr',
         rules: {
             category: {
                 required: true,

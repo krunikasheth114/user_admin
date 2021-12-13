@@ -123,11 +123,6 @@
     @endsection
     @push('page_scripts')
         {!! $dataTable->scripts() !!}
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-
-
         <script>
             $('#update_form').validate({
                 rules: {
@@ -151,27 +146,7 @@
                     },
 
                 },
-                messages: {
-                    firstname: {
-                        required: "Firstname is required ",
-                    },
-                    lastname: {
-                        required: "Lastname is required",
-                    },
-                    email: {
-                        required: "Email is required",
-                    },
-                    category: {
-                        required: "Category is required",
-                    },
-                    subcategory: {
-                        required: "SubCategory is required",
-                    },
-                    password: {
-                        required: "Password is required",
-                    },
-
-                },
+              
                 submitHandler: function(form) {
 
                     $.ajax({
