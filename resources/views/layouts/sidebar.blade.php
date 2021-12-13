@@ -15,13 +15,33 @@
             <ul>
               
                 <li class="menu-title">Main</li>
-             
+               
                 <li>
                     <a href="{{ route('admin.dashboard') }}" class="waves-effect">
                         <i class="fa fa-dashboard"></i>
                         <span> {{__('messages.dashboard')}} </span>
                     </a>
                 </li>
+                <li>
+                    <a href="{{ route('admin.product.product-category')}}" class="waves-effect">
+                        <i class="fa fa-list-alt"></i>
+                        <span> Products Category </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('admin.product.product-subcategory')}}" class="waves-effect">
+                        <i class="fa fa-list-alt"></i>
+                        <span> Products Sub-Category </span>
+                    </a>
+                </li>
+             
+                <li>
+                    <a href="{{ route('admin.product.product')}}" class="waves-effect">
+                        <i class="fa fa-product-hunt"></i>
+                        <span> Products </span>
+                    </a>
+                </li>
+             
 
                 @can('category_view')   
            

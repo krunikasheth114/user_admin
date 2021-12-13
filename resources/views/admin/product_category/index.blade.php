@@ -1,6 +1,5 @@
-@extends('layouts.master');
-@section('page_title',  __('messages.userdocument'))
-
+@extends('layouts.master')
+@section('page_title', 'Product Category')
 @section('content')
     <div class="main-content">
         <div class="page-content">
@@ -26,14 +25,17 @@
                     <div class="col-12">
                         <div class="card m-b-30">
                             <div class="card-header">
-
+                                <div class="card-header-actions">
+                                    <button class="btn btn-success btn-save float-right" title="Add " data-toggle="modal"
+                                        data-target="#product_category_add_modal"
+                                        data-id="'.$data->id.'">{{ __('messages.add') }}</button>
+                                </div>
                             </div>
                             <div class="card-body">
-                                <!-- ajax form response -->
-
                                 <div class="ajax-msg"></div>
                                 <div class="table-responsive">
                                     {!! $dataTable->table(['class' => 'table table-bordered dt-responsive nowrap']) !!}
+
                                 </div>
                             </div>
                         </div>
@@ -44,95 +46,67 @@
         </div>
         <!-- End Page-content -->
     </div>
-    <div class="modal" id="updatedoc" tabindex="-1" role="dialog" data-backdrop="static">
-        <div class="modal-dialog" role="document">
+    <div class="modal" id="edit_product_category" tabindex="-1" role="dialog" data-backdrop="static">
+        <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Update Document </h5>
+                    <h5 class="modal-title">{{ __('messages.updatecategory') }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form id="updatedocform" enctype="multipart/form-data">
+                    <form action="" id="category_update" enctype="multipart/form-data">
                         @csrf
-                        @method('POST')
-
                         <div class="form-group">
-                            <div class="form-group">
-                                <label>Document Name :</label>
-                                <input type="text" class="form-control" name="doc_name" id="doc_name"
-                                    placeholder="Type your document_name">
-                            </div>
+                            <label>{{ __('messages.category') }}</label>
+                            <input type="text" class="form-control" value="" name="category_name" id="category_name"
+                                placeholder="Type your Category">
                         </div>
-                        <div class="form-group">
-                            <label>Document number :</label>
-                            <input type="text" class="form-control" name="doc_num" id="doc_num"
-                                placeholder="Type your document_num">
+                        <div class="modal-footer">
+                            <input type="hidden" id="hidden_id" name="hidden_id" value="">
+                            <button type="submit" id="submit" value="submit" class="btn btn-primary">Update</button>
                         </div>
-                        <div class="form-group" id="old_document">
-
-                        </div>
-
-                        <div class="form-group">
-                            <label>Document:</label>
-                            <input type="file" class="form-control" id="documents" name="documents">
-                        </div>
+                    </form>
                 </div>
-                <input type="hidden" id="id" name="id" value="">
-                <div class="modal-footer">
-                    <button type="submit" id="submit" value="submit" class="btn btn-primary">Update</button>
-                </div>
-                </form>
             </div>
         </div>
     </div>
-    </section>
 @endsection
 @push('page_scripts')
     {!! $dataTable->scripts() !!}
+
     <script>
-        // Get data
-        $(document).on('click', '.update', function(e) {
-            e.preventDefault();
-            $('#updatedoc').modal('show');
-            var href = $(this).attr('href');
+        $(document).on('click', '.edit', function() {
+            var id = $(this).attr('id');
             $.ajax({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
                 },
-                url: href,
-                method: "get",
-                success: function(data) {
-                    $('#id').val(data.data.id);
-                    $('#doc_name').val(data.data.doc_name);
-                    $('#doc_num').val(data.data.doc_num);
-                    // $('#old_document').append('<a class="btn btn-primary" target="_blank" href="'+data.data.document_url+'" > view Doc</a>');
+                url: "{{ route('admin.product.product-edit') }}",
+                method: "post",
+                data: {
 
-                    $("#old_document").html(
-                        '<a class="" target="_blank" href="' + data.data.document_url +
-                        '" >View Document</a>');
-                }
-
-            });
-        });
-        // Update Documents
-        $('#updatedocform').validate({
-            rules: {
-                doc_name: {
-                    required: true,
+                    id: id,
                 },
-                doc_num: {
+                success: function(data) {
+                    $('#category_name').val(data.data.name);
+                    $('#hidden_id').val(data.data.id);
+                }
+            })
+        })
+        $('#category_update').validate({
+            rules: {
+                category_name: {
                     required: true,
                 }
             },
             submitHandler: function(form) {
-                var id = $('#id').val();
                 $.ajax({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
                     },
-                    url: '{{ url('Admin/document/') }}' + '/' + id + '/update',
+                    url: "{{ route('admin.product.product-update') }}",
                     method: "POST",
                     data: new FormData(form),
                     contentType: false,
@@ -140,11 +114,11 @@
                     processData: false,
                     dataType: 'JSON',
                     success: function(data) {
-                        alert(data.messages);
-                        $('#updatedoc').modal('hide');
-
-                        window.LaravelDataTables["document-table"].draw()
-                        $("#updatedocform")[0].reset();
+                        if (data.status == true) {
+                            $("#edit_product_category").modal('hide');
+                            swal("Done!", data.message, "success");
+                            window.LaravelDataTables["product_category-table"].draw();
+                        }
                     },
                     error: function(error) {
                         var i;
@@ -153,29 +127,62 @@
                             toastr.error(value);
                         });
                     }
-                })
+
+                });
             }
         });
-        $('#documents').change('on', function() {
-            $("#old_document").html('');
-        });
-        // Delete Documents
-        $(document).on('click', '.delete', function(e) {
-            e.preventDefault();
+        // Change status
+        $(document).on('click', '.changestatus', function() {
+            var status = $(this).attr('status');
+            var id = $(this).attr('id');
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                },
+                url: "{{ route('admin.product.changestatus') }}",
+                method: "POST",
+                data: {
+                    status: status,
+                    id: id,
+                },
+                success: function(data) {
+                    console.log(data.status);
+                    if (data.status == true)
+
+                    {
+                        window.LaravelDataTables["product_category-table"].draw();
+                    }
+                }
+
+            })
+
+        })
+        // Delete Category
+        $(document).on('click', '.delete', function() {
             var conf = confirm("Are you sure to want delete??");
             if (conf == true) {
-                var href = $(this).attr('href');
+                var id = $(this).attr('id');
+
                 $.ajax({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
                     },
-                    url: href,
-                    method: "delete",
+                    url: "{{ route('admin.product.product-delete') }}",
+                    method: "POST",
+                    data: {
+                        id: id,
+                    },
                     success: function(data) {
-                        window.LaravelDataTables["document-table"].draw()
+                        if (data.status == true) {
+                            swal("Done!", data.message, "success");
+                            window.LaravelDataTables["product_category-table"].draw();
+                        }
                     },
                 })
             }
-         })
+
+
+        })
     </script>
+    @include('admin.product_category.create')
 @endpush

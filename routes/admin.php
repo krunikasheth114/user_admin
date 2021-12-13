@@ -9,7 +9,24 @@ Route::group(['namespace' => 'Auth'], function () {
 Route::group(['middleware' => 'auth:admin'], function () {
 
     Route::get('dashboard',                   'DashboardController@showDashboared')->name('dashboard');
-    Route::group(['prefix' => 'admin_user', 'as' => 'admin_user.'], function () {
+    Route::group(['prefix' => 'product', 'as' => 'product.'], function () {
+        Route::get('product/category',                   'ProductcategoryController@index')->name('product-category');
+        Route::post('product/category/store',                   'ProductcategoryController@store')->name('product-store');
+        Route::post('product/category/edit',                   'ProductcategoryController@edit')->name('product-edit');
+        Route::post('product/category/update',                   'ProductcategoryController@update')->name('product-update');
+        Route::post('product/category/delete',                   'ProductcategoryController@delete')->name('product-delete');
+        Route::post('product/category/changestatus',                   'ProductcategoryController@changeStatus')->name('changestatus');
+        Route::get('product/sub-category',                   'ProductSubcategoryController@index')->name('product-subcategory');
+        Route::post('product/sub-category/store',                   'ProductSubcategoryController@store')->name('product-subcategory-store');
+        Route::post('product/sub-category/changestatus',                   'ProductSubcategoryController@changestatus')->name('product-subcategory-changestatus');
+        Route::post('product/sub-category/edit',                   'ProductSubcategoryController@edit')->name('product-subcategory-edit');
+        Route::post('product/sub-category/update',                   'ProductSubcategoryController@update')->name('product-subcategory-update');
+        Route::post('product/sub-category/delete',                   'ProductSubcategoryController@delete')->name('product-subcategory-delete');
+        Route::get('product',                   'ProductController@index')->name('product');
+        
+    });
+  
+        Route::group(['prefix' => 'admin_user', 'as' => 'admin_user.'], function () {
         Route::post('language',                   'LanguageController@language')->name('language');
         Route::get('index',                   'AdminUserController@index')->name('admin')->middleware('permission:admin_user_view');
         Route::post('store',                   'AdminUserController@store')->name('store_admin')->middleware('permission:admin_user_create');

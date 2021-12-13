@@ -22,7 +22,7 @@ class CategoryController extends Controller
     public function store(CategoryRequest $request)
     {
 
-        $validatedData = $request->validated();
+       
         $validatedData = new Category;
         $validatedData->category_name = $request->input('category_name');
         $validatedData->save();

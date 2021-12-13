@@ -25,7 +25,6 @@ class RegisterUserEmail implements ShouldQueue
     {
         $this->validatedData = $validatedData;
     }
-
     /**
      * Execute the job.
      *
