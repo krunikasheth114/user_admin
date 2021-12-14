@@ -18,9 +18,18 @@
               </select>
 
               </li>
+             
             @guest
             @else
                 <li class="nav-item dropdown">
+                    <li>
+                        <select class="form-select" aria-label="Default select currency" name="currency" class="select" id="currency">
+                          <option value="Inr">INR</option>
+                          <option value="Euro">EURO</option>
+                      
+                        </select>
+          
+                        </li>
                     <a id="navbarDropdown" class="nav-link dropdown-toggle" style="color: black;" href="#" role="button"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                         {{ Auth::user()->email }}
@@ -37,6 +46,7 @@
                         </form>
                     </div>
                 </li>
+               
             @endguest
         </ul>
 

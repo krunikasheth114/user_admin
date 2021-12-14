@@ -3,8 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-
-
+use AmrShawky\LaravelCurrency\Facade\Currency;
 use Illuminate\Http\Request;
 
 class LanguageController extends Controller

@@ -23,11 +23,16 @@ Route::group(['middleware' => 'auth:admin'], function () {
         Route::post('product/sub-category/update',                   'ProductSubcategoryController@update')->name('product-subcategory-update');
         Route::post('product/sub-category/delete',                   'ProductSubcategoryController@delete')->name('product-subcategory-delete');
         Route::get('product',                   'ProductController@index')->name('product');
-        
+        Route::post('product/store',                   'ProductController@store')->name('store');
+        Route::post('product/changeStatus',                   'ProductController@changeStatus')->name('changestatus-product');
+        Route::post('product/edit',                   'ProductController@edit')->name('edit');
+        Route::post('product/update',                   'ProductController@update')->name('update');
+        Route::post('product/delete',                   'ProductController@delete')->name('delete');
     });
-  
-        Route::group(['prefix' => 'admin_user', 'as' => 'admin_user.'], function () {
+
+    Route::group(['prefix' => 'admin_user', 'as' => 'admin_user.'], function () {
         Route::post('language',                   'LanguageController@language')->name('language');
+        Route::post('currency/change',                   'CurrencyController@changeCurrency')->name('change-currency');
         Route::get('index',                   'AdminUserController@index')->name('admin')->middleware('permission:admin_user_view');
         Route::post('store',                   'AdminUserController@store')->name('store_admin')->middleware('permission:admin_user_create');
         Route::post('edit',                   'AdminUserController@edit')->name('edit_admin')->middleware('permission:admin_user_view');

@@ -105,7 +105,7 @@
             href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.min.css">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.all.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/localization/messages_fr.js"></script>
-        
+
         {{-- <script src="{{ asset('assets/pages/chartjs.init.js') }}"></script> --}}
         <script>
             $(document).ready(function() {
@@ -114,30 +114,39 @@
 
                 }
             });
-         
+
             $("body").on('change', '#lang', function() {
-                var lang = $(this).val();
-                $.ajax({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-                    },
-                    url: "{{ route('admin.admin_user.language') }}",
-                    method: "POST",
-                    data: {
-                        _token: "{{ csrf_token() }}",
-                        lang: lang
-                    },
-                    success: function(data) {
+                    var lang = $(this).val();
+                    $.ajax({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                        },
+                        url: "{{ route('admin.admin_user.language') }}",
+                        method: "POST",
+                        data: {
+                            _token: "{{ csrf_token() }}",
+                            lang: lang
+                        },
+                        success: function(data) {
 
-                        if (data.status == true) {
+                            if (data.status == true) {
 
-                            location.reload();
+                                location.reload();
+                            }
+
                         }
-
-                    }
+                    })
                 })
-            })
-        </script>
+                (function() {
+                    var previous;
+                    $("select[name=currency]").focus(function() {
+                        previous = this.value;
+                        alert(previous);
+                    }).change(function() {
+                        previous = this.value;
+                    });
+                })();
+        </script> 
         @stack('page_scripts')
 </body>
 
