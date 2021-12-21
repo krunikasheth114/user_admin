@@ -21,6 +21,16 @@
                             </a>
                         @endif
                     </li>
+                    <li class="nav-item ">
+                        @if (Auth::user())
+                            <a class="nav-link" href="{{ route('product.show')}}">Products
+                                <span class="sr-only">(current)</span>
+                            </a>
+                        @else
+                            <a class="nav-link" href="{{ route('user.login') }}">
+                                Products</a>
+                        @endif
+                    </li>
                     @if (Auth::user())
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('blog.createblog') }}">Start Writing

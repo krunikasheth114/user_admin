@@ -122,7 +122,7 @@ return [
     'key' => env('APP_KEY'),
 
     'cipher' => 'AES-256-CBC',
-
+   
     /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers
@@ -165,7 +165,7 @@ return [
         Collective\Html\HtmlServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
         Laravel\Socialite\SocialiteServiceProvider::class,
-
+        Swap\Laravel\SwapServiceProvider::class,
         /*
          * Package Service Providers...
          */
@@ -236,7 +236,7 @@ return [
         'Form'=>  Collective\Html\FormFacade::class,
         'Html'=>Collective\Html\HtmlFacade::class,
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
-
+        'Swap' => Swap\Laravel\Facades\Swap::class
     ],
 
 ];

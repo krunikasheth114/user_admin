@@ -58,8 +58,11 @@ Route::group(['middleware' => 'auth:web'], function () {
         Route::post('/commentReply',         'users\ViewblogController@commentReply')->name('commentReply');
         Route::post('/response',         'users\ViewblogController@response')->name('response');
         Route::post('/fetch-comment',         'users\ViewblogController@fetchComment')->name('fetch_comment');
-    
     });
-    Route::get('/login/{social}', 'users\SocialLoginController@socialLogin')->where('social', 'twitter|facebook|linkedin|google|github|bitbucket')->name('login-social');
-    Route::get('/login/{social}/callback', 'users\SocialLoginController@handleProviderCallback')->where('social', 'twitter|facebook|linkedin|google|github|bitbucket');
+    Route::group(['prefix' => 'product', 'as' => 'product.'], function () {
+        Route::get('show',         'users\ProductController@index')->name('show');
+        Route::post('/curency',         'users\ProductController@changeCurrency')->name('change-currency');
+    });
+    // Route::get('/login/{social}', 'users\SocialLoginController@socialLogin')->where('social', 'twitter|facebook|linkedin|google|github|bitbucket')->name('login-social');
+    // Route::get('/login/{social}/callback', 'users\SocialLoginController@handleProviderCallback')->where('social', 'twitter|facebook|linkedin|google|github|bitbucket');
 });

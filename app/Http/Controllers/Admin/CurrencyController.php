@@ -5,20 +5,16 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use AmrShawky\LaravelCurrency\Facade\Currency;
 use Illuminate\Http\Request;
+use App\Models\Product;
+use Session;
 
 class CurrencyController extends Controller
 {
-   public function changeCurrency(Request $request){
-    //    dd($request->all());
-    $from = $request->from;
-    $to = $request->to;
-    $amount= $request->amount;
-    $converted=Currency::convert()
-        ->from($from) //currncy you are converting
-        ->to($to)     // currency you are converting to
-        ->amount(100) // amount in USD you converting to EUR
-        ->get();
-
-return view('blade_name',compact('converted'));
-   }
+    public function changeCurrency(Request $request)
+    {  
+        Session::pull('currency');
+        $currency = Session::put('currency',$request->from);
+        $data =   Session::get('currency');
+        return response()->json(['status' => true, 'message' => 'Update Success' ,'currency' => $data]);
+    }
 }

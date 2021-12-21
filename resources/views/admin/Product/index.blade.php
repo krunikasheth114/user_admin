@@ -30,6 +30,10 @@
                                         data-target="#add_product_model"
                                         data-id="'.$data->id.'">{{ __('messages.add') }}</button>
                                 </div>
+                                <select class="form-select" aria-label="Default select currency" name="currency" id="currency">
+                                    <option value="INR" >INR</option>
+                                    <option value="EUR">EURO</option>
+                                </select>
                             </div>
                             <div class="card-body">
                                 <div class="ajax-msg"></div>
@@ -282,6 +286,34 @@
 
 
         })
+          
+        var from;
+            $("#currency").on('focus', function() {
+                from = this.value;
+            }).change(function() {
+                var to = this.value;
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                    },
+                    url: "{{ route('admin.admin_user.change-currency') }}",
+                    method: "POST",
+                    data: {
+                        _token: "{{ csrf_token() }}",
+                        from: from,
+                        to: to
+                    },
+                    success: function(data) {
+                        if (data.status == true) {
+                            setTimeout(function()
+                            { 
+                                window.LaravelDataTables["products-table"].draw();
+                            }, 3000);
+                        }
+
+                    }
+                })
+            });
     </script>
     @include('admin.product.create')
 @endpush

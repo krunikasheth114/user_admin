@@ -116,37 +116,29 @@
             });
 
             $("body").on('change', '#lang', function() {
-                    var lang = $(this).val();
-                    $.ajax({
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-                        },
-                        url: "{{ route('admin.admin_user.language') }}",
-                        method: "POST",
-                        data: {
-                            _token: "{{ csrf_token() }}",
-                            lang: lang
-                        },
-                        success: function(data) {
+                var lang = $(this).val();
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                    },
+                    url: "{{ route('admin.admin_user.language') }}",
+                    method: "POST",
+                    data: {
+                        _token: "{{ csrf_token() }}",
+                        lang: lang
+                    },
+                    success: function(data) {
 
-                            if (data.status == true) {
+                        if (data.status == true) {
 
-                                location.reload();
-                            }
-
+                            location.reload();
                         }
-                    })
+
+                    }
                 })
-                (function() {
-                    var previous;
-                    $("select[name=currency]").focus(function() {
-                        previous = this.value;
-                        alert(previous);
-                    }).change(function() {
-                        previous = this.value;
-                    });
-                })();
-        </script> 
+            })
+          
+        </script>
         @stack('page_scripts')
 </body>
 

@@ -12,7 +12,7 @@
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="blog-post">
-                                        <div class="blog-thumb">
+                                        <div class="blog-thumb1">
                                             <img src="{{ asset('images/' . $b->image) }}" alt="">
                                         </div>
                                         <div class="down-content">

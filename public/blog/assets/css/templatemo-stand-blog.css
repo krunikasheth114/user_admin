@@ -433,6 +433,13 @@ header .navbar {
 
 .blog-posts .blog-thumb img {
     width: 100%;
+    height: 300px;
+    overflow: hidden;
+}
+
+.blog-posts .blog-thumb1 img {
+    width: 100%;
+    height: 400px;
     overflow: hidden;
 }
 

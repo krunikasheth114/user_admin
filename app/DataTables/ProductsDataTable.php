@@ -8,6 +8,8 @@ use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
+use Session;
+use AmrShawky\LaravelCurrency\Facade\Currency;
 
 class ProductsDataTable extends DataTable
 {
@@ -44,11 +46,11 @@ class ProductsDataTable extends DataTable
             })
             ->addColumn('action', function ($data) {
                 $inactive = "";
-                    if ($data->status == 1) {
-                        $inactive .= '<button type="button" class="btn btn-primary m-1 changestatus" status ="0" id="' . $data->id . '"><i class="fa fa-lock"></i></button>';
-                    } else {
-                        $inactive .= '<button type="button" class="btn btn-success m-1 changestatus" status ="1" id="' . $data->id . '"><i class="fa fa-unlock"></i></button>';
-                    }
+                if ($data->status == 1) {
+                    $inactive .= '<button type="button" class="btn btn-primary m-1 changestatus" status ="0" id="' . $data->id . '"><i class="fa fa-lock"></i></button>';
+                } else {
+                    $inactive .= '<button type="button" class="btn btn-success m-1 changestatus" status ="1" id="' . $data->id . '"><i class="fa fa-unlock"></i></button>';
+                }
                 $inactive .=  '<button type="button" class="btn btn-warning m-1 edit" data-toggle="modal" data-target="#update_product" id="' . $data->id . '"><i class="fa fa-edit"></i></button>';
                 $inactive .=  '<button type="button" class="btn btn-danger m-1 delete" id="' . $data->id . '"><i class="fa fa-trash"></i></button>';
                 return $inactive;
@@ -56,8 +58,24 @@ class ProductsDataTable extends DataTable
             ->editcolumn('image', function ($data) {
                 return '<img src="' . $data->ImageUrl . '" height="100px" width="100px">';
             })
+            ->editcolumn('price', function ($data) {
+                $from = Session::get('currency');
+                $to = 'INR';
+                if ($from == 'INR') {
+                    $to = 'EUR';
+                    $converted = Currency::convert()
+                        ->from($from) 
+                        ->to($to)    
+                        ->amount((int)$data->price) 
+                        ->get();
+                     
+                } else {
+                    $converted = $data->price; 
+                }
+                return $to . ' ' . $converted;
+            })
 
-            ->rawColumns(['action', 'status','image'])
+            ->rawColumns(['action', 'status', 'image','price'])
             ->addIndexColumn();
     }
 
@@ -103,13 +121,13 @@ class ProductsDataTable extends DataTable
     {
         return [
             Column::make('id'),
-            Column::make('category_id'),
-            Column::make('subcategory_id'),
-            Column::make('name'),
-            Column::make('price'),
-            Column::make('image'),
-            Column::make('created_at'),
-            Column::make('updated_at'),
+            Column::make('category_id')->searchable(),
+            Column::make('subcategory_id')->searchable(),
+            Column::make('name')->searchable(),
+            Column::make('price')->searchable(),
+            Column::make('image')->searchable(),
+            Column::make('created_at')->searchable(),
+            Column::make('updated_at')->searchable(),
             Column::make('status'),
             Column::computed('action')
                 ->exportable(false)
