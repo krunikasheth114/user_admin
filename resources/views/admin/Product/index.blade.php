@@ -30,28 +30,29 @@
                                         data-target="#add_product_model"
                                         data-id="'.$data->id.'">{{ __('messages.add') }}</button>
                                 </div>
-                                <select class="form-select" aria-label="Default select currency" name="currency" id="currency">
-                                    <option value="INR" >INR</option>
-                                    <option value="EUR">EURO</option>
+                                <select class="form-select" aria-label="Default select currency" name="currency"
+                                    id="currency">
+                                    <option value="INR">INR
+                                    </option>
+                                    <option value="EUR">EURO
+                                    </option>
                                 </select>
+                                    {{-- <button class="btn btn-success m-1">Import User Data</button> --}}
+                                    <a class="btn btn-warning m-1" href="{{ route('admin.export')}}">Export Products</a>
                             </div>
                             <div class="card-body">
                                 <div class="ajax-msg"></div>
                                 <div class="table-responsive">
                                     {!! $dataTable->table(['class' => 'table table-bordered dt-responsive nowrap']) !!}
-
                                 </div>
                             </div>
                         </div>
 
                     </div>
                 </div>
-            </div> <!-- container-fluid -->
+            </div>
         </div>
-        <!-- End Page-content -->
     </div>
-
-    {{-- Update Form --}}
     <div class="modal" id="update_product" tabindex="-1" role="dialog" data-backdrop="static">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -127,7 +128,6 @@
                                 </span>
                             @endif
                         </div>
-
                         <div class="form-group">
                             <div>
                                 <input type="hidden" name="hidden_id" id="hidden_id">
@@ -286,34 +286,33 @@
 
 
         })
-          
-        var from;
-            $("#currency").on('focus', function() {
-                from = this.value;
-            }).change(function() {
-                var to = this.value;
-                $.ajax({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-                    },
-                    url: "{{ route('admin.admin_user.change-currency') }}",
-                    method: "POST",
-                    data: {
-                        _token: "{{ csrf_token() }}",
-                        from: from,
-                        to: to
-                    },
-                    success: function(data) {
-                        if (data.status == true) {
-                            setTimeout(function()
-                            { 
-                                window.LaravelDataTables["products-table"].draw();
-                            }, 3000);
-                        }
 
+        var from;
+        $("#currency").on('focus', function() {
+            from = this.value;
+        }).change(function() {
+            var to = this.value;
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                },
+                url: "{{ route('admin.admin_user.change-currency') }}",
+                method: "POST",
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    from: from,
+                    to: to
+                },
+                success: function(data) {
+                    if (data.status == true) {
+                        setTimeout(function() {
+                            window.LaravelDataTables["products-table"].draw();
+                        }, 3000);
                     }
-                })
-            });
+
+                }
+            })
+        });
     </script>
     @include('admin.product.create')
 @endpush

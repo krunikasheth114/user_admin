@@ -68,14 +68,13 @@ class ProductsDataTable extends DataTable
                         ->to($to)    
                         ->amount((int)$data->price) 
                         ->get();
-                     
                 } else {
                     $converted = $data->price; 
                 }
                 return $to . ' ' . $converted;
             })
 
-            ->rawColumns(['action', 'status', 'image','price'])
+            ->rawColumns(['action', 'status', 'image'])
             ->addIndexColumn();
     }
 

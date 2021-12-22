@@ -13,8 +13,10 @@
                                 <label for="change-currency" class="pull-right"> <b> Change Currency</b></label>
                                 <select class="form-select pull-right" aria-label="Default select currency" name="currency"
                                     id="currency">
-                                    <option value="INR">INR</option>
-                                    <option value="EUR">EURO</option>
+                                    <option value="INR" {{ Session::get('currency1') == 'INR' ? 'selected' : '' }}>INR
+                                    </option>
+                                    <option value="EUR" {{ Session::get('currency1') == 'EUR' ? 'selected' : '' }}>EURO
+                                    </option>
                                 </select>
                             </div>
                         </div>
@@ -33,9 +35,15 @@
                                             <a href="#">
                                                 <h4>{{ $product->name }}</h4>
                                             </a>
-                                            <span class="converted-currency" name="currency[]">
-                                                <i class="fa fa-rupee">{{ $product->price }}</i> 
-                                            </span>
+                                            @if (Session::get('currency1') == 'EUR')
+                                                <span class="converted-currency" name="currency">
+                                                    <i class="fa fa-euro ">{{ getEuroPrice($product->price) }}</i>
+                                                </span>
+                                            @else
+                                                <span class="converted-currency" name="currency">
+                                                    <i class="fa fa-rupee ">{{ $product->price }}</i>
+                                                </span>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
@@ -47,7 +55,6 @@
         </div>
     </section>
 @endsection
-
 @push('page_scripts')
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.min.css">
@@ -56,6 +63,7 @@
     <script>
         var from;
         $("#currency").on('focus', function() {
+            // e.preventDefault();
             from = this.value;
         }).change(function() {
             var to = this.value;
@@ -71,27 +79,48 @@
                     to: to
                 },
                 success: function(data) {
-                
+                    console.log(data);
                     $(".product-data").html('');
                     $.each(data.data, function(key, value) {
-                        $(".product-data").append(`<div class="col-lg-6">
+                        if (value.session_val == "EUR") {
+                            $(".product-data").append(`<div class="col-lg-6">
                                     <div class="blog-post">
                                         <div class="blog-thumb">
-                                            <img src="` + /images/ + value.image  +`"/> 
+                                            <img src="` + /images/ + value.image + `"/> 
                                         </div>
                                         <div class="down-content">
                                                 <span id=""> ` + value.category_name + `</span>
                                             <a href="#">
-                                                <h4>` + value.name + `</h4>
+                                                <h4>` + value.name +
+                                `</h4>
                                             </a>
-                                            <span class="converted-currency" name="currency"> <i class="fa fa-euro">   ` + value.new_price + `</i> 
-                                           
+                                                <span class="converted-currency" name="currency"> <i class="fa fa-euro">` +
+                                +value
+                                .new_price + `</i> 
                                             </span>
                                         </div>
                                     </div>
                                 </div>`);
+                        } else {
+                            $(".product-data").append(`<div class="col-lg-6">
+                                    <div class="blog-post">
+                                        <div class="blog-thumb">
+                                            <img src="` + /images/ + value.image + `"/> 
+                                        </div>
+                                        <div class="down-content">
+                                                <span id=""> ` + value.category_name + `</span>
+                                            <a href="#">
+                                                <h4>` + value.name +
+                                `</h4>
+                                            </a>
+                                                <span class="converted-currency" name="currency"> <i class="fa fa-rupee">` +
+                                value.price + `</i> 
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>`);
+                        }
                     });
-
                 }
             })
         });

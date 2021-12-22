@@ -16,8 +16,23 @@ function getblogView($blog_id)
 }
 
 function getChildComment($comment_id)
-{   
-    $comments = \App\Models\Comment::where('parent_id',$comment_id)->get();
+{
+    $comments = \App\Models\Comment::where('parent_id', $comment_id)->get();
 
     return $comments;
+}
+
+function getEuroPrice($price)
+{
+    $from = 'INR';
+    if ($from == 'INR') {
+
+        $to = 'EUR';
+        $newPrice = Currency::convert()
+            ->from($from)
+            ->to($to)
+            ->amount($price)
+            ->get();
+    }
+    return $newPrice;
 }

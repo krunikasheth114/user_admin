@@ -100,5 +100,7 @@ Route::group(['middleware' => 'auth:admin'], function () {
         Route::post('assign/{id}',  'RoleController@assign')->name('assign')->middleware('permission:Role_permission_view');
         Route::post('updatepermission',  'RoleController@updatePermission')->name('update-permission')->middleware('permission:Role_permission_view');
     });
+    Route::get('importExportView', 'MyController@importExportView')->name('import-export');
+    Route::get('export', 'MyController@export')->name('export');
 });
 ?>

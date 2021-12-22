@@ -12,7 +12,7 @@ class CurrencyController extends Controller
 {
     public function changeCurrency(Request $request)
     {  
-        Session::pull('currency');
+        $request->session()->forget('currency');
         $currency = Session::put('currency',$request->from);
         $data =   Session::get('currency');
         return response()->json(['status' => true, 'message' => 'Update Success' ,'currency' => $data]);
