@@ -102,12 +102,6 @@
                     </a>
                 </li>
                 @endcan
-                <li>
-                    <a href="{{ route('admin.import-export')}}" class="waves-effect">
-                        <i class="fa fa-list"></i>
-                        <span> Import-Export </span>
-                    </a>
-                </li>
                 @if (Auth::user()->is_admin == 1)
                     <li>
                         <a href="{{ route('admin.role.viewrole') }}" class="waves-effect">
@@ -123,8 +117,7 @@
                     </li>
                 @endif
             </ul>
-            
         </div>
         <div class="clearfix"></div>
-    </div> <!-- end sidebarinner -->
+    </div>
 </div>

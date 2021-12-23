@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
@@ -17,6 +18,7 @@ class MyController extends Controller
     }
     public function export(){
 
-        return Excel::download(new ProductsExport, 'products-collection.xlsx');
+        // $Products=DB::table('products')->get();
+        return Excel::download(new ProductsExport, 'products.xlsx');
     }
 }

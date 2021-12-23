@@ -27,8 +27,7 @@
                             <div class="card-header">
                                 <div class="card-header-actions">
                                     <button class="btn btn-success btn-save float-right" title="Add " data-toggle="modal"
-                                        data-target="#add_product_model"
-                                        data-id="'.$data->id.'">{{ __('messages.add') }}</button>
+                                        data-target="#add_product_model">{{ __('messages.add') }}</button>
                                 </div>
                                 <select class="form-select" aria-label="Default select currency" name="currency"
                                     id="currency">
@@ -38,7 +37,7 @@
                                     </option>
                                 </select>
                                     {{-- <button class="btn btn-success m-1">Import User Data</button> --}}
-                                    <a class="btn btn-warning m-1" href="{{ route('admin.export')}}">Export Products</a>
+                                    {{-- <a class="btn btn-warning m-1" href="{{ route('admin.export')}}">Export Products</a> --}}
                             </div>
                             <div class="card-body">
                                 <div class="ajax-msg"></div>

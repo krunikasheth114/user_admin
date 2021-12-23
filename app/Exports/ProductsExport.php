@@ -14,4 +14,16 @@ class ProductsExport implements FromCollection
     {
         return Product::all();
     }
+    public function headings(): array
+    {
+        return [
+            '#',
+            'category_id',
+            'subcategory_id',
+            'name',
+            'price',
+            'Created at',
+            'Updated at'
+        ];
+    }
 }
