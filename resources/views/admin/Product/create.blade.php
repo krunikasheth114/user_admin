@@ -121,7 +121,7 @@
                     if (data.status == true) {
                         swal("Done!", data.message, "success");
                         $("#add_product_model").modal('hide');
-                        // window.LaravelDataTables["subcategory-table"].draw();
+                        window.LaravelDataTables["products-table"].draw();
                     }
                 },
                 error: function(error) {

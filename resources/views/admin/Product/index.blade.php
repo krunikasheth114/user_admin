@@ -3,9 +3,8 @@
 @section('content')
     <div class="main-content">
         <div class="page-content">
+          
             <div class="container-fluid">
-
-                <!-- start page title -->
                 <div class="row">
                     <div class="col-12">
                         <div class="page-title-box d-flex align-items-center justify-content-between">
@@ -26,6 +25,15 @@
                         <div class="card m-b-30">
                             <div class="card-header">
                                 <div class="card-header-actions">
+                                    @include('common.flash')
+                                    <form action="{{ route('admin.import') }}" method="POST" class="import_form" enctype="multipart/form-data">
+                                        @csrf
+                                        <input type="file" name="file" class="form-control" >
+                                        <br>
+                                        <button class="btn btn-success">Import Product Data</button>
+                                    
+                                    </form>
+                                    <br>
                                     <button class="btn btn-success btn-save float-right" title="Add " data-toggle="modal"
                                         data-target="#add_product_model">{{ __('messages.add') }}</button>
                                 </div>
@@ -36,8 +44,7 @@
                                     <option value="EUR">EURO
                                     </option>
                                 </select>
-                                    {{-- <button class="btn btn-success m-1">Import User Data</button> --}}
-                                    {{-- <a class="btn btn-warning m-1" href="{{ route('admin.export')}}">Export Products</a> --}}
+
                             </div>
                             <div class="card-body">
                                 <div class="ajax-msg"></div>
@@ -311,6 +318,18 @@
 
                 }
             })
+        });
+        $(".import_form").validate({
+            rules: {
+                file: {
+                    required: true,
+                },
+            },
+            messages: {
+                file: {
+                    required: "This field is required",
+                },
+            }
         });
     </script>
     @include('admin.product.create')

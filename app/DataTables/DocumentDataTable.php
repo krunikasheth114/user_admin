@@ -28,9 +28,9 @@ class DocumentDataTable extends DataTable
                 return $request->created_at->format('Y-m-d H:i:s'); // human readable format
             })
 
-            // ->editColumn('document', function ($request) {
-            //     return $request->getDocumentUrlAttribute(); 
-            // })
+            ->editColumn('document', function ($request) {
+                return $request->getDocumentUrlAttribute(); 
+            })
             ->editcolumn('user_id', function ($data) {
                 return $data->getUser ? $data->getUser->firstname . '  ' .  $data->getUser->lastname : '';;
             })

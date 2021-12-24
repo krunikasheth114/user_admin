@@ -9,10 +9,13 @@ use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 use Session;
+use \App\Exports\ProductsExport;
 use AmrShawky\LaravelCurrency\Facade\Currency;
+
 
 class ProductsDataTable extends DataTable
 {
+    protected $exportClass = ProductsExport::class;
     /**
      * Build DataTable class.
      *
@@ -56,7 +59,8 @@ class ProductsDataTable extends DataTable
                 return $inactive;
             })
             ->editcolumn('image', function ($data) {
-                return '<img src="' . $data->ImageUrl . '" height="100px" width="100px">';
+                // return '<img src="' . $data->0ImageUrl . '" height="100px" width="100px">';
+                return '<a href ="' .$data->ImageUrl.'" target="_blank">'.$data->ImageUrl.'</a>';
             })
             ->editcolumn('price', function ($data) {
                 $from = Session::get('currency');
@@ -71,9 +75,8 @@ class ProductsDataTable extends DataTable
                 } else {
                     $converted = $data->price; 
                 }
-                return $to . ' ' . $converted;
+                return $converted;
             })
-
             ->rawColumns(['action', 'status', 'image'])
             ->addIndexColumn();
     }
@@ -100,11 +103,13 @@ class ProductsDataTable extends DataTable
             ->setTableId('products-table')
             ->columns($this->getColumns())
             ->minifiedAjax()
+            ->dom('Blfrtip')
             ->orderBy(1)
-            ->parameters([
-                'dom'          => 'Blfrtip',
-                'buttons'      => ['excel', 'csv'],
-            ]);
+            // 
+            ->buttons(
+                Button::make('excel'),
+
+            );
     }
 
     /**
@@ -120,10 +125,10 @@ class ProductsDataTable extends DataTable
             Column::make('subcategory_id')->searchable(),
             Column::make('name')->searchable(),
             Column::make('price')->searchable(),
-            Column::make('image')->searchable(),
+            Column::make('status'),
+            Column::make('image'),
             Column::make('created_at')->searchable(),
             Column::make('updated_at')->searchable(),
-            Column::make('status'),
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)

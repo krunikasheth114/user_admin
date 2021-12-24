@@ -44,6 +44,8 @@
                                                     <i class="fa fa-rupee ">{{ $product->price }}</i>
                                                 </span>
                                             @endif
+                                            <br>
+                                            <button class="btn btn-secondary">Add To Cart</button>
                                         </div>
                                     </div>
                                 </div>
@@ -94,9 +96,8 @@
                                                 <h4>` + value.name +
                                 `</h4>
                                             </a>
-                                                <span class="converted-currency" name="currency"> <i class="fa fa-euro">` +
-                                +value
-                                .new_price + `</i> 
+                                                <span class="converted-currency" name="currency"> <i class="fa fa-euro">` + +
+                                value.new_price + `</i> 
                                             </span>
                                         </div>
                                     </div>

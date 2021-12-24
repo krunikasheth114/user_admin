@@ -11,7 +11,6 @@ class Product extends Model
 {
     use HasFactory;
 
-    public $table = 'products';
     
     protected $fillable = [
         'id',
@@ -19,8 +18,9 @@ class Product extends Model
         'subcategory_id',
         'name',
         'price',
+        'status',
         'image',
-        'created_at'
+        
     ];
     public function getCategory()
     {
@@ -33,6 +33,7 @@ class Product extends Model
     }
     public function getImageUrlAttribute()
     {
-        return $this->image != '' ?  asset('images/' . $this->image) : asset('images/default/default.jpg');
+        return $this->image != '' ?  asset('/images/' . $this->image) : asset('images/default/default.jpg');
     }
+   
 }

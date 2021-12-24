@@ -4,23 +4,37 @@ namespace App\Imports;
 
 use App\Models\Product;
 use Maatwebsite\Excel\Concerns\ToModel;
+use Maatwebsite\Excel\Concerns\WithHeadingRow;
+use App\Models\Product_category;
+use App\Models\Product_subcategory;
+// use Illuminate\Validation\Validator;
+use Illuminate\Support\Facades\Validator;
+use File;
 
-class ProductsImport implements ToModel
+class ProductsImport implements ToModel, WithHeadingRow
 {
     /**
-    * @param array $row
-    *
-    * @return \Illuminate\Database\Eloquent\Model|null
-    */
+     * @param array $row
+     *
+     * @return \Illuminate\Database\Eloquent\Model|null
+     */
     public function model(array $row)
     {
+
+        $category_id = Product_category::where('name', $row['category_id'])->first();
+        $sub_category_id = Product_subcategory::where('name', $row['subcategory_id'])->first();
+        $files = File::allFiles(public_path('images/')); 
+        $random= array_random($files);
+        $Image = $random->getFilename();
         return new Product([
-            'category_id'     => $row['category_id'],
-            'subcategory_id'     => $row['subcategory_id'],
+            'category_id'     => $category_id->id ?? '',
+            'subcategory_id'     => $sub_category_id->id ?? '',
             'name'     => $row['name'],
             'price'     => $row['price'],
-            'status'     => $row['status'],
-            'image'     => $row['image'],
+            'status'     => $row['status'] == 'Active' ? 1 : 0,
+            'image'     => $Image,
+            'created_at'     => $row['created_at'],
+            'updated_at'     => $row['updated_at'],
         ]);
     }
 }
