@@ -52,7 +52,6 @@ class ProductController extends Controller
     }
     public function catFilter(Request $request)
     {
-
         $request->session()->put('price_range', $request->price_range);
         $request->session()->put('category', $request->categories);
         $request->session()->save();
