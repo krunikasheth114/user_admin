@@ -2,6 +2,7 @@
 
 namespace App\DataTables;
 
+use App\Exports\ProductsExport;
 use App\Models\Product;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
@@ -9,13 +10,16 @@ use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 use Session;
-use \App\Exports\ProductsExport;
+
 use AmrShawky\LaravelCurrency\Facade\Currency;
 
 
 class ProductsDataTable extends DataTable
 {
     protected $exportClass = ProductsExport::class;
+    // protected $exportColumns = [
+    //     ['data' => 'id', 'title' => 'ID'],
+    // ];
     /**
      * Build DataTable class.
      *
@@ -59,8 +63,14 @@ class ProductsDataTable extends DataTable
                 return $inactive;
             })
             ->editcolumn('image', function ($data) {
-                // return '<img src="' . $data->0ImageUrl . '" height="100px" width="100px">';
-                return '<a href ="' .$data->ImageUrl.'" target="_blank">'.$data->ImageUrl.'</a>';
+                // $imageUrl = URL::to('/images/') . $data->image;
+                // return '<img src="'.$imageUrl.'"height="100px" width="100px />';
+
+                $image = '<img src="' . $data->ImageUrl . '" height="100px" width="100px">';
+                return $image;
+                // $path = $data->ImageUrl;
+                // return '<a href ="' . $path . '" ><img src ="' . $data->ImageUrl . ' "height=150 width="70"/></a>';
+                //    return <a href = "' .$data->ImageUrl.'"><img src ="'.$data->ImageUrl.' " height=150" width="70"></a>;
             })
             ->editcolumn('price', function ($data) {
                 $from = Session::get('currency');
@@ -68,12 +78,12 @@ class ProductsDataTable extends DataTable
                 if ($from == 'INR') {
                     $to = 'EUR';
                     $converted = Currency::convert()
-                        ->from($from) 
-                        ->to($to)    
-                        ->amount((int)$data->price) 
+                        ->from($from)
+                        ->to($to)
+                        ->amount((int)$data->price)
                         ->get();
                 } else {
-                    $converted = $data->price; 
+                    $converted = $data->price;
                 }
                 return $converted;
             })
@@ -97,20 +107,24 @@ class ProductsDataTable extends DataTable
      *
      * @return \Yajra\DataTables\Html\Builder
      */
+
+
     public function html()
     {
+        
         return $this->builder()
             ->setTableId('products-table')
             ->columns($this->getColumns())
             ->minifiedAjax()
-            ->dom('Blfrtip')
+            ->dom('Bfrtip')
             ->orderBy(1)
-            // 
-            ->buttons(
-                Button::make('excel'),
-
-            );
+            ->parameters([
+                'dom'          => 'Blfrtip',
+                'buttons'      => ['excel', 'csv'],
+            ]);  
     }
+
+   
 
     /**
      * Get columns.
@@ -119,17 +133,18 @@ class ProductsDataTable extends DataTable
      */
     protected function getColumns()
     {
+        
         return [
-            Column::make('id'),
+            Column::make('id')->exportable(true),
             Column::make('category_id')->searchable(),
             Column::make('subcategory_id')->searchable(),
             Column::make('name')->searchable(),
             Column::make('price')->searchable(),
             Column::make('status'),
-            Column::make('image'),
+            Column::make('image')->exportable(false),
             Column::make('created_at')->searchable(),
             Column::make('updated_at')->searchable(),
-            Column::computed('action')
+            Column::computed('action')  
                 ->exportable(false)
                 ->printable(false)
                 ->width(60)

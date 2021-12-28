@@ -36,3 +36,8 @@ function getEuroPrice($price)
     }
     return $newPrice;
 }
+
+
+// function getProduct($category_id){
+//     $data[] = Product::with('getCategory')->where('category_id', '=', $category_id)->get();
+// }

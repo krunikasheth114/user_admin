@@ -3,20 +3,17 @@
 @section('content')
     <div class="main-content">
         <div class="page-content">
-          
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-12">
                         <div class="page-title-box d-flex align-items-center justify-content-between">
                             <h4 class="mb-0">@yield('page_title')</h4>
-
                             <div class="page-title-right">
                                 <ol class="breadcrumb m-0">
                                     <li class="breadcrumb-item"><a href="javascript: void(0);"></a></li>
                                     <li class="breadcrumb-item active"></li>
                                 </ol>
                             </div>
-
                         </div>
                     </div>
                 </div>
@@ -25,13 +22,21 @@
                         <div class="card m-b-30">
                             <div class="card-header">
                                 <div class="card-header-actions">
-                                    @include('common.flash')
-                                    <form action="{{ route('admin.import') }}" method="POST" class="import_form" enctype="multipart/form-data">
+                                    <form  id="importjuhi" name="importjuhi"method="post" >
                                         @csrf
-                                        <input type="file" name="file" class="form-control" >
+                                        {{ \Session::get('message') }}
+                                        <div class="alert alert-info">{{ Session::get('message') }}</div>
+
+
+                                        @if (\Session::has('message'))
+                                            <div class="alert alert-info">{{ Session::get('message') }}</div>
+                                        @endif
+
+
+                                        <input type="file" name="file" class="form-control" required>
                                         <br>
                                         <button class="btn btn-success">Import Product Data</button>
-                                    
+                                        <a class="btn btn-warning" href="{{ route('admin.export')}}">Export Product Data</a>
                                     </form>
                                     <br>
                                     <button class="btn btn-success btn-save float-right" title="Add " data-toggle="modal"
@@ -44,7 +49,6 @@
                                     <option value="EUR">EURO
                                     </option>
                                 </select>
-
                             </div>
                             <div class="card-body">
                                 <div class="ajax-msg"></div>
@@ -53,7 +57,6 @@
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -150,6 +153,9 @@
 @push('page_scripts')
     {!! $dataTable->scripts() !!}
     <script>
+        $(document).ready( function () {
+            // $('#products-table').DataTable();
+        } );
         // Change status
         $(document).on('click', '.changestatus', function() {
             var status = $(this).attr('status');
@@ -171,6 +177,7 @@
                     {
                         window.LaravelDataTables["products-table"].draw();
                     }
+
                 }
             })
         })
@@ -319,18 +326,62 @@
                 }
             })
         });
-        $(".import_form").validate({
-            rules: {
-                file: {
-                    required: true,
+    $('#importjuhi').validate({
+        rules: {
+            // category_name: {
+            //     required: true,
+            // }
+        
+        },
+        submitHandler: function(form) {
+
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
                 },
-            },
-            messages: {
-                file: {
-                    required: "This field is required",
+
+                url: "{{ route('admin.importjuhi') }}",
+                method: "POST",
+                data: new FormData(form),
+                contentType: false,
+                cache: false,
+                processData: false,
+                dataType: 'JSON',
+                success: function(data) {
+                    window.location.reload();
                 },
-            }
-        });
+                error: function(error) {
+                    // console.log(error.responseJSON.errors);
+                    var i;
+                    var res = error.responseJSON.errors;
+                    $.each(res, function(key, value) {
+                        toastr.error(value);
+                    });
+
+                }
+
+            });
+        }
+    });
+    $('body').on('click','.custom_class' ,function () {
+
+        
+
+    })
+
+
+        // $(".import_form").validate({
+        //     rules: {
+        //         file: {
+        //             required: true,
+        //         },
+        //     },
+        //     messages: {
+        //         file: {
+        //             required: "This field is required",
+        //         },
+        //     }
+        // });
     </script>
     @include('admin.product.create')
 @endpush

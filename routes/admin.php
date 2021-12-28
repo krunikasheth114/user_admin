@@ -102,6 +102,6 @@ Route::group(['middleware' => 'auth:admin'], function () {
     });
     Route::get('importExportView', 'MyController@importExportView')->name('import-export');
     Route::get('export', 'MyController@export')->name('export');
-    Route::post('import', 'MyController@import')->name('import');
+    Route::any('importjuhi', 'MyController@importjuhi')->name('importjuhi');
 });
 ?>

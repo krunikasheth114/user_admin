@@ -9,7 +9,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form class="" method="POST" enctype="multipart/form-data" id="add_product_form">
+                <form class="add_product_form" method="POST" enctype="multipart/form-data" id="add_product_form">
                     @csrf
                     <div class="form-group">
                         <label>{{ __('messages.category_name') }}</label>
@@ -123,6 +123,7 @@
                         $("#add_product_model").modal('hide');
                         window.LaravelDataTables["products-table"].draw();
                     }
+                    $(".add_product_form")[0].reset();
                 },
                 error: function(error) {
                     // console.log(error.responseJSON.errors);

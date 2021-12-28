@@ -62,6 +62,9 @@ Route::group(['middleware' => 'auth:web'], function () {
     Route::group(['prefix' => 'product', 'as' => 'product.'], function () {
         Route::get('show',         'users\ProductController@index')->name('show');
         Route::post('/curency',         'users\ProductController@changeCurrency')->name('change-currency');
+        Route::post('/cat-filter',         'users\ProductController@catFilter')->name('cat-filter');
+        Route::post('cart',         'users\ProductController@addToCart')->name('cart');
+        Route::get('cart-view',         'users\ProductController@cart')->name('cart-view');
     });
     // Route::get('/login/{social}', 'users\SocialLoginController@socialLogin')->where('social', 'twitter|facebook|linkedin|google|github|bitbucket')->name('login-social');
     // Route::get('/login/{social}/callback', 'users\SocialLoginController@handleProviderCallback')->where('social', 'twitter|facebook|linkedin|google|github|bitbucket');

@@ -7,12 +7,18 @@ use App\Models\Product_category;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use AmrShawky\LaravelCurrency\Facade\Currency;
+use Illuminate\Support\Facades\DB;
+use Session;
 
 class ProductController extends Controller
 {
     public function index(Request $request)
     {
-        $products = Product::get();
+        if (!empty(Session::get('category'))) {
+            $products = Product::whereIn('category_id', Session::get('category'))->get();
+        } else {
+            $products = Product::get();
+        }
         $category = Product_category::get();
         return view('user.products.index', compact(['products', 'category']));
     }
@@ -43,5 +49,47 @@ class ProductController extends Controller
             $converted['session_val'] = $data;
         }
         return response(['status' => true, 'data' => $new]);
+    }
+    public function catFilter(Request $request)
+    {
+
+        $request->session()->put('price_range', $request->price_range);
+        $request->session()->put('category', $request->categories);
+        $request->session()->save();
+        $p = (explode(';', $request->price_range));
+        $products = Product::with('getCategory');
+        if (!empty($request->categories)) {
+            $products = $products->orWhereIn('category_id', $request->categories);
+        }
+        if (isset($p) && !empty($p) && count($p) > 1) {
+            $products = $products->orWhereBetween('price', $p);
+        }
+        $data = $products->get();
+        return response()->json(["status" => true, 'data' => $data]);
+    }
+    public function addToCart(Request $request)
+    {
+        $product = Product::findOrFail($request->id);
+        // $request->session()->forget('cart');
+        $cart = session()->get('cart', []);
+        // $quantity = 0;
+        if (isset($cart[$request->id])) {
+            $cart[$request->id]['quantity']++;
+        } else {
+
+            $cart[$request->id] = [
+                "quantity" => 1,
+                "image" => $product->image,
+                "name" => $product->name,
+                "price" => $product->price,
+            ];
+        }
+        session()->put('cart', $cart);
+        return response()->json(['status' => true, 'success' => 'Product added to cart successfully!']);
+    }
+
+    public function cart()
+    {
+        return view('user.products.cart');
     }
 }
