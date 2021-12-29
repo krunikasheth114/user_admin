@@ -23,9 +23,10 @@ class Product_subcategoryRequest extends FormRequest
      */
     public function rules()
     {
+        // dd($this->all());
         return [
             'subcategory_name' => ['required',Rule::unique('product_sub_categories', 'name')->where(function ($query) {
-                return $query->where('category_id', $this->name);
+                return $query->where('category_id', $this->category)->where('deleted_at', NULL);
             }),
          ]];
     }

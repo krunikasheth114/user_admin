@@ -36,9 +36,9 @@ class ProductsDataTable extends DataTable
             ->editcolumn('status', function ($data) {
                 $inactive = "";
                 if ($data->status == 1) {
-                    $inactive .= '<span class="btn btn-primary">Active</span>';
+                    $inactive .= '<span class="badge badge-primary">Active</span>';
                 } else {
-                    $inactive .= '<span class="btn btn-danger">InActive</span>';
+                    $inactive .= '<span class="badge badge-danger">InActive</span>';
                 }
                 return $inactive;
             })

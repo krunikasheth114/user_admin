@@ -93,12 +93,12 @@ Route::group(['middleware' => 'auth:admin'], function () {
         Route::post('delete',  'PermissionController@delete')->name('delete');
     });
     Route::group(['prefix' => 'role', 'as' => 'role.'], function () {
-        Route::get('viewrole',  'RoleController@viewRole')->name('viewrole')->middleware('permission:Role_permission_view');
-        Route::post('store',  'RoleController@create')->name('store')->middleware('permission:Role_permission_create');
-        Route::post('deleterole',  'RoleController@deleteRole')->name('deleterole')->middleware('permission:Role_permission_delete');
-        Route::get('show/{id}',  'RoleController@show')->name('show')->middleware('permission:Role_permission_view');
-        Route::post('assign/{id}',  'RoleController@assign')->name('assign')->middleware('permission:Role_permission_view');
-        Route::post('updatepermission',  'RoleController@updatePermission')->name('update-permission')->middleware('permission:Role_permission_view');
+        Route::get('viewrole',  'RoleController@viewRole')->name('viewrole');
+        Route::post('store',  'RoleController@create')->name('store');
+        Route::post('deleterole',  'RoleController@deleteRole')->name('deleterole');
+        Route::get('show/{id}',  'RoleController@show')->name('show');
+        Route::post('assign/{id}',  'RoleController@assign')->name('assign');
+        Route::post('updatepermission',  'RoleController@updatePermission')->name('update-permission');
     });
     Route::get('importExportView', 'MyController@importExportView')->name('import-export');
     Route::get('export', 'MyController@export')->name('export');

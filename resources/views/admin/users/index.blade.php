@@ -33,7 +33,7 @@
 
                                 <div class="ajax-msg"></div>
                                 <div class="table-responsive">
-                                    
+
                                     {!! $dataTable->table(['class' => 'table table-bordered dt-responsive nowrap']) !!}
                                 </div>
                             </div>
@@ -53,7 +53,7 @@
                 <div class="modal-header">
                     <h5 class="modal-title">
                         <h4 class="text-muted text-center font-18"><b>
-                          {{  __('messages.updateuser')}}</b></h4>
+                                {{ __('messages.updateuser') }}</b></h4>
                     </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -66,31 +66,31 @@
                         <form method="POST" id="update_form">
                             @csrf
                             <div class="form-group">
-                                <label for="profile">  {{  __('messages.currentprofile')}} :</label>
+                                <label for="profile"> {{ __('messages.currentprofile') }} :</label>
                                 <span id="profile"></span>
                             </div>
                             <div class="form-group">
-                                <label for="firstname">{{  __('messages.firstname')}}:</label>
+                                <label for="firstname">{{ __('messages.firstname') }}:</label>
                                 <input id="firstname" type="firstname"
                                     class="form-control @error('firstname') is-invalid @enderror" name="firstname" required
                                     autocomplete="firstname" placeholder="Enter Firstname" autofocus>
                             </div>
                             <div class="form-group">
-                                <label for="lastname">{{  __('messages.lastname')}}:</label>
+                                <label for="lastname">{{ __('messages.lastname') }}:</label>
                                 <input id="lastname" type="lastname"
                                     class="form-control @error('lastname') is-invalid @enderror" name="lastname"
                                     value="{{ old('lastname') }}" required autocomplete="lastname"
                                     placeholder="Enter Lastname" autofocus>
                             </div>
                             <div class="form-group ">
-                                <label for="email">{{  __('messages.email')}} :</label>
+                                <label for="email">{{ __('messages.email') }} :</label>
 
                                 <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
                                     name="email" value="{{ old('email') }}" required autocomplete="email"
                                     placeholder="Enter Email" autofocus>
                             </div>
                             <div class="form-group">
-                                <label for="category">{{  __('messages.category_name')}} :</label>
+                                <label for="category">{{ __('messages.category_name') }} :</label>
                                 <select class="form-control" name="category" id="category">
 
 
@@ -98,20 +98,20 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="subcategory">{{  __('messages.subcategory_name')}} :</label>
+                                <label for="subcategory">{{ __('messages.subcategory_name') }} :</label>
                                 <select class="form-control" name="subcategory" id="subcategory">
 
                                 </select>
                             </div>
                             <div class="form-group ">
-                                <label for="profile">{{  __('messages.profile')}}:</label>
+                                <label for="profile">{{ __('messages.profile') }}:</label>
                                 <input id="profile" type="file" class="form-control @error('profile') is-invalid @enderror"
                                     name="profile" autocomplete="current-profile">
                             </div>
                             <input type="hidden" id="id" name="id" value="">
                             <div class="form-group">
                                 <button type="submit" name="submit" class="btn btn-primary">
-                                    {{  __('messages.update')}}
+                                    {{ __('messages.update') }}
                                 </button>
                             </div>
                         </form>
@@ -146,7 +146,7 @@
                     },
 
                 },
-              
+
                 submitHandler: function(form) {
 
                     $.ajax({
@@ -232,29 +232,32 @@
 
 
             $(document).on('click', '.changestatus', function() {
+                var conf = confirm("Are you sure to want chanvge status??");
+                if (conf == true) {
+                    var status = $(this).attr('status');
+                    var id = $(this).attr('id');
+                    $.ajax({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                        },
+                        url: "{{ route('admin.gets') }}",
+                        method: "POST",
+                        data: {
+                            status: status,
+                            id: id,
+                        },
+                        success: function(data) {
+                            console.log(data.status);
+                            if (data.status == true)
 
-                var status = $(this).attr('status');
-                var id = $(this).attr('id');
-                $.ajax({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-                    },
-                    url: "{{ route('admin.gets') }}",
-                    method: "POST",
-                    data: {
-                        status: status,
-                        id: id,
-                    },
-                    success: function(data) {
-                        console.log(data.status);
-                        if (data.status == true)
-
-                        {
-                            window.LaravelDataTables["users-table"].draw();
+                            {
+                                swal("Done!", data.message, "success");
+                                window.LaravelDataTables["users-table"].draw();
+                            }
                         }
-                    }
 
-                })
+                    })
+                }
 
             });
 

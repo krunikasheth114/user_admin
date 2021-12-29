@@ -102,6 +102,7 @@
                     </a>
                 </li>
                 @endcan
+                
                 @if (Auth::user()->is_admin == 1)
                     <li>
                         <a href="{{ route('admin.role.viewrole') }}" class="waves-effect">

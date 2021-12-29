@@ -38,7 +38,7 @@ class ProductController extends Controller
     public function changeStatus(Request $request)
     {
         $data = Product::where('id', $request->id)->update(['status' => $request->status]);
-        return response()->json(['status' => true, 'data' => $data]);
+        return response()->json(['status' => true, 'data' => $data, 'messages' => 'Status Changed succsessfully']);
     }
     public function edit(Request $request)
     {

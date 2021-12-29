@@ -114,12 +114,9 @@
         <br>
 
     @endforeach
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"></script>
-
-
+    @push('page_scripts')
     <script>
-        $('#edit_blog').validate({
+        $('#edit_blog1').validate({
             rules: {
                 category_id: {
                     required: true,
@@ -150,4 +147,6 @@
 
         });
     </script>
+    @endpush
+   
 @endsection

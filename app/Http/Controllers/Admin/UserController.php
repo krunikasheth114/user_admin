@@ -28,7 +28,7 @@ class UserController extends Controller
   {
 
     $data = User::where('id', $request->id)->update(['status' => $request->status]);
-    return response()->json(['status' => true, 'data' => $data]);
+    return response()->json(['status' => true, 'data' => $data ,'messages' => 'Status Changed succsessfully' ]);
   }
 
 

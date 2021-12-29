@@ -56,7 +56,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">{{__('messages.updatesubcategory')}}</h5>
+                    <h5 class="modal-title">{{ __('messages.updatesubcategory') }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -86,7 +86,7 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" id="btn"  name="submit"
+                    <button type="submit" id="btn" name="submit"
                         class="btn btn-primary">{{ __('messages.update') }}:</button>
                 </div>
             </div>
@@ -98,7 +98,7 @@
 @push('page_scripts')
     {!! $dataTable->scripts() !!}
     <script>
-           $('.edit_subcategory').validate({
+        $('.edit_subcategory').validate({
             rules: {
                 category_name: {
                     required: true,
@@ -109,25 +109,29 @@
             },
         });
         $(document).on('click', '.changestatus', function() {
-            var status = $(this).attr('status');
-            var id = $(this).attr('id');
-            $.ajax({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-                },
-                url: "{{ route('admin.subcategory.getstatus') }}",
-                method: "POST",
-                data: {
-                    status: status,
-                    id: id,
-                },
-                success: function(data) {
-                    console.log(data.status);
-                    if (data.status == true) {
-                        window.LaravelDataTables["subcategory-table"].draw();
+            var conf = confirm("Are you sure to want chanvge status??");
+            if (conf == true) {
+                var status = $(this).attr('status');
+                var id = $(this).attr('id');
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                    },
+                    url: "{{ route('admin.subcategory.getstatus') }}",
+                    method: "POST",
+                    data: {
+                        status: status,
+                        id: id,
+                    },
+                    success: function(data) {
+                        console.log(data.status);
+                        if (data.status == true) {
+                            swal("Done!", data.message, "success");
+                            window.LaravelDataTables["subcategory-table"].draw();
+                        }
                     }
-                }
-            })
+                })
+            }
         })
         $(document).on('click', '.edit', function() {
             var id = $(this).attr('id');
@@ -147,7 +151,7 @@
 
             })
         })
-     
+
         $(document).on('click', '#btn', function() {
             var id = $('#hidden_id').val();
             var category_name = $('#category_name').val();

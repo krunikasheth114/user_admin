@@ -24,7 +24,7 @@ class Product_categoryRequest extends FormRequest
     public function rules()
     {
         return [
-            'category_name' => 'required|unique:product_categories,name,NULL,id',
+            'category_name' => 'required|unique:product_categories,name,NULL,id,deleted_at,NULL',
         ];
     }
 }

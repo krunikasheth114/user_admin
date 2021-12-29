@@ -133,28 +133,32 @@
         });
         // Change status
         $(document).on('click', '.changestatus', function() {
-            var status = $(this).attr('status');
-            var id = $(this).attr('id');
-            $.ajax({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-                },
-                url: "{{ route('admin.product.changestatus') }}",
-                method: "POST",
-                data: {
-                    status: status,
-                    id: id,
-                },
-                success: function(data) {
-                    console.log(data.status);
-                    if (data.status == true)
+            var conf = confirm("Are you sure to want chanvge status??");
+            if (conf == true) {
+                var status = $(this).attr('status');
+                var id = $(this).attr('id');
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                    },
+                    url: "{{ route('admin.product.changestatus') }}",
+                    method: "POST",
+                    data: {
+                        status: status,
+                        id: id,
+                    },
+                    success: function(data) {
+                        console.log(data.status);
+                        if (data.status == true)
 
-                    {
-                        window.LaravelDataTables["product_category-table"].draw();
+                        {
+                            swal("Done!", data.message, "success");
+                            window.LaravelDataTables["product_category-table"].draw();
+                        }
                     }
-                }
 
-            })
+                })
+            }
 
         })
         // Delete Category

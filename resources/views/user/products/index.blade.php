@@ -7,9 +7,11 @@
                     {{-- {{dd(!empty(Session::get('price_range')))}} --}}
                     <h3>Category</h3>
                     <hr style="width:100%" , size="3" , color=black>
+                    {{-- @dd(( Session::get('category')) ? 'checked' : '' )); --}}
                     @foreach ($category as $c)
                         <label class="form-check">
                             <input class="form-check-input " name="category[]" value="{{ $c->id }}"
+                            {{-- @dd(in_array($c->id, Session::get('category')) ? 'checked' : '') --}}
                                 @if (!empty(Session::get('category'))) {{ in_array($c->id, Session::get('category')) ? 'checked' : '' }} @endif type="checkbox">
                             <span class="form-check-label">
                                 <span class="float-right badge badge-light round"></span> {{ $c->name }}

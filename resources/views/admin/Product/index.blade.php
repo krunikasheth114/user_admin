@@ -158,6 +158,8 @@
         } );
         // Change status
         $(document).on('click', '.changestatus', function() {
+            var conf = confirm("Are you sure to want chanvge status??");
+            if (conf == true) {
             var status = $(this).attr('status');
             var id = $(this).attr('id');
             $.ajax({
@@ -175,11 +177,13 @@
                     if (data.status == true)
 
                     {
+                        swal("Done!", data.message, "success");
                         window.LaravelDataTables["products-table"].draw();
                     }
 
                 }
             })
+            }
         })
         // GET Data
         $(document).on('click', '.edit', function() {

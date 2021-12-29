@@ -18,6 +18,7 @@ class CreateBlogCategoriesTable extends Migration
             $table->string('category');
             $table->boolean('status')->default(1);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

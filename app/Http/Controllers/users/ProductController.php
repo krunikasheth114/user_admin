@@ -54,14 +54,15 @@ class ProductController extends Controller
     {
         $request->session()->put('price_range', $request->price_range);
         $request->session()->put('category', $request->categories);
+        $category = Session::get('category');
         $request->session()->save();
         $p = (explode(';', $request->price_range));
         $products = Product::with('getCategory');
-        if (!empty($request->categories)) {
-            $products = $products->orWhereIn('category_id', $request->categories);
+        if (!empty($category)) {
+            $products = $products->whereIn('category_id', $category);
         }
         if (isset($p) && !empty($p) && count($p) > 1) {
-            $products = $products->orWhereBetween('price', $p);
+            $products = $products->whereBetween('price', $p);
         }
         $data = $products->get();
         return response()->json(["status" => true, 'data' => $data]);

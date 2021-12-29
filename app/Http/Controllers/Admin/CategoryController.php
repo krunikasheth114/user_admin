@@ -32,7 +32,7 @@ class CategoryController extends Controller
     {
 
         $data = Category::where('id', $request->id)->update(['status' => $request->status]);
-        return response()->json(['status' => true, 'data' => $data]);
+        return response()->json(['status' => true, 'data' => $data , 'messages' => 'Status Changed succsessfully']);
     }
 
     public function getcategory(Request $request)

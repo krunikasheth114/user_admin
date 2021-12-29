@@ -6,8 +6,9 @@
             <h1>Create Your Blog</h1>
         </div>
         <div class="card-body">
-            @include('common.flash')
+            {{-- @include('common.flash') --}}
             <form action="{{ route('blog.store') }}" id="create_blog" method="post" enctype="multipart/form-data">
+                
                 @csrf
                 <div class="form-group row">
                     <div class="col-sm-8">
@@ -20,9 +21,9 @@
                                 </option>
                             @endforeach
                         </select>
-                        @if ($errors->has('catgory'))
+                        @if ($errors->has('category_id'))
                             <span class="invalid-feedback d-block" role="alert">
-                                <strong>{{ $errors->first('catgory') }}</strong>
+                                <strong>{{ $errors->first('category_id') }}</strong>
                             </span>
                         @endif
                     </div>
@@ -76,7 +77,7 @@
         </div>
     </div>
     <script>
-        $('#create_blog').validate({
+        $('#create_blog111').validate({
             rules: {
                 category_id: {
                     required: true,

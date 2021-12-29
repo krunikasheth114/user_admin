@@ -21,12 +21,12 @@ class BlogController extends Controller
     {
 
         $data = Blog_category::where('id', $request->id)->update(['status' => $request->status]);
-        return response()->json(['status' => true, 'data' => $data]);
+        return response()->json(['status' => true, 'data' => $data , 'messages' => 'Status Changed succsessfully' ]);
     }
     public function store(Request $request)
     {
         $request->validate([
-            'category' => 'required|unique:blog_categories,category',
+            'category' => 'required|unique:blog_categories,category,NULL,id,deleted_at,NULL',
         ]);
         $catgeory = Blog_category::create([
             'category' => $request->input('category'),

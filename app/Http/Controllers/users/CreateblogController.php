@@ -15,7 +15,7 @@ class CreateblogController extends Controller
 {
     public function index(Request $request)
     {
-
+        #BlogCategory
         $category = Blog_category::where('status', 1)->get(['category', 'id']);
         return view('user.blog.createblog', compact('category'));
     }

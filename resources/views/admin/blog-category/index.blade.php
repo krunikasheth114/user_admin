@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('page_title',  __('messages.blogcategory'))
+@section('page_title', __('messages.blogcategory'))
 
 @section('content')
     <div class="main-content">
@@ -27,9 +27,11 @@
                         <div class="card m-b-30">
                             <div class="card-header">
                                 <div class="card-header-actions">
-                                    @if (auth()->user()->hasAnyPermission('blog_category_create')) {\
+                                    @if (auth()->user()->hasAnyPermission('blog_category_create'))
+                                        {\
                                         <button class="btn btn-success btn-save float-right" title="Add "
-                                            data-toggle="modal" data-target="#blog_category" data-id="'.$data->id.'">{{  __('messages.add')}}
+                                            data-toggle="modal" data-target="#blog_category"
+                                            data-id="'.$data->id.'">{{ __('messages.add') }}
                                         </button>
                                     @endif
                                 </div>
@@ -56,7 +58,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="workerLabel"> {{__('messages.updateblogcategory')}}</h5>
+                    <h5 class="modal-title" id="workerLabel"> {{ __('messages.updateblogcategory') }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -67,7 +69,7 @@
                         class="edit_blog_category_form">
                         @csrf
                         <div class="form-group">
-                            <label>{{__('messages.blogcategory')}}</label>
+                            <label>{{ __('messages.blogcategory') }}</label>
                             <input type="text" class="form-control category" value=" " name="category" id="category"
                                 placeholder="Type Blog Category">
                         </div>
@@ -93,7 +95,7 @@
 @endsection
 @push('page_scripts')
     {!! $dataTable->scripts() !!}
-   
+
     <script>
         $(".edit_blog_category_form").validate({
             rules: {
@@ -136,29 +138,33 @@
             }
         })
         $(document).on('click', '.changestatus', function() {
-            var status = $(this).attr('status');
-            var id = $(this).attr('id');
+            var conf = confirm("Are you sure to want chanvge status??");
+            if (conf == true) {
+                var status = $(this).attr('status');
+                var id = $(this).attr('id');
 
-            $.ajax({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-                },
-                url: "{{ route('admin.blog.getstatus') }}",
-                method: "POST",
-                data: {
-                    status: status,
-                    id: id,
-                },
-                success: function(data) {
-                    console.log(data.status);
-                    if (data.status == true)
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                    },
+                    url: "{{ route('admin.blog.getstatus') }}",
+                    method: "POST",
+                    data: {
+                        status: status,
+                        id: id,
+                    },
+                    success: function(data) {
+                        console.log(data.status);
+                        if (data.status == true)
 
-                    {
-                        window.LaravelDataTables["blog_category-table"].draw();
+                        {
+                            swal("Done!", data.message, "success");
+                            window.LaravelDataTables["blog_category-table"].draw();
+                        }
                     }
-                }
 
-            })
+                })
+            }
 
         })
         // Edit Blog Category

@@ -61,6 +61,7 @@
     <script src="{{ asset('blog/assets/js/slick.js') }}"></script>
     <script src="{{ asset('blog/assets/js/isotope.js') }}"></script>
     <script src="{{ asset('blog/assets/js/accordions.js') }}"></script>
+  
     
     {{-- <script src="//code.jquery.com/jquery-1.9.1.js"></script> --}}
     {{-- <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script> --}}

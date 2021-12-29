@@ -23,12 +23,18 @@ class BlogRequest extends FormRequest
      */
     public function rules()
     {
-       
         return [
-             'category_id' => 'required',
-             'title'=>'required',
-             'description'=>'required',
-             'image'=>'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'category_id' => 'required',
+            'title' => 'required',
+            'description' => 'required',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ];
+        
+    }
+    public function attributes()
+    {
+        return [
+            'category_id' => 'Category',
         ];
     }
 }
