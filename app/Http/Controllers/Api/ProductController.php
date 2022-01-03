@@ -9,6 +9,7 @@ use App\Contracts\ProductContract;
 use App\Http\Controllers\Api\BaseController as  BaseController;
 use App\Repositories\ProductRepository;
 use App\Models\Product;
+use App\Http\Requests\ProductRequest;
 
 class ProductController  extends BaseController
 {
@@ -24,34 +25,41 @@ class ProductController  extends BaseController
     }
     public function create(Request $request)
     {
-        $product = $this->product->create($request->all());
+        try {
+            $product = $this->product->create($request->all());
+        } catch (ValidationException|\Exception  $e) {
+
+            return $this->sendError($e, 'Something Went Wrong');
+        }
         return $this->sendResponse($product, 'Product Crearted');
     }
     public function edit(Product $product)
     {
-        dd($product);
-        $product = $this->product->edit($id);
-        if (!empty($product)) {
-            return $this->sendResponse($product, 'Product-detail');
-        } else {
-            return $this->sendError($product, 'data not found');
+        try {
+            $product = $this->product->edit($id);
+        } catch (\Exception $e) {
+            return $this->sendError($e, 'data not found');
         }
+        return $this->sendResponse($product, 'Product-detail');
     }
     public function update(Request $request, $id)
     {
-        // $collection = $request->except(['_token','_method']);
         $data = $request->all();
-        if (!empty($id)) {
+        try {
             $product = $this->product->update($data, $id);
-            return $this->sendResponse($data, 'Product Updated');
-        } 
+        } catch (\Exception $e) {
+            return $this->sendError($e, 'Something Went Wrong');
+        }
+        return $this->sendResponse($data, 'Product Updated');
     }
     public function delete($id)
     {
-
+        
         $product = $this->product->delete($id);
         if ($product) {
             return $this->sendResponse($product, 'Product deleted');
-        } 
+        }else{
+            return $this->sendError($product, 'Something Went Wrong');
+        }
     }
 }
