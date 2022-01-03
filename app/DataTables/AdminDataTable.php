@@ -30,9 +30,8 @@ class AdminDataTable extends DataTable
                 return $request->created_at->format('Y-m-d H:i:s'); // human readable format
             })
             ->editColumn('role', function ($data) {
-                return $data->getRoleNames(); 
+                return $data->getRoleNames();
             })
-           
             ->addColumn('action', function ($data) {
                 $inactive = "";
                 $inactive .=  '<button type="button" class="btn btn-warning m-1 edit" data-toggle="modal" data-target="#update_admin_user" id="' . $data->id . '"><i class="fa fa-edit"></i></button>';
@@ -61,15 +60,15 @@ class AdminDataTable extends DataTable
     public function html()
     {
         return $this->builder()
-                    ->setTableId('admin-table')
-                    ->columns($this->getColumns())
-                    ->minifiedAjax()
-                    // ->dom('Bfrtip')
-                    ->orderBy(1)
-                    ->parameters([
-                        'dom'          => 'Blfrtip',
-                        'buttons'      => ['excel', 'csv'],
-                    ]);
+            ->setTableId('admin-table')
+            ->columns($this->getColumns())
+            ->minifiedAjax()
+            // ->dom('Bfrtip')
+            ->orderBy(1)
+            ->parameters([
+                'dom'          => 'Blfrtip',
+                'buttons'      => ['excel', 'csv'],
+            ]);
     }
 
     /**
@@ -80,17 +79,17 @@ class AdminDataTable extends DataTable
     protected function getColumns()
     {
         return [
-         
+
             Column::make('id'),
             Column::make('email'),
             Column::make('role'),
             Column::make('created_at'),
             Column::make('updated_at'),
             Column::computed('action')
-            ->exportable(false)
-            ->printable(false)
-            ->width(60)
-            ->addClass('text-center'),
+                ->exportable(false)
+                ->printable(false)
+                ->width(60)
+                ->addClass('text-center'),
         ];
     }
 

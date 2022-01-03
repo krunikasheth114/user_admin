@@ -13,12 +13,13 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends Authenticatable
 {
-    protected $guard = 'web';
-
-    protected $table = 'users';
     use SoftDeletes;
 
     use HasApiTokens, HasFactory, Notifiable;
+    
+    protected $guard = 'web';
+
+    protected $table = 'users';
 
     /**
      * The attributes that are mass assignable.
@@ -53,10 +54,10 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-    public function getCategory()
-    {
-        return $this->hasOne(Category::class, 'id', 'category_id');
-    }
+        public function getCategory()
+        {
+            return $this->hasOne(Category::class, 'id', 'category_id');
+        }
     public function getSubCategory()
     {
         return $this->hasOne(Subcategory::class, 'id', 'subcategory_id');
@@ -90,7 +91,7 @@ class User extends Authenticatable
         return $this->hasMany(Blog::class, 'user_id', 'id');
     }
 
-    public function likes()
+    public function likeCount()
     {
         return $this->belongsToMany('App\Models\Blog', 'likes', 'user_id', 'blog_id')->count();
     }

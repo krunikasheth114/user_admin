@@ -2,8 +2,9 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\RegisterController; 
+use App\Http\Controllers\Api\RegisterController;
 use App\Http\Controllers\Api\HomeController;
+use App\Http\Controllers\Api\ProductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,19 +22,26 @@ use App\Http\Controllers\Api\HomeController;
 // });
 
 
-Route::post('register','RegisterController@Register')->name('register');
-Route::get('home','RegisterController@home')->name('home');
-Route::post('login','LoginController@Login')->name('login');
+Route::post('register', 'RegisterController@Register')->name('register');
+Route::get('home', 'RegisterController@home')->name('home');
+Route::post('login', 'LoginController@Login')->name('login');
 
 Route::group(['middleware' => 'auth:api'], function () {
     // dd('dsdfg');
-    Route::get('blogList','HomeController@blogList');
-    Route::get('index/{slug}','BlogDetailController@index');
-    Route::get('like/{id}','BlogDetailController@like');
-    Route::post('comment','BlogDetailController@comment');
-    Route::get('delete/{id}','BlogDetailController@delete');
-    Route::post('commentReply','BlogDetailController@commentReply');
-    Route::post('response','BlogDetailController@response');
-    Route::get('fetchComment/{id}','BlogDetailController@fetchComment');
-    
+    Route::get('blogList', 'HomeController@blogList');
+    Route::get('index/{slug}', 'BlogDetailController@index');
+    Route::get('like/{id}', 'BlogDetailController@like');
+    Route::post('comment', 'BlogDetailController@comment');
+    Route::get('delete/{id}', 'BlogDetailController@delete');
+    Route::post('commentReply', 'BlogDetailController@commentReply');
+    Route::post('response', 'BlogDetailController@response');
+    Route::get('fetchComment/{id}', 'BlogDetailController@fetchComment');
+    Route::prefix('product')->group(function () {
+        Route::get('index', 'ProductController@index');
+        Route::post('store', 'ProductController@create');
+        Route::get('edit/{product}', 'ProductController@edit');
+        Route::post('update/{id}', 'ProductController@update');
+        Route::get('delete/{id}', 'ProductController@delete');
+
+    });
 });

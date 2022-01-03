@@ -18,6 +18,7 @@ class ProductController extends Controller
         $subcategory = Product_subcategory::get(['name', 'id']);
         return $datatable->render('admin.product.index', compact('category', 'subcategory'));
     }
+    
     public function store(ProductRequest $request)
     {
         $data = new Product;
@@ -35,11 +36,13 @@ class ProductController extends Controller
         $data->save();
         return response()->json(['status' => true, 'message' => 'Product Added']);
     }
+
     public function changeStatus(Request $request)
     {
         $data = Product::where('id', $request->id)->update(['status' => $request->status]);
         return response()->json(['status' => true, 'data' => $data, 'messages' => 'Status Changed succsessfully']);
     }
+
     public function edit(Request $request)
     {
         $data['product'] = Product::find($request->id);
@@ -47,6 +50,7 @@ class ProductController extends Controller
         $data['subcategory'] = Product_subcategory::get(['name', 'id']);
         return response()->json(['status' => true, 'data' => $data]);
     }
+
     public function update(Request $request)
     {
         $id = $request->hidden_id;
@@ -75,6 +79,7 @@ class ProductController extends Controller
         $data->update();
         return response()->json(['status' => true, 'message' => 'Update Success']);
     }
+
     public function delete(Request $request)
     {
         $data = Product::find($request->id);

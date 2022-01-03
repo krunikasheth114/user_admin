@@ -22,50 +22,54 @@ use App\Http\Controllers\users\DashboardController;
 Route::get('/', function () {
     return redirect('home');
 });
-// \Auth::logout();
-Route::get('/home',          'users\RegisterController@home')->name('home');
-Route::get('/register',          'users\RegisterController@showLoginForm')->name('register');
-Route::get('/getcat',            'users\RegisterController@getcat')->name('getcat');
-Route::post('store',             'users\RegisterController@store')->name('store');
-Route::get('verify_register_user/{id}',        'users\RegisterController@showotpRegister')->name('user.showotpRegister');
-Route::get('verify_user/{id}',        'users\RegisterController@showotpLogin')->name('user.verify_user');
-Route::post('otp_verify',        'users\RegisterController@VerifyUser')->name('otp_verify');
-Route::get('/user/login',        'users\LoginController@showLoginForm')->name('user.login');
-Route::post('/attemptLogin',     'users\LoginController@Login')->name('attemptLogin');
-Route::get('showEmail',        'users\LoginController@showEmail')->name('user.showEmail');
-Route::post('getEmail',        'users\LoginController@getEmail')->name('user.getEmail');
-Route::get('get_otp/{id}',        'users\LoginController@get_otp')->name('user.get_otp');
-Route::post('verify_otp',        'users\LoginController@verify_otp')->name('user.verify_otp');
-Route::get('reset_pass/{id}',        'users\LoginController@reset_pass')->name('user.reset_pass');
-Route::post('confirm_pass',        'users\LoginController@confirm_pass')->name('user.confirm_pass');
-Route::get('logout',            'users\LoginController@logout')->name('logout');
-Route::get('/display/{slug}',         'users\ViewblogController@index')->name('display');
-Route::group(['middleware' => 'auth:web'], function () {
-    Route::any('/dashboard',         'users\DashboardController@index')->name('dashboard')->middleware('CheckStatus');
-    Route::any('/edit',         'users\UpdateController@edit')->name('edit');
-    Route::any('/update',         'users\UpdateController@update')->name('update');
-    Route::post('/getcategory',         'users\UpdateController@getcategory')->name('getcategory');
-    Route::post('/getsubcategory',         'users\UpdateController@getsubcategory')->name('getsubcategory');
-    Route::group(['prefix' => 'blog', 'as' => 'blog.'], function () {
-        Route::any('/createblog',         'users\CreateblogController@index')->name('createblog');
-        Route::post('/store',         'users\CreateblogController@store')->name('store');
-        Route::get('/edit/{id}',         'users\CreateblogController@edit')->name('edit');
-        Route::post('/update/{slug}',         'users\CreateblogController@update')->name('update');
-        Route::get('/delete/{slug}',         'users\CreateblogController@delete')->name('delete');
-        Route::post('/like',         'users\ViewblogController@like')->name('like');
-        Route::post('comment',         'users\ViewblogController@comment')->name('comment');
-        Route::post('/delete/comment',         'users\ViewblogController@delete')->name('delete.comment');
-        Route::post('/commentReply',         'users\ViewblogController@commentReply')->name('commentReply');
-        Route::post('/response',         'users\ViewblogController@response')->name('response');
-        Route::post('/fetch-comment',         'users\ViewblogController@fetchComment')->name('fetch_comment');
+// \Auth::logout();'namespace' => 'Auth'
+Route::group(['namespace' => 'users'], function () {
+    Route::get('/home',              'RegisterController@home')->name('home');
+    Route::get('/register',          'RegisterController@showLoginForm')->name('register');
+    Route::get('/getcat',            'RegisterController@getcat')->name('getcat');
+    Route::post('store',             'RegisterController@store')->name('store');
+    Route::get('verify_register_user/{id}',   'RegisterController@showotpRegister')->name('user.showotpRegister');
+    Route::get('verify_user/{id}',        'RegisterController@showotpLogin')->name('user.verify_user');
+    Route::post('otp_verify',           'RegisterController@VerifyUser')->name('otp_verify');
+    Route::get('/user/login',           'LoginController@showLoginForm')->name('user.login');
+    Route::post('/attemptLogin',        'LoginController@Login')->name('attemptLogin');
+    Route::get('showEmail',             'LoginController@showEmail')->name('user.showEmail');
+    Route::post('getEmail',             'LoginController@getEmail')->name('user.getEmail');
+    Route::get('get_otp/{id}',          'LoginController@get_otp')->name('user.get_otp');
+    Route::post('verify_otp',           'LoginController@verify_otp')->name('user.verify_otp');
+    Route::get('reset_pass/{id}',       'LoginController@reset_pass')->name('user.reset_pass');
+    Route::post('confirm_pass',         'LoginController@confirm_pass')->name('user.confirm_pass');
+    Route::get('logout',                 'LoginController@logout')->name('logout');
+    Route::get('/display/{slug}',         'CreateblogController@displayBlog')->name('display');
+    Route::group(['middleware' => 'auth:web'], function () {
+        Route::any('/dashboard',        'DashboardController@index')->name('dashboard')->middleware('CheckStatus');
+        Route::any('/edit',             'UpdateController@edit')->name('edit');
+        Route::any('/update',           'UpdateController@update')->name('update');
+        Route::post('/getcategory',      'UpdateController@getcategory')->name('getcategory');
+        Route::post('/getsubcategory',    'UpdateController@getsubcategory')->name('getsubcategory');
+
+        Route::group(['prefix' => 'blog', 'as' => 'blog.'], function () {
+            Route::any('/createblog',         'CreateblogController@index')->name('createblog');
+            Route::post('/store',             'CreateblogController@store')->name('store');
+            Route::get('/edit/{id}',          'CreateblogController@edit')->name('edit');
+            Route::post('/update/{slug}',      'CreateblogController@update')->name('update');
+            Route::get('/delete/{slug}',        'CreateblogController@deleteBlog')->name('delete');
+            Route::post('/like',                 'CreateblogController@like')->name('like');
+            Route::post('comment',                 'CreateblogController@comment')->name('comment');
+            Route::post('/delete/comment',         'CreateblogController@delete')->name('delete.comment');
+            Route::post('/commentReply',           'CreateblogController@commentReply')->name('commentReply');
+            Route::post('/response',                'CreateblogController@response')->name('response');
+            Route::post('/fetch-comment',            'CreateblogController@fetchComment')->name('fetch_comment');
+        });
+
+        Route::group(['prefix' => 'product', 'as' => 'product.'], function () {
+            Route::get('show',              'ProductController@index')->name('show');
+            Route::post('/curency',         'ProductController@changeCurrency')->name('change-currency');
+            Route::post('/cat-filter',       'ProductController@catFilter')->name('cat-filter');
+            Route::post('cart',              'ProductController@addToCart')->name('cart');
+            Route::get('cart-view',           'ProductController@cart')->name('cart-view');
+        });
+        // Route::get('/login/{social}', 'users\SocialLoginController@socialLogin')->where('social', 'twitter|facebook|linkedin|google|github|bitbucket')->name('login-social');
+        // Route::get('/login/{social}/callback', 'users\SocialLoginController@handleProviderCallback')->where('social', 'twitter|facebook|linkedin|google|github|bitbucket');
     });
-    Route::group(['prefix' => 'product', 'as' => 'product.'], function () {
-        Route::get('show',         'users\ProductController@index')->name('show');
-        Route::post('/curency',         'users\ProductController@changeCurrency')->name('change-currency');
-        Route::post('/cat-filter',         'users\ProductController@catFilter')->name('cat-filter');
-        Route::post('cart',         'users\ProductController@addToCart')->name('cart');
-        Route::get('cart-view',         'users\ProductController@cart')->name('cart-view');
-    });
-    // Route::get('/login/{social}', 'users\SocialLoginController@socialLogin')->where('social', 'twitter|facebook|linkedin|google|github|bitbucket')->name('login-social');
-    // Route::get('/login/{social}/callback', 'users\SocialLoginController@handleProviderCallback')->where('social', 'twitter|facebook|linkedin|google|github|bitbucket');
 });

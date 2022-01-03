@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\URL;
 
 class ViewblogController extends Controller
 {
-    public function index(Request $request, $slug)
+    public function displayBlog(Request $request, $slug)
     {
 
         $view = Blog::where('slug', $slug)->first();
