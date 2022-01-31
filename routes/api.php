@@ -39,7 +39,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::prefix('product')->group(function () {
         Route::get('index', 'ProductController@index');
         Route::post('store', 'ProductController@create');
-        Route::get('edit/{product}', 'ProductController@edit');
+        Route::get('edit/{id}', 'ProductController@edit');
         Route::post('update/{id}', 'ProductController@update');
         Route::get('delete/{id}', 'ProductController@delete');
 

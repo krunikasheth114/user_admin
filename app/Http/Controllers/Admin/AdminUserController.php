@@ -18,17 +18,7 @@ class AdminUserController extends Controller
         return $datatable->render('admin.admin.index', compact('role'));
     }
 
-    public function store(AdminRequest $request)
-    {
-        $admin_user = new Admin;
-        $admin_user->email = $request->input('email');
-        $admin_user->password = Hash::make($request->input('password'));
-        $admin_user->is_Admin = 0;
-        $role_id = $request->role;
-        $admin_user->assignRole($role_id);
-        $admin_user->save();
-        return response()->json(['status' => true, 'message' => ' Admin Added Succesfully']);
-    }
+    
     public function edit(Request $request)
     {
         $data['users'] = Admin::find($request->id);

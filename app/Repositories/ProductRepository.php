@@ -65,7 +65,6 @@ class ProductRepository implements ProductContract
     public function delete($id)
     {
         $product = Product::find($id);
-        $product->delete();
         return $product;
     }
 }

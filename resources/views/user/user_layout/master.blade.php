@@ -19,12 +19,14 @@
     <link rel="stylesheet" href="{{ asset('blog/assets/css/templatemo-stand-blog.css') }}">
     <link rel="stylesheet" href="{{ asset('blog/assets/css/owl.css') }}">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.1/css/ion.rangeSlider.min.css"/>
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.1/css/ion.rangeSlider.min.css" />
     <link rel="stylesheet" href="/resources/demos/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.min.css">
 
     @stack('css')
 </head>
+
 <body>
     <div id="preloader">
         <div class="jumper">
@@ -61,8 +63,8 @@
     <script src="{{ asset('blog/assets/js/slick.js') }}"></script>
     <script src="{{ asset('blog/assets/js/isotope.js') }}"></script>
     <script src="{{ asset('blog/assets/js/accordions.js') }}"></script>
-  
-    
+
+
     {{-- <script src="//code.jquery.com/jquery-1.9.1.js"></script> --}}
     {{-- <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script> --}}
 

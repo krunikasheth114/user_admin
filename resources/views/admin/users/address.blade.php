@@ -252,8 +252,8 @@
                 </div>
             </div> <!-- container-fluid -->
         </div>
-        @endsection
-        @push('page_scripts')
+    @endsection
+    @push('page_scripts')
         <script>
             $('#add-more').on('click', function() {
                 // $('#update-data').validate();
@@ -428,7 +428,7 @@
                         console.log(data.data);
                         $.each(data.data, function(key, value) {
                             $(".subcategory").append('<option value="' + value.id + '">' + value
-                                .subcategory_name + '</option>');
+                                .question + '</option>');
                         });
                     }
 

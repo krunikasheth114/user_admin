@@ -75,7 +75,7 @@
     //                         {!! Form::button('<i class="fa fa-close"></i>', ['class' => 'btn btn-danger delete_add_more']) !!}     
     //                     </div>
     //             </div>`;
-    //     $("#append").append(html);
+    //      
     // });
     // $("body").on("click", ".delete_add_more", function() {
     //     $(this).parent().parent().remove();
@@ -135,8 +135,6 @@
             });
 
         },
-
-
     })
 </script>
 @endpush

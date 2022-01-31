@@ -18,7 +18,7 @@ class ProductController extends Controller
         $subcategory = Product_subcategory::get(['name', 'id']);
         return $datatable->render('admin.product.index', compact('category', 'subcategory'));
     }
-    
+
     public function store(ProductRequest $request)
     {
         $data = new Product;

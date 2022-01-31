@@ -27,39 +27,33 @@ class ProductController  extends BaseController
     {
         try {
             $product = $this->product->create($request->all());
-        } catch (ValidationException|\Exception  $e) {
+        } catch (ValidationException | \Exception  $e) {
 
             return $this->sendError($e, 'Something Went Wrong');
         }
         return $this->sendResponse($product, 'Product Crearted');
     }
-    public function edit(Product $product)
+    public function edit($id)
     {
-        try {
-            $product = $this->product->edit($id);
-        } catch (\Exception $e) {
-            return $this->sendError($e, 'data not found');
+        $product = $this->product->edit($id);
+        if (is_null($product)) {
+            return $this->sendError($product, 'Data Not Found');
         }
         return $this->sendResponse($product, 'Product-detail');
     }
     public function update(Request $request, $id)
     {
         $data = $request->all();
-        try {
+     
             $product = $this->product->update($data, $id);
-        } catch (\Exception $e) {
-            return $this->sendError($e, 'Something Went Wrong');
-        }
         return $this->sendResponse($data, 'Product Updated');
     }
     public function delete($id)
     {
-        
         $product = $this->product->delete($id);
-        if ($product) {
-            return $this->sendResponse($product, 'Product deleted');
-        }else{
-            return $this->sendError($product, 'Something Went Wrong');
+        if (is_null($product)) {
+            return $this->sendError($product, 'Data Not Found');
         }
+        return $this->sendResponse($product, 'Product deleted');
     }
 }

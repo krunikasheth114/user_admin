@@ -28,6 +28,7 @@ class SubCategoryRequest extends FormRequest
             'subcategory_name' => Rule::unique('sub_categories', 'subcategory_name')->where(function ($query) {
                 return $query->where('category_id', $this->category)->where('deleted_at', NULL);
             }),
+       
         ];
     }
 }

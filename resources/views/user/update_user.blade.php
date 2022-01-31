@@ -208,8 +208,7 @@
                     $("#subcategory").html('');
                     console.log(data.data.subcategory);
                     $.each(data.data.subcategory, function(key, value) {
-                        selectdata = (value.id == data.data.user.subcategory_id) ? 'selected' :
-                            '';
+                        selectdata = (value.id == data.data.user.subcategory_id) ? 'selected' :'';
                         $("#subcategory").append('<option value="' + value.id + '"' +
                             selectdata + '>' + value.subcategory_name + '</option>');
                     });
