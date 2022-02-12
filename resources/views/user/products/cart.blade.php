@@ -1,5 +1,6 @@
 @extends('user.user_layout.master')
 @section('content')
+
     <table class="table table-hover table table-bordered">
         <thead>
             <tr>
@@ -11,19 +12,26 @@
             </tr>
         </thead>
         <tbody>
-          {{-- @dd(Session::get('cart')); --}}
-            @foreach (Session::get('cart') as $id => $detail)
-            {{-- @if($detail['quantity']<0) --}}
-                <tr>
-                    <td scope="col"><img src="/images/{{ $detail['image'] }}" alt="" height="50px" width="50px"></td>
-                    <td scope="col">{{ $detail['name'] }}</td>
-                    <td>{{ $detail['price'] }}</td>
-                    <td> <input type="number" class="col-md-2" value ="{{$detail['quantity']}}">  </td>
-                    <td><button class="btn btn-primary">view all</button></td>
-                 
-                </tr>
-              {{-- @endif --}}
-            @endforeach
+            {{-- @dd($product) --}}
+            @if (isset($product))
+                @foreach ($product as $detail)
+                    @foreach ($detail['product_data'] as $id => $item)
+                        <tr>
+                            <td scope="col"><img src="/images/{{ $item['image'] }}" alt="" height="50px" width="50px">
+                            </td>
+                            <td scope="col">{{ $item['name'] }}</td>
+                            <td>{{ $item['price'] }}</td>
+                            <td> <input type="number" class="col-md-2" value="1"> </td>
+                            <td>
+                                <form action="{{ route('product.user-order') }}" method="post">
+                                    <input type="hidden" name="product_id" id="product_id" value="{{ $item['id'] }}">
+                                    <a href="" class="btn btn-primary">Order Place</a>
+                            </td>
+                            </form>
+                        </tr>
+                    @endforeach
+                @endforeach
+            @endif
         </tbody>
     </table>
 @endsection

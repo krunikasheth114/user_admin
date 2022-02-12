@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Admin;
 
 
+
 class LoginController extends Controller
 {
     use AuthenticatesUsers;
@@ -38,10 +39,17 @@ class LoginController extends Controller
         // dd( $this->guard()->attempt(
         //     $this->credentials($request), $request->filled('remember')
         // ));
-        return $this->guard()->attempt(
-            $this->credentials($request),
-            $request->filled('remember')
-        );
+        $inputVal = $request->all();
+
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
+        if (Auth::guard('admin')->attempt(array('email' => $inputVal['email'], 'password' => $inputVal['password']))) {
+            return response()->json(['status' => true, 'error' => "Congratulations!!You have Logged in"]);
+        } else {
+            return response()->json(['status' => false, 'error' => "Oopps!! Your credentials are not matched"]);
+        }
         // Auth::guard('admin')->attempt(['email' => $request->email, 'password' => $request->password]);
 
         // $data =  $this->guard()->attempt( 

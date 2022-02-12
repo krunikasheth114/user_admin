@@ -52,19 +52,19 @@
         </div>
     </div>
     @push('page_scripts')
-<script>
-    // var i = 1;
-    // $("body").on("click", ".add_more", function() {
-    //     my_addmore_count = $('body').find('.my_add_more').length;
-    //     i = my_addmore_count + 1;
-    //     var maxfield = 2;
+        <script>
+            // var i = 1;
+            // $("body").on("click", ".add_more", function() {
+            //     my_addmore_count = $('body').find('.my_add_more').length;
+            //     i = my_addmore_count + 1;
+            //     var maxfield = 2;
 
-    //     if (i >= maxfield) {
-    //         alert("you can not add more than two document");
-    //         return false;
-    //     }
+            //     if (i >= maxfield) {
+            //         alert("you can not add more than two document");
+            //         return false;
+            //     }
 
-    //     var html = `<div class="form-group row my_add_more">
+            //     var html = `<div class="form-group row my_add_more">
     //                 <div class="col-4">
     //                     {{ Form::label('documnet image', 'Document image:') }}
     //                 </div>
@@ -75,66 +75,66 @@
     //                         {!! Form::button('<i class="fa fa-close"></i>', ['class' => 'btn btn-danger delete_add_more']) !!}     
     //                     </div>
     //             </div>`;
-    //      
-    // });
-    // $("body").on("click", ".delete_add_more", function() {
-    //     $(this).parent().parent().remove();
-    // });
+            //      
+            // });
+            // $("body").on("click", ".delete_add_more", function() {
+            //     $(this).parent().parent().remove();
+            // });
 
-    $("body").on("click", ".adddoc", function() {
-        var Id = $(this).attr('id');
-        $("#user_id").val(Id);
-    })
-    $(".doc").validate({
-        rules: {
-            doc_name: {
-                required: true,
-            },
-            doc_num: {
-                required: true,
-                number: true,
-            },
-            'document[]': {
-                required: true,
-            }
-
-        },
-      
-        
-        submitHandler: function(form) {
-            $.ajax({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-                },
-                url: "{{ route('admin.document.store') }}",
-                method: "POST",
-                data: new FormData(form),
-                contentType: false,
-                cache: false,
-                processData: false,
-                dataType: 'JSON',
-                success: function(data) {
-                    if (data.status == true) {
-                        alert(data.message);
-                        $("#adddoc").modal('hide')
-                        window.LaravelDataTables["users-table"].draw();
-                    } else {
-                        alert(data.message);
-                        $("#adddoc").modal('hide')
-                        window.LaravelDataTables["users-table"].draw();
+            $("body").on("click", ".adddoc", function() {
+                var Id = $(this).attr('id');
+                $("#user_id").val(Id);
+            })
+            $(".doc").validate({
+                rules: {
+                    doc_name: {
+                        required: true,
+                    },
+                    doc_num: {
+                        required: true,
+                        number: true,
+                    },
+                    'document[]': {
+                        required: true,
                     }
-                    $(".doc")[0].reset();
-                },
-                error: function(error) {
-                    var i;
-                    var res = error.responseJSON.errors;
-                    $.each(res, function(key, value) {
-                        toastr.error(value);
-                    });
-                }
-            });
 
-        },
-    })
-</script>
-@endpush
+                },
+
+
+                submitHandler: function(form) {
+                    $.ajax({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                        },
+                        url: "{{ route('admin.document.store') }}",
+                        method: "POST",
+                        data: new FormData(form),
+                        contentType: false,
+                        cache: false,
+                        processData: false,
+                        dataType: 'JSON',
+                        success: function(data) {
+                            if (data.status == true) {
+                                alert(data.message);
+                                $("#adddoc").modal('hide')
+                                window.LaravelDataTables["users-table"].draw();
+                            } else {
+                                alert(data.message);
+                                $("#adddoc").modal('hide')
+                                window.LaravelDataTables["users-table"].draw();
+                            }
+                            $(".doc")[0].reset();
+                        },
+                        error: function(error) {
+                            var i;
+                            var res = error.responseJSON.errors;
+                            $.each(res, function(key, value) {
+                                toastr.error(value);
+                            });
+                        }
+                    });
+
+                },
+            })
+        </script>
+    @endpush

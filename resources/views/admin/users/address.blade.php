@@ -378,10 +378,10 @@
                     success: function(data) {
                         $this.parent().parent().find(".state").html('');
                         $this.parent().parent().find(".state").append(
-                            '<option value="">---Select State---</option>');
+                            '<option value="">---Select Title---</option>');
                         $.each(data.data, function(key, value) {
                             $this.parent().parent().find(".state").append('<option value="' + value
-                                .id + '">' + value.name + '</option>');
+                                .id + '">' + value.title + '</option>');
                         });
                     }
                 });

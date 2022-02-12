@@ -8,7 +8,11 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 use AmrShawky\LaravelCurrency\Facade\Currency;
 use Illuminate\Support\Facades\DB;
+use \App\Models\Order;
 use Session;
+use Illuminate\Support\Facades\Auth;
+use \App\Models\OrderProduct;
+use App\Models\Cart;
 
 class ProductController extends Controller
 {
@@ -69,27 +73,52 @@ class ProductController extends Controller
     }
     public function addToCart(Request $request)
     {
-        $product = Product::findOrFail($request->id);
-        // $request->session()->forget('cart');
-        $cart = session()->get('cart', []);
-        // $quantity = 0;
-        if (isset($cart[$request->id])) {
-            $cart[$request->id]['quantity']++;
-        } else {
-
-            $cart[$request->id] = [
-                "quantity" => 1,
-                "image" => $product->image,
-                "name" => $product->name,
-                "price" => $product->price,
-            ];
-        }
-        session()->put('cart', $cart);
-        return response()->json(['status' => true, 'success' => 'Product added to cart successfully!']);
+        $cart = Cart::create([
+            'user_id' => Auth::user()->id,
+            'product_id' => $request->product_id,
+            'quantity'=>$request->quantity,
+        ]);
+        return redirect()->route('product.cart-view')->with('success', "Product added in to cart succesfully");
     }
+
+    // $request->session()->forget('cart');
+    // $product = Product::findOrFail($request->product_id);
+    // $cart = session()->get('cart', []);
+    // $quantity = 0;
+    // if (isset($cart[$request->product_id])) {
+    //     $cart[$request->product_id]['quantity']++;
+    // } else {
+    //     $cart[$request->product_id] = [
+    //         "id" => $request->product_id,
+    //         "quantity" => 1,
+    //         "image" => $product->image,
+    //         "name" => $product->name,
+    //         "price" => $product->price,
+    //     ];
+    // }
+    // session()->put('cart', $cart);
+
+    // return response()->json(['status' => true, 'success' => 'Product added to cart successfully!']);
 
     public function cart()
     {
-        return view('user.products.cart');
+        $product = Cart::where('user_id', Auth::user()->id)->with('productData')->get()->toArray();
+        return view('user.products.cart', compact('product'));
+    }
+
+    public function  userOrder(Request $request)
+    {
+        $order = Order::create([
+            'user_id' => Auth::user()->id,
+        ]);
+        $orderId = $order->id;
+        if (isset($orderId)) {
+            $data = OrderProduct::create([
+                'order_id' => $orderId,
+                'product_id' => $request->product_id,
+                'quantity' => $request->quantity,
+            ]);
+        }
+        return  redirect()->back()->with('danger', "Your Order place Succesfully");
     }
 }

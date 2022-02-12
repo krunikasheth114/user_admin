@@ -1,25 +1,26 @@
 @extends('user.user_layout.master')
 @section('content')
+
     <section class="blog-posts grid-system">
         <div class="container">
             <div class="row">
                 <div class="col-lg-4">
-                    {{-- {{dd(!empty(Session::get('price_range')))}} --}}
+
+                    @include('common.flash')
                     <h3>Category</h3>
                     <hr style="width:100%" , size="3" , color=black>
                     {{-- @dd(( Session::get('category')) ? 'checked' : '' )); --}}
                     @foreach ($category as $c)
                         <label class="form-check">
                             <input class="form-check-input " name="category[]" value="{{ $c->id }}"
-                            {{-- @dd(in_array($c->id, Session::get('category')) ? 'checked' : '') --}}
-                                @if (!empty(Session::get('category'))) {{ in_array($c->id, Session::get('category')) ? 'checked' : '' }} @endif type="checkbox">
+                                {{-- @dd(in_array($c->id, Session::get('category')) ? 'checked' : '') --}} @if (!empty(Session::get('category'))) {{ in_array($c->id, Session::get('category')) ? 'checked' : '' }} @endif type="checkbox">
                             <span class="form-check-label">
                                 <span class="float-right badge badge-light round"></span> {{ $c->name }}
                             </span>
                         </label>
                     @endforeach
                     <h3>Price</h3>
-                    <hr style="width:100%" , size="3" , color=black>
+                    <hr style="width:100%" size="3" , color=black>
                     <div class="form-group">
                         <label for="amount">Price range:</label>
                         <input type="text" class="js-range-slider" name="my_range" value=""
@@ -29,10 +30,18 @@
                 <div class="col-lg-8">
                     <div class="all-blog-posts">
                         <div class="row">
-                            <div class="col-lg-6">
+                            <div class="col-lg-3">
                                 <h3 id="">Products</h3>
                             </div>
-                            <div class="col-lg-6 ">
+                            <div class="col-lg-3">
+                                <form action="" method="post">
+
+                                </form>
+                                <a href="{{ route('product.cart-view') }}" name="submit">
+                                    <h3> View cart</h3>
+                                </a>
+                            </div>
+                            <div class="col-lg-3 ">
                                 <label for="change-currency" class="pull-right"> <b> Change Currency</b></label>
                                 <select class="form-select pull-right" aria-label="Default select currency" name="currency"
                                     id="currency">
@@ -69,8 +78,16 @@
                                                 </span>
                                             @endif
                                             <br>
-                                            <button class="btn btn-secondary cart" id="{{ $product->id }}">Add To
-                                                Cart</button>
+                                            {{-- @dd(Auth::user()->id) --}}
+                                            <form action="{{ route('product.cart') }}" method="post">
+                                                @csrf
+                                                <input type="hidden" name="product_id" id="product_id"
+                                                    value="{{ $product->id }}">
+                                                {{-- <input type="number" name="quantity" id="quantity" class="col-md-4"
+                                                    value="1"> --}}
+                                                <button name="submit" id="submit" class="btn btn-success submit">Add To
+                                                    cart</button>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
@@ -87,6 +104,25 @@
 @push('page_scripts')
     <script>
         // Prize Filter
+        // $('body').on('click','.submit', function() {
+        //     var productId = $('#product_id').val();
+        //     var quantity = $('#quantity').val();
+        //     $.ajax({
+        //         headers: {
+        //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+        //         },
+        //         url: "{{ route('product.cart') }}",
+        //         method: "post",
+        //         data: {
+        //             _token: "{{ csrf_token() }}",
+        //             productId: productId,
+        //             quantity: quantity
+        //         },
+        //         success: function(data) {
+
+        //         }
+        //     })
+        // })
         $(function() {
             $("#pricerangeslider").ionRangeSlider({
                 type: "double",
@@ -217,7 +253,11 @@
                     id: id,
                 },
                 success: function(data) {
-                    window.location = "{{ route('product.cart-view') }}";
+                    if (data.status == true) {
+                        toastr.success(data.msg)
+                            .delay(500)
+                    }
+
                 }
             })
         })

@@ -32,7 +32,5 @@ class RegisterRequest extends FormRequest
             'password' => 'required|max:8',
             'profile' =>   'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ];
-        
     }
-    
 }

@@ -86,7 +86,7 @@
 @endsection
 
 @push('page_scripts')
- 
+
 
     <script>
         $("#comment-form").validate({
