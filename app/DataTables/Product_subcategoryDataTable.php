@@ -98,8 +98,8 @@ class Product_subcategoryDataTable extends DataTable
         return [
             
             Column::make('id'),
-            Column::make('name'),
-            Column::make('category_id'),
+            Column::make('category_id')->title('category'),
+            Column::make('name')->title('subcategory'),
             Column::make('status'),
             Column::make('created_at'),
             Column::make('updated_at'),

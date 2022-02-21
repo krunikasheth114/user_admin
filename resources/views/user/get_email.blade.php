@@ -99,49 +99,49 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"></script>
     <script>
-        $('#email').validate({
+        // $('#email').validate({
 
-                rules: {
-                    email: {
-                        required: true,
-                    },
-                    messages: {
-                        email: {
-                            required: "email is required ",
-                        },
-                    }
-                },
-                submitHandler: function(form) {
-                    $(".submit").html("Please Wait");
-                    $.ajax({
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-                        },
-                            url: "{{route('user.getEmail')}}",
-                            method: "POST",
-                            data:new FormData(form),
-                            contentType: false,
-                            cache: false,
-                            processData: false,
-                            dataType: 'JSON',
-                            success: function(data) {
+        //         rules: {
+        //             email: {
+        //                 required: true,
+        //             },
+        //             messages: {
+        //                 email: {
+        //                     required: "email is required ",
+        //                 },
+        //             }
+        //         },
+        //         submitHandler: function(form) {
+        //             $(".submit").html("Please Wait");
+        //             $.ajax({
+        //                 headers: {
+        //                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+        //                 },
+        //                     url: "{{route('user.getEmail')}}",
+        //                     method: "POST",
+        //                     data:new FormData(form),
+        //                     contentType: false,
+        //                     cache: false,
+        //                     processData: false,
+        //                     dataType: 'JSON',
+        //                     success: function(data) {
                            
-                                if(data.status==true){
-                                    $(".submit").html("Send Otp");
-                                    alert(data.message);
-                                    window.location.href = 'get_otp' + '/'+data.data.id;
+        //                         if(data.status==true){
+        //                             $(".submit").html("Send Otp");
+        //                             alert(data.message);
+        //                             window.location.href = 'get_otp' + '/'+data.data.id;
 
-                                }else{
-                                    alert(data.message);
-                                }
+        //                         }else{
+        //                             alert(data.message);
+        //                         }
 
 
-                            },
+        //                     },
                        
-                    });
-                }
+        //             });
+        //         }
            
-        });
+        // });
     </script>
 </body>
 

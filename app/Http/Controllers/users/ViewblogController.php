@@ -9,14 +9,17 @@ use App\Models\Like;
 use App\Models\Comment;
 use App\Models\View;
 use Illuminate\Support\Facades\URL;
+// use Illuminate\Support\ServiceProvider;
 
 class ViewblogController extends Controller
 {
     public function displayBlog(Request $request, $slug)
     {
 
+     
         $view = Blog::where('slug', $slug)->first();
         $url    = URL::current();
+        // dd($currentURL);
         $visit = View::create(['blog_id' => $view->id, 'ip' => $request->ip(), 'url' => $url]);
         $comments = Comment::where('blog_id', $view->id)
             ->where('parent_id', '=', 0)->get();

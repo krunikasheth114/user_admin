@@ -18,6 +18,7 @@ class CreateOrderProductsTable extends Migration
             $table->foreignId('order_id')->constrained('orders')->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('product_id')->constrained('products')->onUpdate('cascade')->onDelete('cascade');
             $table->integer('quantity')->nullable();
+            $table->decimal('totalamount')->nullable()->default(0.00);
             $table->timestamps();
         });
     }

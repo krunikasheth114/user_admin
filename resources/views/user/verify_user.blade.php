@@ -109,45 +109,46 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"></script>
     <script>
-        $('#otp').validate({
+        var otpVerify ="{{ route('otp_verify') }}"
+        // $('#otp').validate({
 
-            rules: {
-                otp: {
-                    required: true,
-                }
-            },
-            messages: {
-                otp: {
-                    required: "Please enter otp first",
-                }
-            },
-            submitHandler: function(form) {
-                $.ajax({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-                    },
+        //     rules: {
+        //         otp: {
+        //             required: true,
+        //         }
+        //     },
+        //     messages: {
+        //         otp: {
+        //             required: "Please enter otp first",
+        //         }
+        //     },
+        //     submitHandler: function(form) {
+        //         $.ajax({
+        //             headers: {
+        //                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+        //             },
 
-                    url: "{{ route('otp_verify') }}",
-                    method: "POST",
-                    data: new FormData(form),
-                    contentType: false,
-                    cache: false,
-                    processData: false,
-                    dataType: 'JSON',
-                    success: function(data) {
+        //             url: "{{ route('otp_verify') }}",
+        //             method: "POST",
+        //             data: new FormData(form),
+        //             contentType: false,
+        //             cache: false,
+        //             processData: false,
+        //             dataType: 'JSON',
+        //             success: function(data) {
 
-                        if (data.status == true) {
-                            alert(data.message);
-                            window.location.href = '/home';
-                        } else {
-                            alert(data.message);
+        //                 if (data.status == true) {
+        //                     alert(data.message);
+        //                     window.location.href = '/home';
+        //                 } else {
+        //                     alert(data.message);
 
-                        }
+        //                 }
 
-                    }
-                });
-            }
-        });
+        //             }
+        //         });
+        //     }
+        // });
     </script>
 </body>
 

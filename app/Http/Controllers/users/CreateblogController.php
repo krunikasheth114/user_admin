@@ -8,7 +8,10 @@ use App\Models\Blog_category;
 use App\Http\Requests\BlogRequest;
 use App\Models\Blog;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Support\Facades\URL;
+use App\Models\View;
+use App\Models\Comment;
+use App\Models\Like;
 
 
 class CreateblogController extends Controller

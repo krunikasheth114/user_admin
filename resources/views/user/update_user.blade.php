@@ -98,156 +98,164 @@
         </div>
     </div>
     <style>
-        .error{
+        .error {
             color: red;
         }
+
     </style>
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     <script>
-        $('#update_form').validate({
-            rules: {
-                firstname: {
-                    required: true,
-                },
-                lastname: {
-                    required: true,
-                },
-                email: {
-                    required: true,
-                },
-                category: {
-                    required: true,
-                },
-                subcategory: {
-                    required: true,
-                },
-                password: {
-                    required: true,
-                },
+        
+        var user_edit = "{{ route('edit') }}"
+        var user_update = "{{ route('update') }}"
+        var get_subCat = "{{ route('getsubcategory') }}"
+     
 
-            },
-            messages: {
-                firstname: {
-                    required: "Firstname is required ",
-                },
-                lastname: {
-                    required: "Lastname is required",
-                },
-                email: {
-                    required: "Email is required",
-                },
-                category: {
-                    required: "Category is required",
-                },
-                subcategory: {
-                    required: "SubCategory is required",
-                },
-                password: {
-                    required: "Password is required",
-                },
+        // $('#update_form').validate({
+        //     rules: {
+        //         firstname: {
+        //             required: true,
+        //         },
+        //         lastname: {
+        //             required: true,
+        //         },
+        //         email: {
+        //             required: true,
+        //         },
+        //         category: {
+        //             required: true,
+        //         },
+        //         subcategory: {
+        //             required: true,
+        //         },
+        //         password: {
+        //             required: true,
+        //         },
 
-            },
-            submitHandler: function(form) {
+        //     },
+        //     messages: {
+        //         firstname: {
+        //             required: "Firstname is required ",
+        //         },
+        //         lastname: {
+        //             required: "Lastname is required",
+        //         },
+        //         email: {
+        //             required: "Email is required",
+        //         },
+        //         category: {
+        //             required: "Category is required",
+        //         },
+        //         subcategory: {
+        //             required: "SubCategory is required",
+        //         },
+        //         password: {
+        //             required: "Password is required",
+        //         },
 
-                $.ajax({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-                    },
+        //     },
+        //     submitHandler: function(form) {
 
-                    url: "{{ route('update') }}",
-                    method: "POST",
-                    data: new FormData(form),
-                    contentType: false,
-                    cache: false,
-                    processData: false,
-                    dataType: 'JSON',
-                    success: function(data) {
-                        alert(data.message);
-                        window.location.href = '/dashboard';
-                    },
-                    error: function(error) {
-                        var i;
-                        var res = error.responseJSON.errors;
-                        $.each(res, function(key, value) {
-                            toastr.error(value);
-                        });
-                    }
-                })
+        //         $.ajax({
+        //             headers: {
+        //                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+        //             },
 
-            },
+        //             url: "{{ route('update') }}",
+        //             method: "POST",
+        //             data: new FormData(form),
+        //             contentType: false,
+        //             cache: false,
+        //             processData: false,
+        //             dataType: 'JSON',
+        //             success: function(data) {
+        //                 alert(data.message);
+        //                 window.location.href = '/dashboard';
+        //             },
+        //             error: function(error) {
+        //                 var i;
+        //                 var res = error.responseJSON.errors;
+        //                 $.each(res, function(key, value) {
+        //                     toastr.error(value);
+        //                 });
+        //             }
+        //         })
 
-        });
-        $(".update").on('click', function() {
-   
-            var id = $(this).attr('id');
-            $.ajax({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-                },
-                url: "{{ route('edit') }}",
-                method: "post",
-                data: {
-                    _token: "{{ csrf_token() }}",
-                    id: id,
-                },
-                dataType: 'JSON',
-                success: function(data) {
-                   
-                    $('#id').val(data.data.user.id);
-                    $('#firstname').val(data.data.user.firstname);
-                    $('#lastname').val(data.data.user.lastname);
-                    $('#email').val(data.data.user.email);
-                    $("#category").html('');
-                    $.each(data.data.Category, function(key, value) {
-                        selectdata = (value.id == data.data.user.category_id) ? 'selected' : '';
-                        $("#category").append('<option value="' + value.id + '" ' + selectdata +
-                            '>' + value.category_name + '</option>');
-                    });
-                    $("#subcategory").html('');
-                    console.log(data.data.subcategory);
-                    $.each(data.data.subcategory, function(key, value) {
-                        selectdata = (value.id == data.data.user.subcategory_id) ? 'selected' :'';
-                        $("#subcategory").append('<option value="' + value.id + '"' +
-                            selectdata + '>' + value.subcategory_name + '</option>');
-                    });
+        //     },
 
-                    if (data.data.user.profile == '') {
-                        $('#profile').html(
-                            '<img src="images/default/default.jpg" height="50px" width="50px" />');
-                    } else {
-                        $('#profile').html('<img src="' + /images/ + data.data.user.profile +
-                            '"height="50px" width="50px"/>');
-                    }
+        // });
+        // $(".update").on('click', function() {
 
-                }
+        //     var id = $(this).attr('id');
+        //     $.ajax({
+        //         headers: {
+        //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+        //         },
+        //         url: "{{ route('edit') }}",
+        //         method: "post",
+        //         data: {
+        //             _token: "{{ csrf_token() }}",
+        //             id: id,
+        //         },
+        //         dataType: 'JSON',
+        //         success: function(data) {
+
+        //             $('#id').val(data.data.user.id);
+        //             $('#firstname').val(data.data.user.firstname);
+        //             $('#lastname').val(data.data.user.lastname);
+        //             $('#email').val(data.data.user.email);
+        //             $("#category").html('');
+        //             $.each(data.data.Category, function(key, value) {
+        //                 selectdata = (value.id == data.data.user.category_id) ? 'selected' : '';
+        //                 $("#category").append('<option value="' + value.id + '" ' + selectdata +
+        //                     '>' + value.category_name + '</option>');
+        //             });
+        //             $("#subcategory").html('');
+        //             console.log(data.data.subcategory);
+        //             $.each(data.data.subcategory, function(key, value) {
+        //                 selectdata = (value.id == data.data.user.subcategory_id) ? 'selected' :'';
+        //                 $("#subcategory").append('<option value="' + value.id + '"' +
+        //                     selectdata + '>' + value.subcategory_name + '</option>');
+        //             });
+
+        //             if (data.data.user.profile == '') {
+        //                 $('#profile').html(
+        //                     '<img src="images/default/default.jpg" height="50px" width="50px" />');
+        //             } else {
+        //                 $('#profile').html('<img src="' + /images/ + data.data.user.profile +
+        //                     '"height="50px" width="50px"/>');
+        //             }
+
+        //         }
 
 
-            })
-        });
-        $('body').on('change', '#category', function() {
-            var id = $(this).val();
-            $.ajax({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-                },
-                url: "{{ route('getsubcategory') }}",
-                method: "post",
-                data: {
-                    id: id,
-                },
-                dataType: 'JSON',
-                success: function(data) {
-                    $("#subcategory").html('');
-                    if (data.status == true) {
-                        $.each(data.data, function(key, value) {
-                            $("#subcategory").append('<option value="' + value.id + '">' + value
-                                .subcategory_name + '</option>');
-                        });
-                    }
-                }
-            })
+        //     })
+        // });
+        // $('body').on('change', '#category', function() {
+        //     var id = $(this).val();
+        //     $.ajax({
+        //         headers: {
+        //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+        //         },
+        //         url: "{{ route('getsubcategory') }}",
+        //         method: "post",
+        //         data: {
+        //             id: id,
+        //         },
+        //         dataType: 'JSON',
+        //         success: function(data) {
+        //             $("#subcategory").html('');
+        //             if (data.status == true) {
+        //                 $.each(data.data, function(key, value) {
+        //                     $("#subcategory").append('<option value="' + value.id + '">' + value
+        //                         .subcategory_name + '</option>');
+        //                 });
+        //             }
+        //         }
+        //     })
 
-        })
+        // })
     </script>

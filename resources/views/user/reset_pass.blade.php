@@ -110,58 +110,59 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"></script>
     <script>
-        $('#reset').validate({
+        var confirm_pass="{{ route('user.confirm_pass') }}"
+        // $('#reset').validate({
 
-            rules: {
+        //     rules: {
               
-                pass: {
-                    required: true,
-                },
-                cpass: {
-                    required: true,
-                    equalTo: '#pass'
-                },
+        //         pass: {
+        //             required: true,
+        //         },
+        //         cpass: {
+        //             required: true,
+        //             equalTo: '#pass'
+        //         },
 
-            },
-            messages: {
+        //     },
+        //     messages: {
                
-                pass: {
-                    required: "please Enter Passwoord ",
-                },
-                cpass: {
-                    required: "Please Enter Confirm Password",
-                    equalTo: 'Confirm Password must be same as Password',
-                },
+        //         pass: {
+        //             required: "please Enter Passwoord ",
+        //         },
+        //         cpass: {
+        //             required: "Please Enter Confirm Password",
+        //             equalTo: 'Confirm Password must be same as Password',
+        //         },
 
-            },
-            submitHandler: function(form) {
+        //     },
+        //     submitHandler: function(form) {
 
-                $.ajax({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-                    },
-                    url: "{{ route('user.confirm_pass') }}",
-                    method: "POST",
-                    data: new FormData(form),
-                    contentType: false,
-                    cache: false,
-                    processData: false,
-                    dataType: 'JSON',
-                    success: function(data) {
-                        if(data.status==true){
-                            alert(data.message)
-                        }
-                        window.location.href = '/user/login' ;
+        //         $.ajax({
+        //             headers: {
+        //                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+        //             },
+        //             url: "{{ route('user.confirm_pass') }}",
+        //             method: "POST",
+        //             data: new FormData(form),
+        //             contentType: false,
+        //             cache: false,
+        //             processData: false,
+        //             dataType: 'JSON',
+        //             success: function(data) {
+        //                 if(data.status==true){
+        //                     alert(data.message)
+        //                 }
+        //                 window.location.href = '/user/login' ;
 
-                    }
-
-
-                });
-
-            }
+        //             }
 
 
-        });
+        //         });
+
+        //     }
+
+
+        // });
     </script>
 
 </body>

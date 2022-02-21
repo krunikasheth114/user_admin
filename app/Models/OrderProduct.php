@@ -12,5 +12,10 @@ class OrderProduct extends Model
         'order_id',
         'product_id',
         'quantity',
+        'totalamount',
     ];
+    public function getProduct()
+    {
+        return $this->hasMany(Product::class, 'id', 'product_id');
+    }
 }

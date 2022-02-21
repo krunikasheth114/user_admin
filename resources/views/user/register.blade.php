@@ -189,107 +189,109 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"></script>
     <script>
-        $('#category').on('change', function() {
-            var catId = $(this).val();
-            // console.log(catId);
-            $.ajax({
-                url: "{{ route('getcat') }}",
-                method: "GET",
-                data: {
-                    catId: catId
+        var getCat ="{{ route('getcat') }}"
+        var register ="{{ route('store') }}"
+        // $('#category').on('change', function() {
+        //     var catId = $(this).val();
+        //     // console.log(catId);
+        //     $.ajax({
+        //         url: "{{ route('getcat') }}",
+        //         method: "GET",
+        //         data: {
+        //             catId: catId
 
-                },
+        //         },
 
-                dataType: 'JSON',
-                success: function(data) {
-                    // console.log(data);
-                    $.each(data.data, function(key, value) {
-                        $("#subcategory").append('<option value="' + value.id + '">' + value
-                            .subcategory_name + '</option>');
-                    });
-                }
-            })
+        //         dataType: 'JSON',
+        //         success: function(data) {
+        //             // console.log(data);
+        //             $.each(data.data, function(key, value) {
+        //                 $("#subcategory").append('<option value="' + value.id + '">' + value
+        //                     .subcategory_name + '</option>');
+        //             });
+        //         }
+        //     })
 
-        })
+        // })
 
-        $('#register_form').validate({
+        // $('#register_form').validate({
 
-            rules: {
-                firstname: {
-                    required: true,
-                },
-                lastname: {
-                    required: true,
-                },
-                email: {
-                    required: true,
-                },
-                category: {
-                    required: true,
-                },
-                subcategory: {
-                    required: true,
-                },
-                password: {
-                    required: true,
-                },
-                profile: {
-                    required: true,
-                },
-            },
-            messages: {
-                firstname: {
-                    required: "Firstname is required ",
-                },
-                lastname: {
-                    required: "Lastname is required",
-                },
-                email: {
-                    required: "Email is required",
-                },
-                category: {
-                    required: "Category is required",
-                },
-                subcategory: {
-                    required: "SubCategory is required",
-                },
-                password: {
-                    required: "Password is required",
-                },
-                profile: {
-                    required: "Profile is required",
-                },
-            },
-            submitHandler: function(form) {
+        //     rules: {
+        //         firstname: {
+        //             required: true,
+        //         },
+        //         lastname: {
+        //             required: true,
+        //         },
+        //         email: {
+        //             required: true,
+        //         },
+        //         category: {
+        //             required: true,
+        //         },
+        //         subcategory: {
+        //             required: true,
+        //         },
+        //         password: {
+        //             required: true,
+        //         },
+        //         profile: {
+        //             required: true,
+        //         },
+        //     },
+        //     messages: {
+        //         firstname: {
+        //             required: "Firstname is required ",
+        //         },
+        //         lastname: {
+        //             required: "Lastname is required",
+        //         },
+        //         email: {
+        //             required: "Email is required",
+        //         },
+        //         category: {
+        //             required: "Category is required",
+        //         },
+        //         subcategory: {
+        //             required: "SubCategory is required",
+        //         },
+        //         password: {
+        //             required: "Password is required",
+        //         },
+        //         profile: {
+        //             required: "Profile is required",
+        //         },
+        //     },
+        //     submitHandler: function(form) {
 
-                $.ajax({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-                    },
+        //         $.ajax({
+        //             headers: {
+        //                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+        //             },
 
-                    url: "{{ route('store') }}",
-                    method: "POST",
-                    data: new FormData(form),
-                    contentType: false,
-                    cache: false,
-                    processData: false,
-                    dataType: 'JSON',
-                    success: function(data) {
+        //             url: "{{ route('store') }}",
+        //             method: "POST",
+        //             data: new FormData(form),
+        //             contentType: false,
+        //             cache: false,
+        //             processData: false,
+        //             dataType: 'JSON',
+        //             success: function(data) {
 
-                        window.location.href = 'verify_register_user' + '/' + data.id;
+        //                 window.location.href = 'verify_register_user' + '/' + data.id;
 
-                    },
-                    error: function(error) {
-                        var i;
-                        var res = error.responseJSON.errors;
-                        $.each(res, function(key, value) {
-                            toastr.error(value)
-                        });
-                    }
-                })
-            },
+        //             },
+        //             error: function(error) {
+        //                 var i;
+        //                 var res = error.responseJSON.errors;
+        //                 $.each(res, function(key, value) {
+        //                     toastr.error(value)
+        //                 });
+        //             }
+        //         })
+        //     },
 
-        });
+        // });
     </script>
 
 </body>

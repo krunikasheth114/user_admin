@@ -23,7 +23,7 @@
                     </li>
                     <li class="nav-item ">
                         @if (Auth::user())
-                            <a class="nav-link" href="{{ route('product.show')}}">Products
+                            <a class="nav-link" href="{{ route('product.show') }}">Products
                                 <span class="sr-only">(current)</span>
                             </a>
                         @else

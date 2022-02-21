@@ -38,17 +38,14 @@
         rules: {
             category_name: {
                 required: true,
-            }
-        
+            },
         },
         submitHandler: function(form) {
-
             $.ajax({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
                 },
-
-                url: "{{ route('admin.product.product-store')}}",
+                url: "{{ route('admin.product.product-store') }}",
                 method: "POST",
                 data: new FormData(form),
                 contentType: false,
@@ -59,7 +56,7 @@
                     if (data.status == true) {
                         $("#product_category_add_modal").modal('hide');
                         swal("Done!", data.message, "success");
-                            window.LaravelDataTables["product_category-table"].draw();
+                        window.LaravelDataTables["product_category-table"].draw();
                     }
                 },
                 error: function(error) {

@@ -89,132 +89,140 @@
 
 
     <script>
-        $("#comment-form").validate({
-            rules: {
-                comment: {
-                    required: true,
-                },
-                messages: {
-                    comment: {
-                        required: "This field is required",
-                    },
-                }
-            },
-        })
-        $('body').on('click', '.like', function() {
-            var blog = $('.like').attr('id');
-            $.ajax({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-                },
-                url: "{{ route('blog.like') }}",
-                method: "POST",
-                data: {
-                    _token: "{{ csrf_token() }}",
-                    id: blog
-                },
-                success: function(data) {
-                    if (data.status == true) {
-                        $(".like").addClass('red');
-                    } else {
-                        $(".like").removeClass("red");
-                    }
-                },
-            })
-        })
+        var like ="{{ route('blog.like') }}"
+        var comment_form ="{{ route('blog.comment') }}"
+        var delete_cmnt ="{{ route('blog.delete.comment') }}"
+        var reply ="{{ route('blog.commentReply') }}"
+        var reply_submit ="{{ route('blog.commentReply') }}"
+        var fetchComment ="{{  route('blog.fetch_comment')  }}"
 
-        $('body').on('submit', '#comment-form', function() {
-            var comment = $('#comment').val();
-            blog_id = "{{ $view->id }}"
-            $.ajax({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-                },
-                url: "{{ route('blog.comment') }}",
-                method: "POST",
-                data: {
-                    _token: "{{ csrf_token() }}",
-                    comment: comment,
-                    id: blog_id
-                },
-                success: function(data) {
-                    console.log(data);
-                }
-            })
-        })
 
-        // Delete Comment
-        $('body').on('click', '.delete', function() {
-            var id = $(this).attr('data-id');
+        // $("#comment-form").validate({
+        //     rules: {
+        //         comment: {
+        //             required: true,
+        //         },
+        //         messages: {
+        //             comment: {
+        //                 required: "This field is required",
+        //             },
+        //         }
+        //     },
+        // })
+        // $('body').on('click', '.like', function() {
+        //     var blog = $('.like').attr('id');
+        //     $.ajax({
+        //         headers: {
+        //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+        //         },
+        //         url: "{{ route('blog.like') }}",
+        //         method: "POST",
+        //         data: {
+        //             _token: "{{ csrf_token() }}",
+        //             id: blog
+        //         },
+        //         success: function(data) {
+        //             if (data.status == true) {
+        //                 $(".like").addClass('red');
+        //             } else {
+        //                 $(".like").removeClass("red");
+        //             }
+        //         },
+        //     })
+        // })
 
-            $.ajax({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-                },
-                url: "{{ route('blog.delete.comment') }}",
-                method: "POST",
-                data: {
-                    _token: "{{ csrf_token() }}",
-                    id: id
-                },
-                success: function(data) {
-                    if (status == true) {}
-                    location.reload();
-                }
-            })
-        });
+        // $('body').on('submit', '#comment-form', function() {
+        //     var comment = $('#comment').val();
+        //     blog_id = "{{ $view->id }}"
+        //     $.ajax({
+        //         headers: {
+        //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+        //         },
+        //         url: "{{ route('blog.comment') }}",
+        //         method: "POST",
+        //         data: {
+        //             _token: "{{ csrf_token() }}",
+        //             comment: comment,
+        //             id: blog_id
+        //         },
+        //         success: function(data) {
+        //             console.log(data);
+        //         }
+        //     })
+        // })
 
-        // reply
-        $('body').on('click', '.reply', function() {
-            $('.reply').toggle();
-            var thisClicked = $(this).attr('id');
-            var cmt_id = $(this).attr('data-id');
-            var route = "{{ route('blog.commentReply') }}";
-            blog_id = "{{ $view->id }}";
-            var html = `<div class="sidebar-item submit-comment">
-                            <div class="content">
-                                <form action="` + route + `" id="comment_reply_form" method="post">
-                                    @csrf
-                                    <div class="row">
-                                        <div class="col-lg-12">
-                                            <fieldset>
-                                            <textarea name="comment_reply" rows="6" id="comment_reply" placeholder="Type your comment" required></textarea>
-                                            </fieldset>
-                                        </div>
-                                        <input type="hidden" name="blog_id" value="` + blog_id + `">
-                                        <input type="hidden" name="parent_id" value="` + cmt_id + `">
-                                        <div class="col-lg-12">
-                                            <fieldset>
-                                            <button type="submit" id="reply-submit"  data-id="` + cmt_id + `" class="main-button">Submit</button>
-                                            </fieldset>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>`;
-            $(this).after(html);
-        })
-        $('body').on('click', '#reply-submit', function() {
-            var cmnt_id = $(this).attr('data-id');
-            var comment = $('#comment_reply').val();
-            blog_id = "{{ $view->id }}"
-            $.ajax({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-                },
-                url: "{{ route('blog.commentReply') }}",
-                method: "POST",
-                data: {
-                    _token: "{{ csrf_token() }}",
-                    parent_id: cmnt_id,
-                    blog_id: blog_id,
-                    comment: comment
-                },
-                success: function(data) {
+        // // Delete Comment
+        // $('body').on('click', '.delete', function() {
+        //     var id = $(this).attr('data-id');
 
-                },
-            });
-        });
+        //     $.ajax({
+        //         headers: {
+        //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+        //         },
+        //         url: "{{ route('blog.delete.comment') }}",
+        //         method: "POST",
+        //         data: {
+        //             _token: "{{ csrf_token() }}",
+        //             id: id
+        //         },
+        //         success: function(data) {
+        //             if (status == true) {}
+        //             location.reload();
+        //         }
+        //     })
+        // });
+
+        // // reply
+        // $('body').on('click', '.reply', function() {
+        //     $('.reply').toggle();
+        //     var thisClicked = $(this).attr('id');
+        //     var cmt_id = $(this).attr('data-id');
+        //     var route = "{{ route('blog.commentReply') }}";
+        //     blog_id = "{{ $view->id }}";
+        //     var html = `<div class="sidebar-item submit-comment">
+        //                     <div class="content">
+        //                         <form action="` + route + `" id="comment_reply_form" method="post">
+        //                             @csrf
+        //                             <div class="row">
+        //                                 <div class="col-lg-12">
+        //                                     <fieldset>
+        //                                     <textarea name="comment_reply" rows="6" id="comment_reply" placeholder="Type your comment" required></textarea>
+        //                                     </fieldset>
+        //                                 </div>
+        //                                 <input type="hidden" name="blog_id" value="` + blog_id + `">
+        //                                 <input type="hidden" name="parent_id" value="` + cmt_id + `">
+        //                                 <div class="col-lg-12">
+        //                                     <fieldset>
+        //                                     <button type="submit" id="reply-submit"  data-id="` + cmt_id + `" class="main-button">Submit</button>
+        //                                     </fieldset>
+        //                                 </div>
+        //                             </div>
+        //                         </form>
+        //                     </div>
+        //                 </div>`;
+        //     $(this).after(html);
+        // })
+        // $('body').on('click', '#reply-submit', function() {
+        //     var cmnt_id = $(this).attr('data-id');
+        //     var comment = $('#comment_reply').val();
+        //     blog_id = "{{ $view->id }}"
+        //     $.ajax({
+        //         headers: {
+        //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+        //         },
+        //         url: "{{ route('blog.commentReply') }}",
+        //         method: "POST",
+        //         data: {
+        //             _token: "{{ csrf_token() }}",
+        //             parent_id: cmnt_id,
+        //             blog_id: blog_id,
+        //             comment: comment
+        //         },
+        //         success: function(data) {
+
+        //         },
+        //     });
+        // });
         load_comment();
 
         function load_comment() {

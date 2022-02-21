@@ -116,36 +116,36 @@
     @endforeach
     @push('page_scripts')
     <script>
-        $('#edit_blog1').validate({
-            rules: {
-                category_id: {
-                    required: true,
-                },
-                title: {
-                    required: true,
-                },
-                description: {
-                    required: true,
-                },
+        // $('#edit_blog1').validate({
+        //     rules: {
+        //         category_id: {
+        //             required: true,
+        //         },
+        //         title: {
+        //             required: true,
+        //         },
+        //         description: {
+        //             required: true,
+        //         },
 
 
-            },
-            messages: {
-                category_id: {
-                    required: "Category Required",
-                },
-                title: {
-                    required: "Title Required",
-                },
-                description: {
-                    required: "description Required",
-                },
+        //     },
+        //     messages: {
+        //         category_id: {
+        //             required: "Category Required",
+        //         },
+        //         title: {
+        //             required: "Title Required",
+        //         },
+        //         description: {
+        //             required: "description Required",
+        //         },
 
 
-            },
+        //     },
 
 
-        });
+        // });
     </script>
     @endpush
    

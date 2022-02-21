@@ -68,8 +68,10 @@ Route::group(['namespace' => 'users'], function () {
             Route::post('/cat-filter',       'ProductController@catFilter')->name('cat-filter');
             Route::post('cart',              'ProductController@addToCart')->name('cart');
             Route::get('cart-view',           'ProductController@cart')->name('cart-view');
-            Route::post('/order',       'ProductController@userOrder')->name('user-order');
-              
+            Route::get('cart-remove/{id}',           'ProductController@cartRemove')->name('user-cart-remove');
+            Route::post('order-preview',           'ProductController@orderPreview')->name('order-preview');
+            Route::any('/order',       'ProductController@userOrder')->name('user-order');
+            Route::get('/order',       'ProductController@userOrderHistory')->name('user-order-history');
         });
         // Route::get('/login/{social}', 'users\SocialLoginController@socialLogin')->where('social', 'twitter|facebook|linkedin|google|github|bitbucket')->name('login-social');
         // Route::get('/login/{social}/callback', 'users\SocialLoginController@handleProviderCallback')->where('social', 'twitter|facebook|linkedin|google|github|bitbucket');

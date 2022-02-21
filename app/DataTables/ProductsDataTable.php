@@ -111,7 +111,7 @@ class ProductsDataTable extends DataTable
 
     public function html()
     {
-        
+
         return $this->builder()
             ->setTableId('products-table')
             ->columns($this->getColumns())
@@ -121,10 +121,10 @@ class ProductsDataTable extends DataTable
             ->parameters([
                 'dom'          => 'Blfrtip',
                 'buttons'      => ['excel', 'csv'],
-            ]);  
+            ]);
     }
 
-   
+
 
     /**
      * Get columns.
@@ -133,18 +133,18 @@ class ProductsDataTable extends DataTable
      */
     protected function getColumns()
     {
-        
+
         return [
             Column::make('id')->exportable(true),
-            Column::make('category_id')->searchable(),
-            Column::make('subcategory_id')->searchable(),
+            Column::make('category_id')->searchable()->title('Category'),
+            Column::make('subcategory_id')->searchable()->title('SubCategory'),
             Column::make('name')->searchable(),
             Column::make('price')->searchable(),
             Column::make('status'),
             Column::make('image')->exportable(false),
             Column::make('created_at')->searchable(),
             Column::make('updated_at')->searchable(),
-            Column::computed('action')  
+            Column::computed('action')
                 ->exportable(false)
                 ->printable(false)
                 ->width(60)

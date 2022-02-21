@@ -77,38 +77,38 @@
         </div>
     </div>
     <script>
-        $('#create_blog111').validate({
-            rules: {
-                category_id: {
-                    required: true,
-                },
-                title: {
-                    required: true,
-                },
-                description: {
-                    required: true,
-                },
-                image: {
-                    required: true,
-                },
-            },
-            messages: {
-                category_id: {
-                    required: "Category Required",
-                },
-                title: {
-                    required:  "Title Required",
-                },
-                description: {
-                    required:  "description Required",
-                },
-                image: {
-                    required: "Image Required",
-                },
+        // $('#create_blog111').validate({
+        //     rules: {
+        //         category_id: {
+        //             required: true,
+        //         },
+        //         title: {
+        //             required: true,
+        //         },
+        //         description: {
+        //             required: true,
+        //         },
+        //         image: {
+        //             required: true,
+        //         },
+        //     },
+        //     messages: {
+        //         category_id: {
+        //             required: "Category Required",
+        //         },
+        //         title: {
+        //             required:  "Title Required",
+        //         },
+        //         description: {
+        //             required:  "description Required",
+        //         },
+        //         image: {
+        //             required: "Image Required",
+        //         },
                
-            },
+        //     },
 
 
-        });
+        // });
     </script>
 @endsection

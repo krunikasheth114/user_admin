@@ -101,6 +101,11 @@
                     required: true,
                 }
             },
+            message: {
+                category_name: {
+                    required: "this field is require",
+                }
+            },
             submitHandler: function(form) {
                 $.ajax({
                     headers: {
