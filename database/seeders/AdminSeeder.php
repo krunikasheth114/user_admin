@@ -22,11 +22,11 @@ class AdminSeeder extends Seeder
         ]);
         $admin->assignRole('SuperAdmin');
 
-        // $admins = Admin::create([
-        //     'email'=>'krunika@gmail.com',
-        //     'password'=>Hash::make('admin@123'),
-        //     'is_admin'=>'1',
-        // ]);
-        // $admins->assignRole('Developer');
+        $admins = Admin::create([
+            'email'=>'krunika@gmail.com',
+            'password'=>Hash::make('admin@123'),
+            'is_admin'=>'1',
+        ]);
+        $admins->assignRole('Developer1');    
     }
 }

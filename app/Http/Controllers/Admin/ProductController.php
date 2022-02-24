@@ -87,4 +87,5 @@ class ProductController extends Controller
         $data->delete();
         return response()->json(['status' => true, 'message' => "Delete Successfully"]);
     }
+    
 }

@@ -1,5 +1,11 @@
 @extends('user.user_layout.master')
 @section('content')
+    @if (Session::has('success'))
+        <div class="alert alert-success text-center">
+
+            <p>{{ Session::get('success') }}</p>
+        </div>
+    @endif
     <table class="table">
         <thead class="thead-dark">
             <tr>
@@ -9,7 +15,6 @@
                 <th scope="col">Quantity</th>
                 <th scope="col">Price</th>
                 <th scope="col">Total Amount</th>
-
             </tr>
         </thead>
         <tbody>
@@ -25,8 +30,8 @@
                                 <td><img src="/images/{{ $val['image'] }}" height="50px" width="50px"></td>
                                 <td>{{ $val['name'] }}</td>
                                 <td>{{ $value['quantity'] }}</td>
-                                <td>{{ $val['price'] }}</td>
-                                <td>{{ $value['totalamount'] }}</td>
+                                <td> <i class="fa fa-inr">{{ $val['price'] }}</td>
+                                <td> <i class="fa fa-inr">{{ $value['totalamount'] }}</td>
                             </tr>
                         @endforeach
                     @endforeach

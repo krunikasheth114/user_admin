@@ -24,6 +24,7 @@
         "php-http/curl-client": "^2.2",
         "php-http/message": "^1.12",
         "spatie/laravel-permission": "^5.4",
+        "stripe/stripe-php": "^7.114",
         "yajra/laravel-datatables": "1.5",
         "yajra/laravel-datatables-buttons": "^4.13",
         "yajra/laravel-datatables-oracle": "^9.18"

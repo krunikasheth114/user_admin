@@ -9,7 +9,7 @@ use App\Models\Product;
 use AmrShawky\LaravelCurrency\Facade\Currency;
 use Illuminate\Support\Facades\DB;
 use \App\Models\Order;
-
+use Stripe;
 use Illuminate\Support\Facades\Auth;
 use \App\Models\OrderProduct;
 use App\Models\Cart;
@@ -106,29 +106,30 @@ class ProductController extends Controller
         $product = Cart::where('user_id', Auth::user()->id)->with('productData')->get()->toArray();
         return view('user.products.cart', compact('product'));
     }
-    // public function orderPreview(Request $request)
-    // {
 
-    //     $order = Order::create([
-    //         'user_id' => Auth::user()->id,
-    //         'status' => 0,
-    //     ]);
-    //     $orderId = $order->id;
-    //     $orderSummary = Product::where('id', $request->product_id)->with('getCategory', 'subCategory')->get();
-    //     return view('user.products.order-summary ', compact('orderSummary','orderId'));
-    // }
     public function cartRemove(Request $request, $id)
     {
         $removeCart = Cart::where(['user_id' => Auth::user()->id, 'product_id' => $id])->delete();
         return redirect()->back()->with('danger', "Removed");
     }
-    public function  userOrder(Request $request)
+    public function orderPreview(Request $request)
     {
-        $price = Product::where('id', $request->product_id)->value('price');
 
+        $quantity = $request->quantity;
+        $userCartPreview = Cart::where(['product_id' => $request->product_id, 'user_id' => Auth::user()->id])->with('productData')->get()->toArray();
+        return view('user.products.preview', compact('quantity', 'userCartPreview'));
+    }
 
-        // dd($price['price']);
-        $totalAmount = $price * $request->quantity;
+    public function userPaymentView(Request $request)
+    {
+        $data = $request->all();
+        return view('user.products.payment', compact('data'));
+    }
+
+    public function  userPayment(Request $request)
+    {
+        // dd($request->all());
+        $productData = cart::where('id', $request->cart_id)->first();
         $order = Order::create([
             'user_id' => Auth::user()->id,
             'status' => 1,
@@ -137,16 +138,25 @@ class ProductController extends Controller
         if (isset($orderId)) {
             $data = OrderProduct::create([
                 'order_id' => $orderId,
-                'product_id' => $request->product_id,
+                'product_id' => $productData->product_id,
                 'quantity' => $request->quantity,
-                'totalamount' =>  $totalAmount,
+                'totalamount' =>  $request->total_amount,
             ]);
         }
+        Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
+        Stripe\Charge::create([
+            "amount" => $request->total_amount * 100,
+            "currency" => "usd",
+            "source" => $request->stripeToken,
+            "description" => "Test payment"
+        ]);
         $lastId = $data->id;
         if (isset($data)) {
-            $deleteFromCart = Cart::where(['user_id' => Auth::user()->id, 'product_id' => $request->product_id])->delete();
+            $deleteFromCart = Cart::where(['user_id' => Auth::user()->id, 'product_id' =>  $productData->product_id])->delete();
         }
-        return redirect()->route('product.user-order-history')->with('success', "Your Order Placed Succesfully ");;
+
+        // return response()->json(['status' => true, 'data' => $data]);
+        return redirect()->route('product.order-history')->with('success', "Your is payment succesfull");
     }
     public function userOrderHistory()
     {

@@ -20,13 +20,13 @@
                             </td>
                             <td scope="col">{{ $item['name'] }}</td>
                             <td>{{ $item['price'] }}</td>
-                            <form action="{{ route('product.user-order') }}" method="post" enctype="multipart/form-data">
+                            <form action="{{ route('product.preview') }}" method="post" enctype="multipart/form-data">
                                 @csrf
                                 <td> <input type="number" name="quantity" id="quantity" class="col-md-2" value="1">
                                 </td>
                                 <td>
                                     <input type="hidden" name="product_id" id="product_id" value="{{ $item['id'] }}">
-                                    <button name="submit" id="submit" class="btn btn-primary submit">place Order</button>
+                                    <button name="submit" id="submit" class="btn btn-primary submit">Place Order</button>
                             </form>
                             <a href="{{ route('product.user-cart-remove', $item['id']) }}" name="remove" id="remove"
                                 class="btn btn-danger remove" value=""> <i class="fa fa-remove"></i></a>

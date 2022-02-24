@@ -21,12 +21,31 @@
     <link rel="stylesheet" href="{{ asset('blog/assets/css/templatemo-stand-blog.css') }}">
     <link rel="stylesheet" href="{{ asset('blog/assets/css/owl.css') }}">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
-  
+
     {{-- <link rel="stylesheet" href="/resources/demos/style.css"> --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.min.css">
     <style>
         body {
             font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", Helvetica, Arial, sans-serif;
+        }
+
+        .panel-title {
+            display: inline;
+            font-weight: bold;
+        }
+
+        .display-table {
+            display: table;
+        }
+
+        .display-tr {
+            display: table-row;
+        }
+
+        .display-td {
+            display: table-cell;
+            vertical-align: middle;
+            width: 61%;
         }
 
     </style>
@@ -60,7 +79,7 @@
     <!-- Bootstrap core JavaScript -->
     {{-- <script src="{{ asset('blog/vendor/jquery/jquery.min.js') }}"></script> --}}
     <script src="{{ asset('blog/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-    
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.all.min.js"></script>
     {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"></script> --}}
     {{-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> --}}

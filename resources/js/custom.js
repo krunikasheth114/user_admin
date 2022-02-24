@@ -653,4 +653,4 @@ $('body').on('click', '.cart', function() {
             }
         })
     })
-    // Category Filter
+    //  Payment

@@ -41,7 +41,7 @@
                         </a>
                     </div>
                     <div class="row">
-                        <a href="{{ route('product.user-order-history') }}" name="submit">
+                        <a href="{{ route('product.order-history') }}" name="submit">
                             <u>
                                 <h4 style="color: black">My Orders</h4>
                             </u>

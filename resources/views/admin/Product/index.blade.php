@@ -22,7 +22,7 @@
                         <div class="card m-b-30">
                             <div class="card-header">
                                 <div class="card-header-actions">
-                                    <form  id="importjuhi" name="importjuhi"method="post" >
+                                    <form id="importjuhi" name="importjuhi" method="post">
                                         @csrf
                                         {{ \Session::get('message') }}
                                         <div class="alert alert-info">{{ Session::get('message') }}</div>
@@ -36,7 +36,8 @@
                                         <input type="file" name="file" class="form-control" required>
                                         <br>
                                         <button class="btn btn-success">Import Product Data</button>
-                                        <a class="btn btn-warning" href="{{ route('admin.export')}}">Export Product Data</a>
+                                        <a class="btn btn-warning" href="{{ route('admin.export') }}">Export Product
+                                            Data</a>
                                     </form>
                                     <br>
                                     <button class="btn btn-success btn-save float-right" title="Add " data-toggle="modal"
@@ -153,36 +154,36 @@
 @push('page_scripts')
     {!! $dataTable->scripts() !!}
     <script>
-        $(document).ready( function () {
+        $(document).ready(function() {
             // $('#products-table').DataTable();
-        } );
+        });
         // Change status
         $(document).on('click', '.changestatus', function() {
             var conf = confirm("Are you sure to want chanvge status??");
             if (conf == true) {
-            var status = $(this).attr('status');
-            var id = $(this).attr('id');
-            $.ajax({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-                },
-                url: "{{ route('admin.product.changestatus-product') }}",
-                method: "POST",
-                data: {
-                    status: status,
-                    id: id,
-                },
-                success: function(data) {
-                    console.log(data.status);
-                    if (data.status == true)
+                var status = $(this).attr('status');
+                var id = $(this).attr('id');
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                    },
+                    url: "{{ route('admin.product.changestatus-product') }}",
+                    method: "POST",
+                    data: {
+                        status: status,
+                        id: id,
+                    },
+                    success: function(data) {
+                        console.log(data.status);
+                        if (data.status == true)
 
-                    {
-                        swal("Done!", data.message, "success");
-                        window.LaravelDataTables["products-table"].draw();
+                        {
+                            swal("Done!", data.message, "success");
+                            window.LaravelDataTables["products-table"].draw();
+                        }
+
                     }
-
-                }
-            })
+                })
             }
         })
         // GET Data
@@ -330,48 +331,48 @@
                 }
             })
         });
-    $('#importjuhi').validate({
-        rules: {
-            // category_name: {
-            //     required: true,
-            // }
-        
-        },
-        submitHandler: function(form) {
+        $('#importjuhi').validate({
+            rules: {
+                // category_name: {
+                //     required: true,
+                // }
 
-            $.ajax({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-                },
+            },
+            submitHandler: function(form) {
 
-                url: "{{ route('admin.importjuhi') }}",
-                method: "POST",
-                data: new FormData(form),
-                contentType: false,
-                cache: false,
-                processData: false,
-                dataType: 'JSON',
-                success: function(data) {
-                    window.location.reload();
-                },
-                error: function(error) {
-                    // console.log(error.responseJSON.errors);
-                    var i;
-                    var res = error.responseJSON.errors;
-                    $.each(res, function(key, value) {
-                        toastr.error(value);
-                    });
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                    },
 
-                }
+                    url: "{{ route('admin.importjuhi') }}",
+                    method: "POST",
+                    data: new FormData(form),
+                    contentType: false,
+                    cache: false,
+                    processData: false,
+                    dataType: 'JSON',
+                    success: function(data) {
+                        window.location.reload();
+                    },
+                    error: function(error) {
+                        // console.log(error.responseJSON.errors);
+                        var i;
+                        var res = error.responseJSON.errors;
+                        $.each(res, function(key, value) {
+                            toastr.error(value);
+                        });
 
-            });
-        }
-    });
-    $('body').on('click','.custom_class' ,function () {
+                    }
 
-        
+                });
+            }
+        });
+        $('body').on('click', '.custom_class', function() {
 
-    })
+
+
+        })
 
 
         // $(".import_form").validate({
