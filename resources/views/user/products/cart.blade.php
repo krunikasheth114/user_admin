@@ -1,5 +1,10 @@
 @extends('user.user_layout.master')
 @section('content')
+<div class="container">
+    <div class="row">
+        <h1>Your Cart</h1>
+    </div>
+</div>
     <table class="table table-hover table table-bordered">
         <thead>
             <tr>
@@ -20,7 +25,8 @@
                             </td>
                             <td scope="col">{{ $item['name'] }}</td>
                             <td>{{ $item['price'] }}</td>
-                            <form action="{{ route('product.preview') }}" method="post" enctype="multipart/form-data">
+                            <form action="{{ route('product.order-preview') }}" method="post"
+                                enctype="multipart/form-data">
                                 @csrf
                                 <td> <input type="number" name="quantity" id="quantity" class="col-md-2" value="1">
                                 </td>
@@ -35,7 +41,8 @@
                     @endforeach
                 @endforeach
             @else
-                <?php echo 'Your Cart is Empty!!'; ?>
+          
+                <?php echo '<h6 style="color:red">Your Cart is Empty!!</h6>'; ?>
             @endif
         </tbody>
     </table>

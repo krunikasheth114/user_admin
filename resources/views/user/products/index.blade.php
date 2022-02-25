@@ -74,7 +74,6 @@
                         </div>
                         <div class="row product-data">
                             @foreach ($products as $product)
-                                {{-- @if (empty(Session::get('category'))) --}}
                                 <div class="col-lg-6">
                                     <div class="blog-post">
                                         <div class="blog-thumb">
@@ -113,6 +112,8 @@
                                 </div>
                                 {{-- @endif --}}
                             @endforeach
+
+
                         </div>
                     </div>
                 </div>
@@ -160,138 +161,38 @@
                             $.each(data.data, function(key, value) {
                                 console.log(value);
                                 $(".product-data").append(`<div class="col-lg-6">
-                        <div class="blog-post">
-                            <div class="blog-thumb">
-                                <img src="` + /images/ + value.image + `"/> 
-                                            <img src="` + /images/ + value.image + `"/> 
-                                <img src="` + /images/ + value.image + `"/> 
-                            </div>
-                            <div class="down-content">
-                                    <span id=""> ` + value.get_category.name + `</span>
-                                <a href="#">
-                                    <h4>` + value.name +
+                                        <div class="blog-post">
+                                            <div class="blog-thumb">
+                                                <img src="` + /images/ + value.image + `"/>     
+                                            </div>
+                                            <div class="down-content">
+                                                    <span id=""> ` + value.get_category.name + `</span>
+                                                <a href="#">
+                                                    <h4>` + value.name +
                                     `</h4>
-                                </a>
-                                    <span class="converted-currency" name="currency"> <i class="fa fa-rupee">` +
+                                                </a>
+                                                    <span class="converted-currency" name="currency"> <i class="fa fa-rupee">` +
                                     +
                                     value.price + `</i> 
-                                </span>
-                            </div>
-                        </div>
-                    </div>`);
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>`);
                             });
+                        } else {
+                            $('.product-data').append(
+                                '<div id="loading"></div>'
+                            );
+                            $('product-data').on('load', function() {
+                                setTimeout(removeLoader,
+                                    2000); //wait for page load PLUS two seconds.
+                            });
+
                         }
                     }
                 })
             });
-        });
-        // Prize Filter
-        // $('body').on('click','.submit', function() {
-        //     var productId = $('#product_id').val();
-        //     var quantity = $('#quantity').val();
-        //     $.ajax({
-        //         headers: {
-        //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-        //         },
-        //         url: "{{ route('product.cart') }}",
-        //         method: "post",
-        //         data: {
-        //             _token: "{{ csrf_token() }}",
-        //             productId: productId,
-        //             quantity: quantity
-        //         },
-        //         success: function(data) {
-
-        //         }
-        //     })
-        // })
-
-        // Currency converter
-        // var from;
-        // $("#currency").on('focus', function() {
-        //     // e.preventDefault();
-        //     from = this.value;
-        // }).change(function() {
-        //     var to = this.value;
-        //     $.ajax({
-        //         headers: {
-        //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-        //         },
-        //         url: "{{ route('product.change-currency') }}",
-        //         method: "POST",
-        //         data: {
-        //             _token: "{{ csrf_token() }}",
-        //             from: from,
-        //             to: to
-        //         },
-        //         success: function(data) {
-        //             console.log(data);
-        //             $(".product-data").html('');
-        //             $.each(data.data, function(key, value) {
-        //                 if (value.session_val == "EUR") {
-        //                     $(".product-data").append(`<div class="col-lg-6">
-    //                             <div class="blog-post">
-    //                                 <div class="blog-thumb">
-    //                                     <img src="` + /images/ + value.image + `"/> 
-    //                                 </div>
-    //                                 <div class="down-content">
-    //                                         <span id=""> ` + value.category.name + `</span>
-    //                                     <a href="#">
-    //                                         <h4>` + value.name +
-        //                         `</h4>
-    //                                     </a>
-    //                                         <span class="converted-currency" name="currency"> <i class="fa fa-euro">` +
-        //                         +
-        //                         value.new_price + `</i> 
-    //                                     </span>
-    //                                 </div>
-    //                             </div>
-    //                         </div>`);
-        //                 } else {
-        //                     $(".product-data").append(`<div class="col-lg-6">
-    //                             <div class="blog-post">
-    //                                 <div class="blog-thumb">
-    //                                     <img src="` + /images/ + value.image + `"/> 
-    //                                 </div>
-    //                                 <div class="down-content">
-    //                                         <span id=""> ` + value.category_name + `</span>
-    //                                     <a href="#">
-    //                                         <h4>` + value.name +
-        //                         `</h4>
-    //                                     </a>
-    //                                         <span class="converted-currency" name="currency"> <i class="fa fa-rupee">` +
-        //                         value.price + `</i> 
-    //                                     </span>
-    //                                 </div>
-    //                             </div>
-    //                         </div>`);
-        //                 }
-        //             });
-        //         }
-        //     })
-        // });
-        // Add To cart
-        // $('body').on('click', '.cart', function() {
-        //     var id = $(this).attr('id');
-        //     $.ajax({
-        //             headers: {
-        //                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-        //             },
-        //             url: "{{ route('product.cart') }}",
-        //             method: "POST",
-        //             data: {
-        //                 _token: "{{ csrf_token() }}",
-        //                 id: id,
-        //             },
-        //             success: function(data) {
-        //                 if (data.status == true) {
-        //                     toastr.success(data.msg)
-        //                         .delay(500)
-        //                 }
-        //             });
-        //     });
-        // });
-
+        }); 
         // Category Filter
         var categories;
         $('input[name="category[]"]').on('change', function(e) {
@@ -333,6 +234,15 @@
                                     </div>
                                 </div>`);
                         });
+                    } else {
+                        $('.product-data').append(
+                            '<div id="loading"></div>'
+                        );
+                        $('product-data').on('load', function() {
+                            setTimeout(removeLoader,
+                                2000); //wait for page load PLUS two seconds.
+                        });
+
                     }
                 }
             });

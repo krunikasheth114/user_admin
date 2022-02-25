@@ -20,9 +20,9 @@ class ProductController extends Controller
     public function index(Request $request)
     {
         if (!empty(Session::get('category'))) {
-            $products = Product::whereIn('category_id', Session::get('category'))->get();
+            $products = Product::whereIn('category_id', Session::get('category'))->where('status', 1)->get();
         } else {
-            $products = Product::get();
+            $products = Product::where('status', 1)->get();
         }
         $category = Product_category::get();
         return view('user.products.index', compact(['products', 'category']));
@@ -62,7 +62,7 @@ class ProductController extends Controller
         $category = Session::get('category');
         $request->session()->save();
         $p = (explode(';', $request->price_range));
-        $products = Product::with('getCategory');
+        $products = Product::where('status', 1)->with('getCategory');
         if (!empty($category)) {
             $products = $products->whereIn('category_id', $category);
         }
@@ -82,24 +82,6 @@ class ProductController extends Controller
         return redirect()->route('product.cart-view')->with('success', "Product added in to cart succesfully");
     }
 
-    // $request->session()->forget('cart');
-    // $product = Product::findOrFail($request->product_id);
-    // $cart = session()->get('cart', []);
-    // $quantity = 0;
-    // if (isset($cart[$request->product_id])) {
-    //     $cart[$request->product_id]['quantity']++;
-    // } else {
-    //     $cart[$request->product_id] = [
-    //         "id" => $request->product_id,
-    //         "quantity" => 1,
-    //         "image" => $product->image,
-    //         "name" => $product->name,
-    //         "price" => $product->price,
-    //     ];
-    // }
-    // session()->put('cart', $cart);
-
-    // return response()->json(['status' => true, 'success' => 'Product added to cart successfully!']);
 
     public function cart()
     {
@@ -130,6 +112,7 @@ class ProductController extends Controller
     {
         // dd($request->all());
         $productData = cart::where('id', $request->cart_id)->first();
+        // dd($productData);
         $order = Order::create([
             'user_id' => Auth::user()->id,
             'status' => 1,
@@ -155,8 +138,9 @@ class ProductController extends Controller
             $deleteFromCart = Cart::where(['user_id' => Auth::user()->id, 'product_id' =>  $productData->product_id])->delete();
         }
 
-        // return response()->json(['status' => true, 'data' => $data]);
-        return redirect()->route('product.order-history')->with('success', "Your is payment succesfull");
+        // return response()->json(['status' => true, 'msg' => "Your is payment succesfull"]);
+        return redirect()->route('product.order-history')->with('success', 'Payment succesfull');
+        // return redirect()->route('product.order-history')->with('success', "Payment succesfull");
     }
     public function userOrderHistory()
     {

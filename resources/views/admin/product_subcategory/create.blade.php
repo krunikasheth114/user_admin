@@ -67,7 +67,7 @@
                     if (data.status == true) {
 
                         $("#product_sub_category_add_modal").modal('hide');
-                        // window.LaravelDataTables["subcategory-table"].draw();
+                        window.LaravelDataTables["product_subcategory-table"].draw();
                     }
                 },
                 error: function(error) {

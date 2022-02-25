@@ -1,11 +1,10 @@
 @extends('user.user_layout.master')
 @section('content')
-    @if (Session::has('success'))
-        <div class="alert alert-success text-center">
-
-            <p>{{ Session::get('success') }}</p>
-        </div>
-    @endif
+<div class="container">
+    <div class="row">
+        <h1>Order History</h1>
+    </div>
+</div>
     <table class="table">
         <thead class="thead-dark">
             <tr>
@@ -37,7 +36,7 @@
                     @endforeach
                 @endforeach
             @else
-                <?php echo 'No Orders From You !!'; ?>
+                <?php echo '<h6 style="color:red">No Orders From You !!</h6>'; ?>
             @endif
 
         </tbody>

@@ -71,10 +71,9 @@ Route::group(['namespace' => 'users'], function () {
             Route::get('cart-remove/{id}',           'ProductController@cartRemove')->name('user-cart-remove');
             Route::post('order-preview',           'ProductController@orderPreview')->name('order-preview');
             Route::get('/order',       'ProductController@userOrderHistory')->name('order-history');
-            Route::get('/order-preview',       'ProductController@orderPreview')->name('preview');
+            // Route::get('/order-preview',       'ProductController@orderPreview')->name('preview');
             Route::post('/view',       'ProductController@userPaymentView')->name('payment');
             Route::post('/payment',       'ProductController@userPayment')->name('user-payment');
         });
-      
     });
 });

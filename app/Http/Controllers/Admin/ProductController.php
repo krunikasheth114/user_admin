@@ -14,8 +14,8 @@ class ProductController extends Controller
 {
     public function index(ProductsDataTable $datatable)
     {
-        $category = Product_category::get(['name', 'id']);
-        $subcategory = Product_subcategory::get(['name', 'id']);
+        $category = Product_category::where('status', 1)->get(['name', 'id']);
+        $subcategory = Product_subcategory::where('status', 1)->get(['name', 'id']);
         return $datatable->render('admin.product.index', compact('category', 'subcategory'));
     }
 
@@ -87,5 +87,4 @@ class ProductController extends Controller
         $data->delete();
         return response()->json(['status' => true, 'message' => "Delete Successfully"]);
     }
-    
 }
