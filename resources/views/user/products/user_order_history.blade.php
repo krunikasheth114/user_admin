@@ -1,10 +1,17 @@
 @extends('user.user_layout.master')
 @section('content')
-<div class="container">
-    <div class="row">
-        <h1>Order History</h1>
+    <div class="container">
+        <div class="row">
+            {{-- @dd(Session::get('success')); --}}
+            @if (Session::has('success'))
+                <div class="alert alert-success text-center">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+                    <p>{{ Session::get('success') }}</p>
+                </div>
+            @endif
+            <h1>Order History</h1>
+        </div>
     </div>
-</div>
     <table class="table">
         <thead class="thead-dark">
             <tr>

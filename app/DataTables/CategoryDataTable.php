@@ -49,7 +49,7 @@ class CategoryDataTable extends DataTable
                 }
 
                 if (auth()->user()->hasAnyPermission('category_update')) {
-                    $inactive .=  '<button type="button" class="btn btn-warning m-1  edit" data-toggle="modal" data-target="#editcategory" id="' . $data->id . '"><i class="fa fa-edit"></i></button>';
+                    $inactive .=  '<button type="button" class="btn btn-warning m-1  edit"  id="' . $data->id . '"><i class="fa fa-edit"></i></button>';
                 }
                 if (auth()->user()->hasAnyPermission('category_delete')) {
                     $inactive .=  '<button type="button" class="btn btn-danger m-1 delete" id="' . $data->id . '"><i class="fa fa-trash"></i></button>';

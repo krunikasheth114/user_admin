@@ -105,14 +105,22 @@ class ProductController extends Controller
     public function userPaymentView(Request $request)
     {
         $data = $request->all();
-        return view('user.products.payment', compact('data'));
+        return view('user.products.payment.payment', compact('data'));
     }
 
+    // public function cardCreate(Request $request)
+    // {
+    //    try{
+
+    //    }catch(\Exception $e){
+
+    //    }
+
+    // }
     public function  userPayment(Request $request)
     {
         // dd($request->all());
         $productData = cart::where('id', $request->cart_id)->first();
-        // dd($productData);
         $order = Order::create([
             'user_id' => Auth::user()->id,
             'status' => 1,
@@ -126,20 +134,61 @@ class ProductController extends Controller
                 'totalamount' =>  $request->total_amount,
             ]);
         }
+        $stripe = new \Stripe\StripeClient(
+            (env('STRIPE_SECRET'))
+        );
+        $token = $stripe->tokens->create([
+            'card' => [
+                'number' => $request->cardnumber,
+                'exp_month' => $request->expirationmonth,
+                'exp_year' => $request->expirationyear,
+                'cvc' => $request->cvc,
+            ],
+        ]);
+        $customer = $stripe->customers->create([
+            'name' => $request->nameoncard,
+            'email' => $request->email,
+
+        ]);
+        $id = $customer->id;
+        $stripe->customers->createSource(
+            $id,
+            [
+                'source' => $token->id,
+            ]
+        );
         Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
-        Stripe\Charge::create([
+        $charge = Stripe\Charge::create([
             "amount" => $request->total_amount * 100,
             "currency" => "usd",
-            "source" => $request->stripeToken,
-            "description" => "Test payment"
+            "customer" => $id,
+            "description" => "Test payment",
+
         ]);
+        // $chargeID = $charge->id;
+
+        // $stripe->customers->retrieve(
+        //     'cus_LDj4JMDNSvvkel'
+
+        // );
+        // dd($data);
+        // $data = $stripe->charges->all(['limit' => 3]);
+
+        // $data = $stripe->charges->retrieve(
+        //     $chargeID
+        // );
+        // $data =   $stripe->charges->update(
+        //     $chargeID,
+        //     ['metadata' => ['order_id' =>  $orderId]]
+        // );
         $lastId = $data->id;
         if (isset($data)) {
             $deleteFromCart = Cart::where(['user_id' => Auth::user()->id, 'product_id' =>  $productData->product_id])->delete();
         }
-
+        Session::flash('success', 'Payment successful!');
         // return response()->json(['status' => true, 'msg' => "Your is payment succesfull"]);
-        return redirect()->route('product.order-history')->with('success', 'Payment succesfull');
+        return redirect()->route('product.order-history');
+
         // return redirect()->route('product.order-history')->with('success', "Payment succesfull");
     }
     public function userOrderHistory()

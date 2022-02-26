@@ -1,10 +1,10 @@
 @extends('user.user_layout.master')
 @section('content')
-<div class="container">
-    <div class="row">
-        <h1>Your Cart</h1>
+    <div class="container">
+        <div class="row">
+            <h1>Your Cart</h1>
+        </div>
     </div>
-</div>
     <table class="table table-hover table table-bordered">
         <thead>
             <tr>
@@ -41,7 +41,6 @@
                     @endforeach
                 @endforeach
             @else
-          
                 <?php echo '<h6 style="color:red">Your Cart is Empty!!</h6>'; ?>
             @endif
         </tbody>

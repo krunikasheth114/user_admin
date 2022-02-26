@@ -73,6 +73,7 @@ Route::group(['namespace' => 'users'], function () {
             Route::get('/order',       'ProductController@userOrderHistory')->name('order-history');
             // Route::get('/order-preview',       'ProductController@orderPreview')->name('preview');
             Route::post('/view',       'ProductController@userPaymentView')->name('payment');
+            Route::post('/add/card',       'ProductController@cardCreate')->name('create-card');
             Route::post('/payment',       'ProductController@userPayment')->name('user-payment');
         });
     });
