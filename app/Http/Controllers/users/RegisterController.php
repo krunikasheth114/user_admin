@@ -22,7 +22,7 @@ use App\Jobs\RegisterUserEmail;
 class RegisterController extends Controller
 {
 
-    public function showLoginForm(Request $request)
+    public function Register(Request $request)
     {
         if (Auth::check()) {
             return view('user.index');
@@ -38,11 +38,14 @@ class RegisterController extends Controller
         $data = Subcategory::where('category_id', $request->catId)
             ->where('status', 1)
             ->get(['subcategory_name', 'id']);
+
         return response()->json(['status' => true, 'data' => $data]);
     }
 
-    public function store(RegisterRequest $request)
+    public function store(Request $request)
     {
+
+        // dd($request->all());
         // $validatedData = $request->validated();
         $validatedData = new User;
         $validatedData->firstname = $request->input('firstname');
@@ -55,12 +58,20 @@ class RegisterController extends Controller
         $validatedData->profile = $imageName;
         $validatedData->otp = random_int(1000, 9999);
         $validatedData->password = Hash::make($request->input('password'));
+        $validatedData->stripe_cusid = 0;
         $validatedData->save();
         $id = $validatedData->id; // Get current user id
- 
- 
-        RegisterUserEmail::dispatch($validatedData)->delay(now()->addMinutes(1));   
-         return response()->json(['status' => true, 'data' => $validatedData, 'message' => "Mail sent", 'id' => $id]);
+
+        // $customer = $stripe->customers->create([
+        //     'name' => $request->nameoncard,
+        //     'email' => $request->email,
+        // ]);
+        // $cusId = $customer->id;
+        // User::where('id', $id)->update([
+        //     'stripe_cusid' => $cusId
+        // ]);
+        RegisterUserEmail::dispatch($validatedData)->delay(now()->addMinutes(1));
+        return response()->json(['status' => true, 'data' => $validatedData, 'message' => "Mail sent", 'id' => $id]);
     }
 
     public function showotpRegister(Request $request, $id)
@@ -99,9 +110,9 @@ class RegisterController extends Controller
         $blog_view = DB::table('blogs')
             ->leftJoin('views', 'blogs.id', '=', 'views.blog_id')
             ->count();
-         $blogs = Blog::latest('created_at')->take(5)->get();
-         $category = Blog_category::get(['category', 'id']);
+        $blogs = Blog::latest('created_at')->take(5)->get();
+        $category = Blog_category::get(['category', 'id']);
 
-        return view('user.index', compact('blog','blog_view','blogs','category'));
+        return view('user.index', compact('blog', 'blog_view', 'blogs', 'category'));
     }
 }

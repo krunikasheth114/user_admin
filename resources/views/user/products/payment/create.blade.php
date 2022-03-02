@@ -9,8 +9,9 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form role="form" action="{{ route('product.user-payment')}}" method="post" class="require-validation" data-cc-on-file="false"
-                    data-stripe-publishable-key="{{ env('STRIPE_KEY') }}" id="payment-form">
+                <form role="form" action="{{ route('product.user-payment') }}" method="post"
+                    class="require-validation payment- " data-cc-on-file="false"
+                    data-stripe-publishable-key="{{ env('STRIPE_KEY') }}" id="payment-  ">
                     @csrf
                     <div class="form-group">
                         <label for='nameoncard'>Name on Card</label>
@@ -38,9 +39,9 @@
                                 type='text'>
                         </div>
                         <div class='col-xs-12 col-md-4 form-group expiration required'>
-                            <label for='expirationyear'>Expiration Year</label> <input
-                                class='form-control card-expiry-year' name="expirationyear" placeholder='YYYY' size='4'
-                                type='text'>
+                            <label for='expirationyear'>Expiration Year</label>
+                            <input class='form-control card-expiry-year' name="expirationyear" placeholder='YYYY'
+                                size='4' type='text'>
                         </div>
                     </div>
                     {{-- <div class='form-row row'>
@@ -61,59 +62,13 @@
                     </div>
 
                 </form>
-
             </div>
         </div>
     </div>
 </div>
 @push('page-scripts')
-    <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
-    <script type="text/javascript">
-        $(function() {
-            var $form = $(".require-validation");
-            $('form.require-validation').bind('submit', function(e) {
-                var $form = $(".require-validation"),
-                    inputSelector = ['input[type=email]', 'input[type=password]',
-                        'input[type=text]', 'input[type=file]',
-                        'textarea'
-                    ].join(', '),
-                    $inputs = $form.find('.required').find(inputSelector),
-                    $errorMessage = $form.find('div.error'),
-                    valid = true;
-                $errorMessage.addClass('hide');
-
-                $('.has-error').removeClass('has-error');
-                $inputs.each(function(i, el) {
-                    var $input = $(el);
-                    if ($input.val() === '') {
-                        $input.parent().addClass('has-error');
-                        $errorMessage.removeClass('hide');
-                        e.preventDefault();
-                    }
-                });
-
-
-
-            });
-
-            function stripeResponseHandler(status, response) {
-                if (response.error) {
-                    $('.error')
-                        .removeClass('hide')
-                        .find('.alert')
-                        .text(response.error.message);
-                } else {
-                    // token contains id, last4, and card type
-                    var token = response['id'];
-                    // insert the token into the form so it gets submitted to the server
-                    $form.find('input[type=text]').empty();
-                    $form.append("<input type='hidden' name='stripeToken' value='" + token + "'/>");
-                    $form.get(0).submit();
-                }
-            }
-
-        });
-        $('#payment-form').validate({
+    <script>
+        $('.payment-form').validate({
             rules: {
                 nameoncard: {
                     required: true,

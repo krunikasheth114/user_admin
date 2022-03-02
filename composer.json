@@ -10,7 +10,7 @@
         "florianv/laravel-swap": "^2.3",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
-        "laravel/cashier": "^13.6",
+        "laravel/cashier": "^13.8",
         "laravel/framework": "^8.54",
         "laravel/helpers": "^1.4",
         "laravel/passport": "^10.2",

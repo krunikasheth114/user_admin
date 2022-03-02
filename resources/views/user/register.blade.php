@@ -10,14 +10,8 @@
     <meta content="ThemeDesign" name="author" />
     <meta name="csrf-token" content="{{ csrf_token() }}" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-
-    <link rel="shortcut icon" href="images/favicon.ico">
-
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet">
-
     <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('assets/css/icons.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet" type="text/css">
@@ -53,14 +47,13 @@
                                             Register here!</b></h4>
 
                                     <div class="p-2">
-                                        <form method="post" id="register_form">
+                                        <form action="" method="post" id="register_form">
                                             @csrf
-
                                             <div class="form-group">
                                                 <label for="firstname">{{ __('Firstname') }} :</label>
                                                 <input id="firstname" type="text" class="form-control"
                                                     name="firstname" value="{{ old('firstname') }}"
-                                                    autocomplete="firstname"  placeholder="Enter Firstname" autofocus>
+                                                    autocomplete="firstname" placeholder="Enter Firstname" autofocus>
                                             </div>
 
                                             @if ($errors->has('firstname'))
@@ -74,7 +67,7 @@
                                                 <input id="lastname" type="text"
                                                     class="form-control @error('lastname') is-invalid @enderror"
                                                     name="lastname" value="{{ old('lastname') }}"
-                                                    autocomplete="lastname"  placeholder="Enter Lastname" autofocus>
+                                                    autocomplete="lastname" placeholder="Enter Lastname" autofocus>
                                             </div>
                                             @if ($errors->has('lastname'))
                                                 <span class="invalid-feedback d-block" role="alert">
@@ -87,7 +80,8 @@
                                                 <label for="email">{{ __('Email') }} :</label>
 
                                                 <input id="email" type="email" class="form-control" name="email"
-                                                    value="{{ old('email') }}" autocomplete="email"  placeholder="Enter Email" autofocus>
+                                                    value="{{ old('email') }}" autocomplete="email"
+                                                    placeholder="Enter Email" autofocus>
                                             </div>
                                             @if ($errors->has('email'))
                                                 <span class="invalid-feedback d-block" role="alert">
@@ -129,7 +123,8 @@
                                                 <label for="email">{{ __('Password') }} :</label>
                                                 <input id="password" type="password"
                                                     class="form-control @error('password') is-invalid @enderror"
-                                                    name="password"  placeholder="Enter Password" autocomplete="current-password">
+                                                    name="password" placeholder="Enter Password"
+                                                    autocomplete="current-password">
                                             </div>
                                             @if ($errors->has('password'))
                                                 <span class="invalid-feedback d-block" role="alert">
@@ -143,18 +138,15 @@
                                                     name="profile" autocomplete="current-profile">
                                             </div>
                                             <div class="form-group">
-
-                                                <button type="submit" class="btn btn-primary">
+                                                <button type="submit" name="submit" class="btn btn-primary">
                                                     {{ __('Register') }}
                                                 </button>
                                             </div>
                                             <div class="form-group row">
-                                                
-                                                   Already have Acount?
-                                                    <a href="{{ route('user.login') }}"> Login here</a>
-                                              
+                                                Already have Acount?
+                                                <a href="{{ route('user.login') }}"> Login here</a>
                                             </div>
-        
+
                                     </div>
                                     </form>
                                 </div>
@@ -166,7 +158,7 @@
             </div>
         </div>
     </div>
-    </div>
+
 
     <!-- jQuery  -->
     <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
@@ -185,113 +177,108 @@
 
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script> --}}
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"></script>
     <script>
-        var getCat ="{{ route('getcat') }}"
-        var register ="{{ route('store') }}"
-        // $('#category').on('change', function() {
-        //     var catId = $(this).val();
-        //     // console.log(catId);
-        //     $.ajax({
-        //         url: "{{ route('getcat') }}",
-        //         method: "GET",
-        //         data: {
-        //             catId: catId
+        // var getCat ="{{ route('getcat') }}"
+        // var register ="{{ route('store') }}"
+        $('#category').on('change', function() {
 
-        //         },
+            var catId = $(this).val();
+            // console.log(catId);
+            $.ajax({
+                url: "{{ route('getcat') }}",
+                method: "GET",
+                data: {
+                    catId: catId
+                },
+                dataType: 'JSON',
+                success: function(data) {
+                    // console.log(data);
+                    $.each(data.data, function(key, value) {
+                        $("#subcategory").append('<option value="' + value.id + '">' + value
+                            .subcategory_name + '</option>');
+                    });
+                }
+            })
 
-        //         dataType: 'JSON',
-        //         success: function(data) {
-        //             // console.log(data);
-        //             $.each(data.data, function(key, value) {
-        //                 $("#subcategory").append('<option value="' + value.id + '">' + value
-        //                     .subcategory_name + '</option>');
-        //             });
-        //         }
-        //     })
+        })
 
-        // })
+        $('#register_form').validate({
+            rules: {
+                firstname: {
+                    required: true,
+                },
+                lastname: {
+                    required: true,
+                },
+                email: {
+                    required: true,
+                },
+                category: {
+                    required: true,
+                },
+                subcategory: {
+                    required: true,
+                },
+                password: {
+                    required: true,
+                },
+                profile: {
+                    required: true,
+                },
+            },
+            messages: {
+                firstname: {
+                    required: "Firstname is required ",
+                },
+                lastname: {
+                    required: "Lastname is required",
+                },
+                email: {
+                    required: "Email is required",
+                },
+                category: {
+                    required: "Category is required",
+                },
+                subcategory: {
+                    required: "SubCategory is required",
+                },
+                password: {
+                    required: "Password is required",
+                },
+                profile: {
+                    required: "Profile is required",
+                },
+            },
+            submitHandler: function(form) {
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                    },
 
-        // $('#register_form').validate({
+                    url: "{{ route('store') }}",
+                    method: "post",
+                    data: new FormData(form),
+                    contentType: false,
+                    cache: false,
+                    processData: false,
+                    dataType: 'JSON',
+                    success: function(data) {
+                        window.location.href = 'verify_register_user' + '/' + data.id;
+                    },
+                    error: function(error) {
+                        var i;
+                        var res = error.responseJSON.errors;
+                        $.each(res, function(key, value) {
+                            toastr.error(value)
+                        });
+                    }
+                })
+            },
 
-        //     rules: {
-        //         firstname: {
-        //             required: true,
-        //         },
-        //         lastname: {
-        //             required: true,
-        //         },
-        //         email: {
-        //             required: true,
-        //         },
-        //         category: {
-        //             required: true,
-        //         },
-        //         subcategory: {
-        //             required: true,
-        //         },
-        //         password: {
-        //             required: true,
-        //         },
-        //         profile: {
-        //             required: true,
-        //         },
-        //     },
-        //     messages: {
-        //         firstname: {
-        //             required: "Firstname is required ",
-        //         },
-        //         lastname: {
-        //             required: "Lastname is required",
-        //         },
-        //         email: {
-        //             required: "Email is required",
-        //         },
-        //         category: {
-        //             required: "Category is required",
-        //         },
-        //         subcategory: {
-        //             required: "SubCategory is required",
-        //         },
-        //         password: {
-        //             required: "Password is required",
-        //         },
-        //         profile: {
-        //             required: "Profile is required",
-        //         },
-        //     },
-        //     submitHandler: function(form) {
-
-        //         $.ajax({
-        //             headers: {
-        //                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-        //             },
-
-        //             url: "{{ route('store') }}",
-        //             method: "POST",
-        //             data: new FormData(form),
-        //             contentType: false,
-        //             cache: false,
-        //             processData: false,
-        //             dataType: 'JSON',
-        //             success: function(data) {
-
-        //                 window.location.href = 'verify_register_user' + '/' + data.id;
-
-        //             },
-        //             error: function(error) {
-        //                 var i;
-        //                 var res = error.responseJSON.errors;
-        //                 $.each(res, function(key, value) {
-        //                     toastr.error(value)
-        //                 });
-        //             }
-        //         })
-        //     },
-
-        // });
+        });
     </script>
 
 </body>

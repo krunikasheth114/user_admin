@@ -254,84 +254,84 @@ $('#category').on('change', function() {
 
 })
 
-$('#register_form').validate({
+// $('#register_form').validate({
 
-    rules: {
-        firstname: {
-            required: true,
-        },
-        lastname: {
-            required: true,
-        },
-        email: {
-            required: true,
-        },
-        category: {
-            required: true,
-        },
-        subcategory: {
-            required: true,
-        },
-        password: {
-            required: true,
-        },
-        profile: {
-            required: true,
-        },
-    },
-    messages: {
-        firstname: {
-            required: "Firstname is required ",
-        },
-        lastname: {
-            required: "Lastname is required",
-        },
-        email: {
-            required: "Email is required",
-        },
-        category: {
-            required: "Category is required",
-        },
-        subcategory: {
-            required: "SubCategory is required",
-        },
-        password: {
-            required: "Password is required",
-        },
-        profile: {
-            required: "Profile is required",
-        },
-    },
-    submitHandler: function(form) {
+//     rules: {
+//         firstname: {
+//             required: true,
+//         },
+//         lastname: {
+//             required: true,
+//         },
+//         email: {
+//             required: true,
+//         },
+//         category: {
+//             required: true,
+//         },
+//         subcategory: {
+//             required: true,
+//         },
+//         password: {
+//             required: true,
+//         },
+//         profile: {
+//             required: true,
+//         },
+//     },
+//     messages: {
+//         firstname: {
+//             required: "Firstname is required ",
+//         },
+//         lastname: {
+//             required: "Lastname is required",
+//         },
+//         email: {
+//             required: "Email is required",
+//         },
+//         category: {
+//             required: "Category is required",
+//         },
+//         subcategory: {
+//             required: "SubCategory is required",
+//         },
+//         password: {
+//             required: "Password is required",
+//         },
+//         profile: {
+//             required: "Profile is required",
+//         },
+//     },
+//     submitHandler: function(form) {
 
-        $.ajax({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-            },
+//         $.ajax({
+//             headers: {
+//                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+//             },
 
-            url: register,
-            method: "POST",
-            data: new FormData(form),
-            contentType: false,
-            cache: false,
-            processData: false,
-            dataType: 'JSON',
-            success: function(data) {
+//             url: register,
+//             method: "POST",
+//             data: new FormData(form),
+//             contentType: false,
+//             cache: false,
+//             processData: false,
+//             dataType: 'JSON',
+//             success: function(data) {
 
-                window.location.href = 'verify_register_user' + '/' + data.id;
+//                 window.location.href = 'verify_register_user' + '/' + data.id;
 
-            },
-            error: function(error) {
-                var i;
-                var res = error.responseJSON.errors;
-                $.each(res, function(key, value) {
-                    toastr.error(value)
-                });
-            }
-        })
-    },
+//             },
+//             error: function(error) {
+//                 var i;
+//                 var res = error.responseJSON.errors;
+//                 $.each(res, function(key, value) {
+//                     toastr.error(value)
+//                 });
+//             }
+//         })
+//     },
 
-});
+// });
 
 
 // Reset Password

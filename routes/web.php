@@ -25,9 +25,9 @@ Route::get('/', function () {
 // \Auth::logout();'namespace' => 'Auth'
 Route::group(['namespace' => 'users'], function () {
     Route::get('/home',              'RegisterController@home')->name('home');
-    Route::get('/register',          'RegisterController@showLoginForm')->name('register');
+    Route::get('/register',          'RegisterController@Register')->name('register');
     Route::get('/getcat',            'RegisterController@getcat')->name('getcat');
-    Route::post('store',             'RegisterController@store')->name('store');
+    Route::post('/store',             'RegisterController@store')->name('store');
     Route::get('verify_register_user/{id}',   'RegisterController@showotpRegister')->name('user.showotpRegister');
     Route::get('verify_user/{id}',        'RegisterController@showotpLogin')->name('user.verify_user');
     Route::post('otp_verify',           'RegisterController@VerifyUser')->name('otp_verify');
@@ -75,6 +75,8 @@ Route::group(['namespace' => 'users'], function () {
             Route::post('/view',       'ProductController@userPaymentView')->name('payment');
             Route::post('/add/card',       'ProductController@cardCreate')->name('create-card');
             Route::post('/payment',       'ProductController@userPayment')->name('user-payment');
+            Route::post('existing/payment' ,      'ProductController@existingCardPayment')->name('existingpayment');
+            Route::post('/create',       'PaymentMethodsController@create')->name('create');
         });
     });
 });
