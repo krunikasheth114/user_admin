@@ -26,7 +26,7 @@ class UsersDataTable extends DataTable
             ->editcolumn('category_id', function ($data) {
                 return $data->getCategory ? $data->getCategory->category_name : '';
             })
-            
+
             ->editcolumn('status', function ($data) {
                 $inactive = "";
                 if ($data->status == 1) {
@@ -60,12 +60,12 @@ class UsersDataTable extends DataTable
                 $inactive = "";
                 if (Auth::user()->is_admin == 1) {
 
-                if ($data->status == 1) {
-                    $inactive .= '<button type="button" class="btn btn-primary m-1 changestatus" status ="0" id="' . $data->id . '"><i class="fa fa-lock"></i></button>';
-                } else {
-                    $inactive .= '<button type="button" class="btn btn-success m-1 changestatus" status ="1" id="' . $data->id . '"><i class="fa fa-unlock"></i></button>';
+                    if ($data->status == 1) {
+                        $inactive .= '<button type="button" class="btn btn-primary m-1 changestatus" status ="0" id="' . $data->id . '"><i class="fa fa-lock"></i></button>';
+                    } else {
+                        $inactive .= '<button type="button" class="btn btn-success m-1 changestatus" status ="1" id="' . $data->id . '"><i class="fa fa-unlock"></i></button>';
+                    }
                 }
-            }
                 if (auth()->user()->hasAnyPermission('user_update')) {
                     $inactive .=  '<button type="button" class="btn btn-warning m-1 update" data-toggle="modal" data-target="#updateuser" id="' . $data->id . '"><i class="fa fa-edit"></i></button>';
                 }
@@ -73,7 +73,7 @@ class UsersDataTable extends DataTable
                     $inactive .=  '<button type="button" class="btn btn-danger m-1 delete" id="' . $data->id . '"><i class="fa fa-trash"></i></button>';
                 }
                 if (auth()->user()->hasAnyPermission('user_address_create')) {
-                $inactive .=  '<a href="' . route('admin.address.edit', $data->id) . '" class="btn btn-success btn-sm  m-1 editdata" id="' . $data->id . '" title="Edit Page"><i class="fa fa-edit"></i></a>';
+                    $inactive .=  '<a href="' . route('admin.address.edit', $data->id) . '" class="btn btn-success btn-sm  m-1 editdata" id="' . $data->id . '" title="Edit Page"><i class="fa fa-edit"></i></a>';
                 }
                 if (auth()->user()->hasAnyPermission('user_document_create')) {
                     $inactive .=  '<button type="button" class="btn btn-primary m-1 adddoc" data-toggle="modal" data-target="#adddoc" id="' . $data->id . '"><i class="fa fa-plus"></i></button>';

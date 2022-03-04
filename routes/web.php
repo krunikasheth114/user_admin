@@ -76,6 +76,8 @@ Route::group(['namespace' => 'users'], function () {
             Route::post('/add/card',       'ProductController@cardCreate')->name('create-card');
             Route::post('/payment',       'ProductController@userPayment')->name('user-payment');
             Route::post('existing/payment' ,      'ProductController@existingCardPayment')->name('existingpayment');
+            Route::get('existing/payment/edit' ,      'ProductController@editPaymentMethod')->name('editpaymentmethod');
+            Route::post('existing/payment/delete' ,      'ProductController@removePaymentMethod')->name('deletepaymentmethod');
             Route::post('/create',       'PaymentMethodsController@create')->name('create');
         });
     });
