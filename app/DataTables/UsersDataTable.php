@@ -36,12 +36,12 @@ class UsersDataTable extends DataTable
                 }
                 return $inactive;
             })
-            ->editColumn('created_at', function ($request) {
-                return $request->created_at->format('Y-m-d H:i:s'); // human readable format
-            })
-            ->editColumn('updated_at', function ($request) {
-                return $request->created_at->format('Y-m-d H:i:s'); // human readable format
-            })
+            // ->editColumn('created_at', function ($request) {
+            //     return $request->created_at->format('Y-m-d H:i:s'); // human readable format
+            // })
+            // ->editColumn('updated_at', function ($request) {
+            //     return $request->created_at->format('Y-m-d H:i:s'); // human readable format
+            // })
 
 
 

@@ -108,11 +108,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     <script>
-        
         var user_edit = "{{ route('edit') }}"
         var user_update = "{{ route('update') }}"
         var get_subCat = "{{ route('getsubcategory') }}"
-     
+
 
         // $('#update_form').validate({
         //     rules: {
@@ -220,7 +219,6 @@
         //                 $("#subcategory").append('<option value="' + value.id + '"' +
         //                     selectdata + '>' + value.subcategory_name + '</option>');
         //             });
-
         //             if (data.data.user.profile == '') {
         //                 $('#profile').html(
         //                     '<img src="images/default/default.jpg" height="50px" width="50px" />');

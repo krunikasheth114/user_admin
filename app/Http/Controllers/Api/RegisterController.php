@@ -29,6 +29,7 @@ class RegisterController extends BaseController
         $user->profile = $imageName;
         $user->otp = random_int(1000, 9999);
         $user->password = Hash::make($request->input('password'));
+        $user->stripe_cusid = 0;
         $user->save();
         $user['token'] =  $user->createToken('task2')->accessToken;
         $id = $user->id; // Get current user id

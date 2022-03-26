@@ -16,7 +16,7 @@ class User extends Authenticatable
     use SoftDeletes;
 
     use HasApiTokens, HasFactory, Notifiable;
-    
+
     protected $guard = 'web';
 
     protected $table = 'users';
@@ -54,10 +54,10 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-        public function getCategory()
-        {
-            return $this->hasOne(Category::class, 'id', 'category_id');
-        }
+    public function getCategory()
+    {
+        return $this->hasOne(Category::class, 'id', 'category_id');
+    }
     public function getSubCategory()
     {
         return $this->hasOne(Subcategory::class, 'id', 'subcategory_id');
@@ -68,8 +68,9 @@ class User extends Authenticatable
     }
 
     public function getProfileUrlAttribute()
+
     {
-        return $this->profile != '' ?  asset('images/'.$this->profile) : asset('images/default/default.jpg');
+        return $this->profile != '' ?  asset('images/' . $this->profile) : asset('images/default/default.jpg');
     }
 
     public function userAddress()
@@ -99,9 +100,4 @@ class User extends Authenticatable
     {
         return $this->belongsToMany('App\Models\Blog', 'comment', 'user_id', 'blog_id')->count();
     }
-    
-    
-   
- 
-
- }
+}

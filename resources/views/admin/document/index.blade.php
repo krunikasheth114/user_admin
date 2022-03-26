@@ -1,5 +1,5 @@
 @extends('layouts.master');
-@section('page_title',  __('messages.userdocument'))
+@section('page_title', __('messages.userdocument'))
 
 @section('content')
     <div class="main-content">
@@ -176,6 +176,6 @@
                     },
                 })
             }
-         })
+        })
     </script>
 @endpush

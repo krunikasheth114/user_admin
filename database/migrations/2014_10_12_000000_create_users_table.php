@@ -23,12 +23,7 @@ class CreateUsersTable extends Migration
             $table->boolean('status')->default(1);
             $table->string('profile');
             $table->integer('otp');
-            $table->boolean('is_verify')->default(0 );
-            // $table->foreignId('address_id')->constrained('user_addresses')->onUpdate('cascade')->onDelete('cascade');
-            // $table->foreignId('country_id')->constrained('user_addresses')->onUpdate('cascade')->onDelete('cascade');
-            // $table->foreignId('state_id')->constrained('user_addresses')->onUpdate('cascade')->onDelete('cascade');
-            // $table->foreignId('city_id')->constrained('user_addresses')->onUpdate('cascade')->onDelete('cascade');
-
+            $table->boolean('is_verify')->default(0);
             $table->softDeletes();
             $table->rememberToken();
             $table->timestamps();

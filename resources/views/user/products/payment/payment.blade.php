@@ -23,9 +23,9 @@
                                 name="update" id="update" data-id="{{ $item['id'] }}" type="submit"><i
                                     class="fa fa-edit"></i></button>
                             {{-- Remove card --}}
-                            {{-- <button class="btn btn-danger" style="float: right"><i class="fa fa-remove"
+                            <button class="btn btn-danger" style="float: right"><i class="fa fa-remove"
                                     cus_id="{{ $item->cus_id }}" card_id="{{ $item->card_id }}" id="remove"
-                                    name="submit"></i></button> --}}
+                                    name="submit"></i></button>
                         </div>
                         <div class="card-body">
                             <form action="{{ route('product.existingpayment') }}" method="post">
@@ -123,8 +123,13 @@
                 dataType: 'JSON',
                 success: function(data) {
                     if (data.status == true) {
-                        toastr.success(data.msg);
+                        setTimeout(function() {
+                            toastr.success(data.msg);
+                            location.reload(true);
+                        }, 5000);
+
                     }
+
                 }
             })
         })

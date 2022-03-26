@@ -210,9 +210,13 @@ class ProductController extends Controller
                         'source' => $token->id,
                     ]
                 );
-                $stripe->customers->update(
+                // $stripe->customers->update(
+                //     $customer->id,
+                //     ['default_source' => $customer->default_source]
+                // );
+                $default = $stripe->customers->update(
                     $customer->id,
-                    ['default_source' => $customer->default_source]
+                    ['default_source' =>  $token->id]
                 );
                 Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
                 $charge = \Stripe\Charge::create([
@@ -221,7 +225,6 @@ class ProductController extends Controller
                     'customer' =>   $customer->id, // Previously stored, then retrieved
                     "description" => "Test payment",
                 ]);
-
                 $cardDetail = PaymentMethod::create([
                     'token_id' =>  $token->id,
                     'user_id' => Auth::user()->id,
@@ -238,9 +241,6 @@ class ProductController extends Controller
                 $default0 = PaymentMethod::where('user_id', Auth::user()->id)->where('last4', '!=', $request->cardnumber)->update([
                     'default_method' => 0,
                 ]);
-
-
-
                 // create new one
             } else {
                 $stripe = new \Stripe\StripeClient(
@@ -331,23 +331,24 @@ class ProductController extends Controller
         ]);
         // $customer = $stripe->customers->update($request->customer_id);
 
-        $stripe->customers->update(
-            $request->customer_id,
-            ['default_source' =>  $charge->payment_method]
-        );
+
         Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
         $charge = \Stripe\Charge::create([
-            'amount' => $request->ammount * 100, // $15.00 this time
+            'amount' => $request->ammount * 100,
             'currency' => 'usd',
             'customer' => $request->customer_id, // Previously stored, then retrieved
             "description" => "Test payment",
         ]);
 
+        $default = $stripe->customers->update(
+            $request->customer_id,
+            ['default_source' =>  $request->card_id]
+        );
 
-        $cardDetail = PaymentMethod::where(['user_id' => Auth::user()->id, 'card_id' =>  $charge->payment_method])->update([
+        $cardDetail = PaymentMethod::where('user_id', Auth::user()->id)->where('card_id', $request->card_id)->update([
             'default_method' => 1,
         ]);
-        $defalt0 = PaymentMethod::where('user_id', Auth::user()->id)->where('last4', '!=', $request->card)->update([
+        $defalt0 = PaymentMethod::where('user_id', Auth::user()->id)->where('card_id', '!=', $request->card_id)->update([
             'default_method' => 0,
         ]);
         $lastId = $data->id;
