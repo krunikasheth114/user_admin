@@ -116,7 +116,7 @@ class ProductsDataTable extends DataTable
             ->setTableId('products-table')
             ->columns($this->getColumns())
             ->minifiedAjax()
-            ->dom('Bfrtip')
+            ->dom('Blfrtip')
             ->orderBy(1)
             ->parameters([
                 'dom'          => 'Blfrtip',
@@ -138,7 +138,7 @@ class ProductsDataTable extends DataTable
             Column::make('id')->exportable(true),
             Column::make('category_id')->searchable()->title('Category'),
             Column::make('subcategory_id')->searchable()->title('SubCategory'),
-            Column::make('name')->searchable(),
+            Column::make('name')->searchable(true),
             Column::make('price')->searchable(),
             Column::make('status'),
             Column::make('image')->exportable(false),

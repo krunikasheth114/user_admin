@@ -20,13 +20,13 @@ class AdminSeeder extends Seeder
             'password'=>Hash::make('admin@123'),
             'is_admin'=>'1',
         ]);
-        $admin->assignRole('SuperAdmin');
+        // $admin->assignRole('SuperAdmin');
 
         $admins = Admin::create([
             'email'=>'krunika@gmail.com',
             'password'=>Hash::make('admin@123'),
             'is_admin'=>'1',
         ]);
-        $admins->assignRole('Developer1');    
+        // $admins->assignRole('Developer1');    
     }
 }

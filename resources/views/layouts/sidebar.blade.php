@@ -117,6 +117,18 @@
                         </a>
                     </li>
                 @endif
+                <li>
+                    <a href="{{ route('admin.role.viewrole') }}" class="waves-effect">
+                        <i class="fa fa-user-circle-o"></i>
+                        <span>{{__('messages.roles&permissions')}} </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('admin.report') }}" class="waves-effect">
+                        <i class="fa fa-user"></i>
+                        <span>Report</span>
+                    </a>
+                </li>
             </ul>
         </div>
         <div class="clearfix"></div>

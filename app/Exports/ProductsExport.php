@@ -26,6 +26,7 @@ class ProductsExport implements FromQuery, WithHeadings, WithMapping
 
     public function map($data): array
     {
+        // dd($data);
         return [
             !empty($data->id) ? $data->id : '',
             !empty($data->image) ? $data->ImageUrl : '',

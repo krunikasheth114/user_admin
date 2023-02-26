@@ -20,11 +20,11 @@ use App\Http\Controllers\users\DashboardController;
 */
 
 Route::get('/', function () {
-    return redirect('home');
+    // return redirect('home');
 });
 // \Auth::logout();'namespace' => 'Auth'
 Route::group(['namespace' => 'users'], function () {
-    Route::get('/home',              'RegisterController@home')->name('home');
+    // Route::get('/home',              'RegisterController@home')->name('home');
     Route::get('/register',          'RegisterController@Register')->name('register');
     Route::get('/getcat',            'RegisterController@getcat')->name('getcat');
     Route::post('/store',             'RegisterController@store')->name('store');
